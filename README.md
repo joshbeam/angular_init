@@ -1,6 +1,6 @@
 Command line tool that creates "boilerplate code" for AngularJS controllers, directives, configs, runs, filters, factories...
 
-Basically, limit the amount of typing you have to do to make a new controller, or whatever.
+Type less, write more AngularJS!
 
 # Sample Usage
 
