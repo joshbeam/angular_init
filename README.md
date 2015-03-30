@@ -4,6 +4,8 @@ Basically, limit the amount of typing you have to do to make a new controller, o
 
 # Sample Usage
 
+After you install `ngi` (the short-name for the shell script of `angular_init`), go to where your site is at (in this case, `~/MyAwesomeApp`):
+
 ## Command line
 
 ```shell
@@ -39,6 +41,13 @@ Inject (already injected $scope): $route
 ```
 
 # Installation (in 6 lines)
+
+## Before you start
+
+1. Open up your command line
+2. Switch to your user directory (Linux/Mac: `cd ~`)
+
+## And go!
 
 All from the command line (Linux/Mac):
 
