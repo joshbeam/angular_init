@@ -38,7 +38,7 @@ Inject (already injected $scope): $route
 })(angular.module('myModule'));
 ```
 
-# Installation (in 5 lines)
+# Installation (in 6 lines)
 
 All from the command line (Linux/Mac):
 
@@ -46,15 +46,19 @@ All from the command line (Linux/Mac):
 ~ $ mkdir .angular_init
 ~ $ cd .angular_init
 ~/.angular_init $ git clone https://github.com/joshbeam/angular_init.git
-~ $ chmod 755 ngi
-~ $ export PATH=$PATH:~/.angular_init/bin
+~/.angular_init $ cd angular_init/bin
+~/.angular_init/angular_init/bin $ chmod 755 ngi
+~/.angular_init/angular_init/bin $ export PATH=$PATH:~/.angular_init/angular_init/bin
 ```
+
+**Just copy & paste each of the lines above.**
 
 1. From your `~` (user directory, something like `/Users/yourname`), make the hidden directory `.angular_init` (this is where the command line tool `ngi` will live)
 2. Go to that directory
 3. Clone this repository
-4. Make sure to `chmod`! This lets the script actually run
-5. Finally, add the new script to your `$PATH`
+4. Go to the `bin`
+4. Make sure to `chmod` the script! This lets it actually run
+5. Finally, add the new script directory to your `$PATH` (so your shell knows where to look)
 
 *Consult an IT professional if you are unsure of any of the above steps*
 
