@@ -95,4 +95,4 @@ All from the command line (Linux/Mac):
 
 &copy; 2015 Joshua Beam (MIT License) &mdash; <a href="http://frontendcollisionblog.com">Front End Collision</a>
 
-[install]: '#installation-in-6-lines'
+[install]: #installation-in-6-lines
