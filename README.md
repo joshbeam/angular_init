@@ -16,6 +16,8 @@ $ => All done!
 ## Output
 
 ```javascript
+// ~/MyAwesomeApp/myAwesome.controller.js
+
 ;(function(app) {
 
 	'use strict';
@@ -65,6 +67,11 @@ All from the command line (Linux/Mac):
 ~/MyAwesomeApp $ ngi module # => module (you can inject dependencies too)
 ~/MyAwesomeApp $ ngi filter # => filter
 ```
+
+# Information
+
+**Version** 0.1.0
+**Language** Ruby
 
 <hr>
 

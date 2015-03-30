@@ -1,4 +1,5 @@
 class AngularInit
+	VERSION = 0.1.0
 	WHITESPACE = /\s*/
 	EMPTY = ''
 	CURRENT_DIR = File.dirname(__FILE__)
