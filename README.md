@@ -1,5 +1,7 @@
 Command line tool that creates "boilerplate code" for AngularJS controllers, directives, configs, runs, filters, factories...
 
+Basically, limit the amount of typing you have to do to make a new controller, or whatever.
+
 # Sample Usage
 
 ## Command line
@@ -13,7 +15,7 @@ $ => Inject (already injected $scope): $route
 $ => All done!
 ```
 
-## Output
+## Output (your new boilerplate code)
 
 ```javascript
 // ~/MyAwesomeApp/myAwesome.controller.js
