@@ -40,6 +40,8 @@ Inject (already injected $scope): $route
 })(angular.module('myModule'));
 ```
 
+By the way, the output of this little tool is meant to follow <a href="https://github.com/johnpapa/angular-styleguide">John Papa's AngularJS Style Guide</a>.
+
 # Installation (in 6 lines)
 
 ## Before you start
