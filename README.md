@@ -4,7 +4,7 @@ Type less, write more AngularJS!
 
 # Sample Usage
 
-After you [install][install] `ngi` (the short-name for the shell script of `angular_init`), go to where your site is at (in this case, `~/MyAwesomeApp`):
+After you [do the 2-step install][install] for `ngi` (the short-name for the shell script of `angular_init`), go to where your site is at (in this case, `~/MyAwesomeApp`):
 
 ## Command line
 
@@ -42,34 +42,41 @@ Inject (already injected $scope): $route
 
 By the way, the output of this little tool is meant to follow <a href="https://github.com/johnpapa/angular-styleguide">John Papa's AngularJS Style Guide</a>.
 
-# Installation (in 6 lines)
+# Installation (in 2 steps)
 
 ## Before you start
 
 1. Open up your command line
-2. Switch to your user directory (Linux/Mac: `cd ~`)
+2. Switch to your top-most directory (Linux/Mac: `cd /`)
 
 ## And go!
 
-All from the command line (Linux/Mac):
+### Step 1
 
 ```shell
-~ $ mkdir .angular_init
-~ $ cd .angular_init
-~/.angular_init $ git clone https://github.com/joshbeam/angular_init.git
-~/.angular_init $ cd angular_init/bin
-~/.angular_init/angular_init/bin $ chmod 755 ngi
-~/.angular_init/angular_init/bin $ export PATH=$PATH:~/.angular_init/angular_init/bin
+/ $ git clone https://github.com/joshbeam/angular_init.git usr/local/ngi
 ```
 
-**Just copy & paste each of the lines above.**
+### Step 2
 
-1. From your `~` (user directory, something like `/Users/yourname`), make the hidden directory `.angular_init` (this is where the command line tool `ngi` will live)
-2. Go to that directory
-3. Clone this repository
-4. Go to the `bin`
-4. Make sure to `chmod` the script! This lets it actually run
-5. Finally, add the new script directory to your `$PATH` (so your shell knows where to look)
+We need to make sure your terminal knows where to look. We'll set your `PATH` variable.
+
+Open `~/.bash_profile` (or wherever you set your environment variables on your machine) and type:
+
+```shell
+export PATH="/usr/local/ngi:$PATH"
+```
+
+Save, and re-start your terminal.
+
+### Notes
+
+The permissions to run `ngi` should already be set. However, if you're getting an error running `ngi` in your terminal, do this:
+
+```shell
+/ $ cd usr/local/ngi/bin
+/usr/local/ngi/bin $ chmod 755 ngi
+```
 
 *Consult an IT professional if you are unsure of any of the above steps*
 
