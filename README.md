@@ -8,11 +8,14 @@ Basically, limit the amount of typing you have to do to make a new controller, o
 
 ```shell
 ~/MyAwesomeApp $ ngi controller # run the tool!
-$ => New file name: myAwesome.controller.js
-$ => Module name: myModule
-$ => Controller name: MyAwesomeController
-$ => Inject (already injected $scope): $route
-$ => All done!
+
+# you'll be prompted for some quick info
+$ New file name: myAwesome.controller.js
+$ Module name: myModule
+$ Controller name: MyAwesomeController
+$ Inject (already injected $scope): $route
+$
+$ All done!
 ```
 
 ## Output (your new boilerplate code)
