@@ -67,9 +67,9 @@ Open `~/.bash_profile` (or wherever you set your environment variables on your m
 export PATH="/usr/local/ngi:$PATH"
 ```
 
-Save, and re-start your terminal.
+Save, and re-start your terminal (if the above doesn't work, you can just type the line into your terminal and hit enter, but that'll just set the variable temporarily, and you'll have to type it again every time you start your terminal).
 
-### Notes
+**Getting a permission error?**
 
 The permissions to run `ngi` should already be set. However, if you're getting an error running `ngi` in your terminal, do this:
 
@@ -104,4 +104,4 @@ The permissions to run `ngi` should already be set. However, if you're getting a
 
 &copy; 2015 Joshua Beam (MIT License) &mdash; <a href="http://frontendcollisionblog.com">Front End Collision</a>
 
-[install]: #installation-in-6-lines
+[install]: #installation-in-2-steps
