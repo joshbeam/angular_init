@@ -9,7 +9,7 @@ After you [install][install] `ngi` (the short-name for the shell script of `angu
 ## Command line
 
 ```shell
-~/MyAwesomeApp $ ngi controller # run the tool!
+~/MyAwesomeApp $ ngi controller # this will create a controller!
 
 # you'll be prompted for some quick info
 New file name: myAwesome.controller.js
