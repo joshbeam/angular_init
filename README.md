@@ -5,12 +5,12 @@ Command line tool that creates "boilerplate code" for AngularJS controllers, dir
 ## Command line
 
 ```shell
-~/MyAwesomeApp $ ngi controller
-New file name: myAwesome.controller.js
-Module name: myModule
-Controller name: MyAwesomeController
-Inject (already injected $scope): $route
-All done!
+~/MyAwesomeApp $ ngi controller # run the tool!
+$ => New file name: myAwesome.controller.js
+$ => Module name: myModule
+$ => Controller name: MyAwesomeController
+$ => Inject (already injected $scope): $route
+$ => All done!
 ```
 
 ## Output
