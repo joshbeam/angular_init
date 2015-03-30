@@ -1,0 +1,10 @@
+#!/usr/bin/env ruby
+
+current_dir = File.dirname(__FILE__)
+
+require current_dir+'/angular_init'
+require 'pathname'
+#puts Pathname.new($0).realpath()
+#puts File.basename(Dir.getwd)
+
+AngularInit.run(ARGV[0])
