@@ -4,7 +4,7 @@ Basically, limit the amount of typing you have to do to make a new controller, o
 
 # Sample Usage
 
-After you install `ngi` (the short-name for the shell script of `angular_init`), go to where your site is at (in this case, `~/MyAwesomeApp`):
+After you [install][install] `ngi` (the short-name for the shell script of `angular_init`), go to where your site is at (in this case, `~/MyAwesomeApp`):
 
 ## Command line
 
@@ -94,3 +94,5 @@ All from the command line (Linux/Mac):
 <hr>
 
 &copy; 2015 Joshua Beam (MIT License) &mdash; <a href="http://frontendcollisionblog.com">Front End Collision</a>
+
+[install]: '#installation-in-6-lines'
