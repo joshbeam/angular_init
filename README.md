@@ -4,7 +4,7 @@ Command line tool that creates "boilerplate code" for AngularJS controllers, dir
 
 ## Command line
 
-```bash
+```shell
 ~/MyAwesomeApp $ ngi controller
 New file name: myAwesome.controller.js
 Module name: myModule
@@ -35,7 +35,7 @@ All done!
 
 All from the command line (Linux/Mac):
 
-```bash
+```shell
 ~ $ mkdir .angular_init
 ~ $ cd .angular_init
 ~/.angular_init $ git clone https://github.com/joshbeam/angular_init.git
@@ -53,7 +53,7 @@ All from the command line (Linux/Mac):
 
 # Commands
 
-```bash
+```shell
 ~/MyAwesomeApp $ ngi controller # => controller
 ~/MyAwesomeApp $ ngi directive # => directive
 ~/MyAwesomeApp $ ngi factory # => factory
