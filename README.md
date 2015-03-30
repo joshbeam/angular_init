@@ -64,7 +64,7 @@ We need to make sure your terminal knows where to look. We'll set your `PATH` va
 Open `~/.bash_profile` (or wherever you set your environment variables on your machine) and type:
 
 ```shell
-export PATH="/usr/local/ngi:$PATH"
+export PATH="/usr/local/ngi/bin:$PATH"
 ```
 
 Save, and re-start your terminal (if the above doesn't work, you can just type the line into your terminal and hit enter, but that'll just set the variable temporarily, and you'll have to type it again every time you start your terminal).
