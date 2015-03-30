@@ -15,7 +15,7 @@ Module name: myModule
 Controller name: MyAwesomeController
 Inject (already injected $scope): $route
 
-All done!
+# all done!
 ```
 
 ## Output (your new boilerplate code)
