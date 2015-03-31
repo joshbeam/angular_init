@@ -1,8 +1,8 @@
-**In simple terms:** This tool can make (for example) an AngularJS controller template file for you (`.js`), so that whenever you want to make a new controller for your app, you don't have to type the same starting code over and over again (by the way, this tool doesn't only create controllers. It does directives, filters... almost anything).
+**In simple terms:** This tool, also called by its short-name `ngi`, can make (for example) an AngularJS controller template file for you (`.js`), so that whenever you want to make a new controller for your app, you don't have to type the same starting code over and over again (by the way, this tool doesn't only create controllers. It does directives, filters... almost anything).
 
-**Why use this and not something else?** Good question. You *could* create your own templates and just copy and paste (but this is cumbersome). Most AngularJS developers are probably using the command line already (Gulp, Bower, NPM, Git, etc.), so why not use the command line to streamline your code-writing too?
+**Why use this and not something else?** Good question. You *could* create your own templates and just copy and paste (but this is cumbersome). There are also all-encompassing scaffolding tools that handle a variety of tasks, like generating templates. But that's like going to a general practice doctor (a huge scaffolding tool), when you know you just need to see the <a href="http://en.wikipedia.org/wiki/Otorhinolaryngology">otolaryngologist</a> (angular_init). `ngi` has one task only, which makes it lightweight and specialized. Most AngularJS developers are probably using the command line already (Gulp, Bower, NPM, Git, etc.), so why not use the command line to streamline your code-writing too?
 
-Type less, write more AngularJS!
+Type less, write more AngularJS! Use `ngi`, the simple template generator.
 
 ![Example](https://github.com/joshbeam/angular_init/blob/master/ngi_example.gif "Example")
 
@@ -53,7 +53,7 @@ Inject (already injected $scope): $route
 })(angular.module('myModule'));
 ```
 
-By the way, the output of this little tool is meant to follow <a href="https://github.com/johnpapa/angular-styleguide">John Papa's AngularJS Style Guide</a>.
+By the way, the output of this little tool is meant to follow [John Papa's AngularJS Style Guide][style-guide].
 
 # Installation (in 2 steps)
 
@@ -118,9 +118,22 @@ Feel free to fork the project or get <a href="http://frontendcollisionblog.com/a
 
 # FAQ
 
-*Coming soon*
+**1. Can you explain why the module name is passed as the argument to the IIFE (in the default template)?**
 
-For now, check out this <a href="http://www.reddit.com/r/angularjs/comments/30ydha/command_line_tool_to_create_angularjs_controllers/">Reddit discussion</a> about `ngi` (feel free to post your own question too).
+- If you're using a JSHint plug-in, it will only say 'angular is not defined' in one place
+- Eliminates the clutter of declaring something like `var app = angular.module('myModule')`
+- Something like `angular.module('myModule')` cannot be minified, but the argument `app` can (only an issue if the full module getter happens multiple time)
+- Streamlines the pattern across all of the templates
+
+**2. Is there a way to modify the template to incorporate things like CoffeeScript or ES6?**
+
+This feature is coming soon!
+
+**3. Why are you using `$inject`?**
+
+Check out [John Papa's Style Guide][style-guide].
+
+Check out this <a href="http://www.reddit.com/r/angularjs/comments/30ydha/command_line_tool_to_create_angularjs_controllers/">Reddit discussion</a> about `ngi` (feel free to post your own question too).
 
 # Technical Information
 
@@ -140,3 +153,4 @@ For now, check out this <a href="http://www.reddit.com/r/angularjs/comments/30yd
 [coming-soon]: #coming-soon
 [faq]: #faq
 [tech-info]: #technical-information
+[style-guide]: https://github.com/johnpapa/angular-styleguide

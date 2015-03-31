@@ -6,6 +6,8 @@ class AngularInit
 	TEMPLATE_DIRECTORY = CURRENT_DIR+'/templates'
 	BASIC_TEMPLATE = TEMPLATE_DIRECTORY+'/basic.js'
 	CONFIG_TEMPLATE = TEMPLATE_DIRECTORY+'/config.js'
+	# defines the allowable types, and their corresponding templates
+	# TODO: allow user to pass in flag to generate CoffeeScript and ES6 templates
 	TYPES = [
 		{
 			:name => 'directive',
@@ -53,6 +55,9 @@ class AngularInit
 		@type = type
 	end
 
+	# REVIEW: Use attr_accessor-style setters?
+	# e.g.
+	# template_file=(file)
 	def set_template_file
 		@template_file = IO.read(TYPES.select{ |obj| obj[:name] == @type }[0][:file])
 	end
@@ -75,6 +80,7 @@ class AngularInit
 	end
 
 	def inject
+		# REVIEW: use symbols instead of strings?
 		special = ['routes','controller'].include?(@type)
 		auto_injections = [
 			{
@@ -99,7 +105,7 @@ class AngularInit
 		@dependencies = $stdin.gets.split(',').map { |dep| dep.strip }.reject(&:empty?)
 
 		# automatically inject $scope into a controller
-		# FIXME: don't use index accessors
+		# FIXME: don't use index accessors (numbers are confusing)
 		@dependencies << auto_injections[1][:service] if @type == 'controller' && !@dependencies.include?(auto_injections[1][:service])
 
 		# automatically insert $routeProvider into a routes config
@@ -109,9 +115,14 @@ class AngularInit
 	def replace
 		has_dependencies = @dependencies.size > 0
 
+		# REVIEW: Use #include? instead...? Readability issue.
+		# REVIEW: Use symbols instead of strings... Memory issue.
 		if ['directive','controller','factory','service','filter','module','constant','routes','run','config'].any? { |t| t == @type }
+
+			# Use 'config' as the type, since 'routes' is really an alias for a specific type of 'config'.
 			@type = 'config' if @type == 'routes'
 
+			# Regex replacements to generate the template
 			@template_file = 	@template_file
 								.gsub(/\{\{type\}\}/,@type)
 								.gsub(/\{\{name\}\}/,@name || EMPTY)
@@ -132,18 +143,23 @@ class AngularInit
 	end
 
 	def tag
+		# If Liquid-style tags are used in a template that can be used
+		# for multiple components, remove those parts that don't
+		# belong to the type of component user wants to generate
 		@template_file =	@template_file
 							.gsub(/\{\%\sif\s#{@type}\s\%\}(.*)\{\%\sendif\s#{@type}\s\%\}/m, '\1')
 							.gsub(/\s\{\%\sif\s.*\s\%\}.*\{\%\sendif\s.*\s\%\}/m, '')
 	end
 
 	def write
+		# create the new file
 		File.open(@new_file,'w') do |file|
 			file.write(@template_file)
 			file.close
 		end
 	end
 
+	# Use this function to be able to say AngularInit.run(ARGV[0]) inside the executable file.
 	def self.run(type)
 		init = AngularInit.new(type)
 
@@ -151,8 +167,11 @@ class AngularInit
 
 		init.new_file_name
 
+		# we don't need to define the module if we're creating a module
 		init.module_name unless type == 'module'
 
+		# 'run', 'config', and 'routes' don't have custom names in AngularJS
+		# REVIEW: use symbols instead of strings?
 		init.name unless ['run','config','routes'].any? { |t| t == type }
 
 		init.inject
