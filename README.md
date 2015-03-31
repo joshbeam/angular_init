@@ -6,6 +6,13 @@ Type less, write more AngularJS!
 
 ![Example](https://github.com/joshbeam/angular_init/blob/master/ngi_example.gif "Example")
 
+- [Sample Usage][sample-usage]
+- [Installation][install]
+- [Commands][commands]
+- [Coming Soon][coming-soon]
+- [FAQ][faq]
+- [Technical Information][tech-info]
+
 # Sample Usage
 
 After you [do the 2-step install][install] for `ngi` (the short-name for the shell script of `angular_init`), go to where your site is at (in this case, `~/MyAwesomeApp`). When you're in your site's project directory, just type `ngi <type>` to create a new JavaScript file for you!
@@ -99,13 +106,35 @@ The permissions to run `ngi` should already be set. However, if you're getting a
 ~/MyAwesomeApp $ ngi filter # => filter
 ```
 
-# Information
+# Coming Soon
+
+- Tutorial for customizing templates used to generate components (in order to fit specific individual or organizational needs, patterns, workflows, styles, etc.)
+
+- Flag to generate templates based on alternate syntax (CoffeeScript or ES6)?
+
+Feel free to fork the project or get <a href="http://frontendcollisionblog.com/about">in touch with Josh (me)</a> with any feature requests!
+
+# FAQ
+
+*Coming soon*
+
+For now, check out this <a href="http://www.reddit.com/r/angularjs/comments/30ydha/command_line_tool_to_create_angularjs_controllers/">Reddit discussion</a> about `ngi` (feel free to post your own question too).
+
+# Technical Information
 
 **Version** 0.1.0
+
 **Language** Ruby
+
+**Requirements** Only tested with `ruby 2.1.0p0 (2013-12-25 revision 44422) [x86_64-darwin13.0]`. Compatibility with previous versions of Ruby cannot be guaranteed.
 
 <hr>
 
 &copy; 2015 Joshua Beam (MIT License) &mdash; <a href="http://frontendcollisionblog.com">Front End Collision</a>
 
 [install]: #installation-in-2-steps
+[sample-usage]: #sample-usage
+[commands]: #commands
+[coming-soon]: #coming-soon
+[faq]: #faq
+[tech-info]: #technical-information
