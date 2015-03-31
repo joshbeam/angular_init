@@ -6,7 +6,7 @@ Type less, write more AngularJS!
 
 # Sample Usage
 
-After you [do the 2-step install][install] for `ngi` (the short-name for the shell script of `angular_init`), go to where your site is at (in this case, `~/MyAwesomeApp`):
+After you [do the 2-step install][install] for `ngi` (the short-name for the shell script of `angular_init`), go to where your site is at (in this case, `~/MyAwesomeApp`). When you're in your site's project directory, just type `ngi <type>` to create a new JavaScript file for you!
 
 ## Command line
 
