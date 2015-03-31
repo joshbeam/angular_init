@@ -1,6 +1,6 @@
-**In simple terms:** This tool, also called by its short-name `ngi`, can make (for example) an AngularJS controller template file for you (`.js`), so that whenever you want to make a new controller for your app, you don't have to type the same starting code over and over again (by the way, this tool doesn't only create controllers. It does directives, filters... almost anything).
+**In simple terms:** This tool, also called by its short-name `ngi`, can make (for example) an AngularJS controller template file for you (`.js`), so that **whenever you want to make a new controller for your app, you don't have to type the same starting code over and over again** (by the way, this tool doesn't only create controllers. It does directives, filters... almost anything).
 
-**Why use this and not something else?** Good question. You *could* create your own templates and just copy and paste (but this is cumbersome). There are also all-encompassing scaffolding tools that handle a variety of tasks, like generating templates. But that's like going to a general practice doctor (a huge scaffolding tool), when you know you just need to see the <a href="http://en.wikipedia.org/wiki/Otorhinolaryngology">otolaryngologist</a> (angular_init). `ngi` has one task only, which makes it lightweight and specialized. Most AngularJS developers are probably using the command line already (Gulp, Bower, NPM, Git, etc.), so why not use the command line to streamline your code-writing too?
+**Why use this and not something else?** Good question. You *could* create your own templates and just copy and paste (but this is cumbersome). There are also all-encompassing scaffolding tools that handle a variety of tasks, like generating templates. But that's like going to a general practice doctor (a huge scaffolding tool), when you know you just need to see the <a href="http://en.wikipedia.org/wiki/Otorhinolaryngology">otolaryngologist</a> (angular_init). **`ngi` has one task, and one task only, which makes it lightweight and specialized**. Most AngularJS developers are probably using the command line already (Gulp, Bower, NPM, Git, etc.), so why not use the command line to streamline your code-writing too?
 
 Type less, write more AngularJS! Use `ngi`, the simple template generator.
 
@@ -133,7 +133,7 @@ This feature is coming soon!
 
 Check out [John Papa's Style Guide][style-guide].
 
-Check out this <a href="http://www.reddit.com/r/angularjs/comments/30ydha/command_line_tool_to_create_angularjs_controllers/">Reddit discussion</a> about `ngi` (feel free to post your own question too).
+*For other questions and comments, check out this <a href="http://www.reddit.com/r/angularjs/comments/30ydha/command_line_tool_to_create_angularjs_controllers/">Reddit discussion</a> about `ngi` (feel free to post your own question too). Or, open a new issue on GitHub.*
 
 # Technical Information
 
