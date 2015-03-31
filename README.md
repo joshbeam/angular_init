@@ -6,6 +6,8 @@ Type less, write more AngularJS!
 
 ![Example](https://github.com/joshbeam/angular_init/blob/master/ngi_example.gif "Example")
 
+# Table of Contents
+
 - [Sample Usage][sample-usage]
 - [Installation][install]
 - [Commands][commands]
