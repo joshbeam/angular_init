@@ -1,4 +1,4 @@
-**In simple terms:** This tool can make a controller template for you (for example), so that whenever you want to make a new controller for your app, you don't have to type the same starting code over and over again (by the way, this tool doesn't only create controllers. It does directives, filters... almost anything.)
+**In simple terms:** This tool can make (for example) a controller template for you, so that whenever you want to make a new controller for your app, you don't have to type the same starting code over and over again (by the way, this tool doesn't only create controllers. It does directives, filters... almost anything).
 
 **Why use this and not something else?** Good question. You *could* create your own templates and just copy and paste (but this is cumbersome). Most AngularJS developers are probably using the command line already (Gulp, Bower, NPM, Git, etc.), so why not use the command line to streamline your code-writing too?
 
