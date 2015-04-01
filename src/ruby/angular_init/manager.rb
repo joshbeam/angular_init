@@ -25,7 +25,7 @@ class Manager
 	# Review: is this the best way to do it?
 	Generator = ::Generator
 	Configure = ::Configure
-
+	
 	# So we can call Manager.run(args...)
 	class << self
 		def run(args)
@@ -43,7 +43,7 @@ class Manager
 
 			elsif args[:command] == commands['config']
 
-				puts 'TODO: config' 
+				Configure.run()
 
 			end
 

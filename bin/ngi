@@ -24,9 +24,10 @@
 # 	end
 
 require File.dirname(__FILE__)+'/../src/ruby/angular_init/angular_init'
+require 'optparse'
 
 ARGS_SIZE = ARGV.size
-CONFIG = AngularInit::Manager::Configure.get()
+CONFIG = AngularInit::Manager::Configure.new.from_json
 COMMANDS = CONFIG['global']['commands'].collect{ |k,v| v }
 
 # (2) expect something like => ngi make <type> (e.g. controller, directive, etc.)
@@ -34,6 +35,18 @@ COMMANDS = CONFIG['global']['commands'].collect{ |k,v| v }
 
 # case (2)
 if ARGS_SIZE > 0
+	# options = {}
+
+	# parser = OptionParser.new do |opts|
+	# 	opts.on('--config CONFIG') do |c|
+	# 		puts CONFIG['global'][c]
+	# 	end
+
+	#   opts.on('--make MAKE') do |type|
+	#     options[:type] = type
+	#   end
+	# end.parse!
+
 	command = ARGV[0] # e.g. "make"
 
 	def valid_command?
