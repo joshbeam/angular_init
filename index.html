@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>angular_init (ngi)</title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="description" content="angular_init is the simple AngularJS template generator">
+    <link rel="canonical" href="https://frontendcollisionblog.com/">
+
+    <!-- Custom CSS & Bootstrap Core CSS - Uses Bootswatch Flatly Theme: http://bootswatch.com/flatly/ -->
+    <link rel="stylesheet" href="/css/main.css">
+
+    <!-- Custom Fonts -->
+    <link rel="stylesheet" href="/css/font-awesome/css/font-awesome.min.css">
+    <link href="//fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" rel="stylesheet" type="text/css">
+    <link href="//fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
+
+    <link rel="shortcut icon" href="/img/favicon.ico?v=1.0" type="image/x-icon">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+</head>
+    <body id="page-top" data-spy="scroll" data-target=".navbar-fixed-top">
+     <!-- Navigation -->
+    <nav class="navbar navbar-custom navbar-fixed-top" role="navigation">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-main-collapse">
+                    <i class="fa fa-bars"></i>
+                </button>
+                <a class="navbar-brand page-scroll" href="#page-top">
+                    <span class="light">ngi</span>
+                </a>
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse navbar-right navbar-main-collapse">
+                <ul class="nav navbar-nav">
+                    <!-- Hidden li included to remove active class from about link when scrolled up past about section -->
+                    <li class="hidden">
+                        <a href="#page-top"></a>
+                    </li>
+                    <li>
+                        <a class="page-scroll" href="#about">About</a>
+                    </li>
+                    <li>
+                        <a class="page-scroll" href="#see-it-in-action">In Action</a>
+                    </li>
+                    <li>
+                        <a class="page-scroll" href="#use">Use</a>
+                    </li>
+                    <li>
+                        <a class="page-scroll" href="#install">Install</a>
+                    </li>
+                    <li>
+                        <a class="page-scroll" href="#contact">Contact</a>
+                    </li>
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container -->
+    </nav>
+        <!-- Intro Header -->
+    <header class="intro">
+        <div class="intro-body">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-8 col-md-offset-2">
+                        <h1 class="brand-heading">angular_init</h1>
+                        <p class="intro-text">Type less, write more AngularJS! Use <code>ngi</code>, the simple template generator.</p>
+                        <a href="#about" class="btn btn-circle page-scroll">
+                            <i class="fa fa-angle-double-down animated"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+        <!-- About Section -->
+    <section class="container content-section text-center">
+        <div id="about" class="row">
+            <div class="col-lg-8 col-lg-offset-2">
+                <h2>About angular_init</h2>
+                <h3>In simple terms</h3>
+                <p>
+                This tool, also called by its short-name <code>ngi</code>, can make (for example) an AngularJS controller template file for you (.js), so that <em>whenever you want to make a new controller for your app, you don't have to type the same starting code over and over again</em> (by the way, this tool doesn't only create controllers. It does directives, filters... almost anything).
+                </p>
+                <h3>Why <code>ngi</code> and not something else?</h3>
+                <p>
+                Good question. You could create your own templates and just copy and paste (but this is cumbersome). There are also all-encompassing scaffolding tools that handle a variety of tasks, like generating templates. But that's like going to a general practice doctor (a huge scaffolding tool), when you know you just need to see the otolaryngologist (angular_init).
+                </p>
+                <p>
+                <em><code>ngi</code> has one task, and one task only, which makes it lightweight and specialized.</em> Most AngularJS developers are probably using the command line already (Gulp, Bower, NPM, Git, etc.), so why not use the command line to streamline your code-writing too?
+                </p>         
+            </div>
+        </div>
+    </section>
+        <!-- See It In Action Section -->
+    <section class="container content-section text-center">
+        <div class="row">
+            <div id="see-it-in-action" class="col-lg-8 col-lg-offset-2">
+                <h1>See it in action</h1>
+                <img src="/img/ngi_example.gif" />
+                <br><br><br><br>
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="cm">/*</span>
+<span class="cm">*</span>
+<span class="cm">*                           OUTPUT ~/MyAwesomeApp/my.controller.js</span>
+<span class="cm">*</span>
+<span class="cm">**/</span>
+
+<span class="p">;(</span><span class="kd">function</span><span class="p">(</span><span class="nx">app</span><span class="p">)</span> <span class="p">{</span>
+
+    <span class="s1">&#39;use strict&#39;</span><span class="p">;</span>
+
+    <span class="nx">app</span><span class="p">.</span><span class="nx">controller</span><span class="p">(</span><span class="s1">&#39;MyController&#39;</span><span class="p">,</span><span class="nx">MyController</span><span class="p">);</span>
+
+    <span class="nx">MyAwesomeController</span><span class="p">.</span><span class="nx">$inject</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;$route&#39;</span><span class="p">,</span> <span class="s1">&#39;$scope&#39;</span><span class="p">];</span>
+
+    <span class="kd">function</span> <span class="nx">MyAwesomeController</span><span class="p">(</span><span class="nx">$route</span><span class="p">,</span> <span class="nx">$scope</span><span class="p">)</span> <span class="p">{</span>
+
+    <span class="p">}</span>
+
+<span class="p">})(</span><span class="nx">angular</span><span class="p">.</span><span class="nx">module</span><span class="p">(</span><span class="s1">&#39;myModule&#39;</span><span class="p">));</span></code></pre></div>
+            </div>
+        </div>
+    </section>
+        <!-- See It In Action Section -->
+    <section id="use" class="container content-section text-center">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2">
+                <h1>Use</h1>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash">~/MyAwesomeApp <span class="nv">$ </span>ngi controller <span class="c"># =&gt; controller</span>
+~/MyAwesomeApp <span class="nv">$ </span>ngi directive <span class="c"># =&gt; directive</span>
+~/MyAwesomeApp <span class="nv">$ </span>ngi factory <span class="c"># =&gt; factory</span>
+~/MyAwesomeApp <span class="nv">$ </span>ngi service <span class="c"># =&gt; service (same as factory)</span>
+~/MyAwesomeApp <span class="nv">$ </span>ngi constant <span class="c"># =&gt; constant</span>
+~/MyAwesomeApp <span class="nv">$ </span>ngi run <span class="c"># =&gt; a run block</span>
+~/MyAwesomeApp <span class="nv">$ </span>ngi config <span class="c"># =&gt; a config block</span>
+~/MyAwesomeApp <span class="nv">$ </span>ngi routes <span class="c"># =&gt; a config block with $routeProvider injected</span>
+~/MyAwesomeApp <span class="nv">$ </span>ngi module <span class="c"># =&gt; module (you can inject dependencies too)</span>
+~/MyAwesomeApp <span class="nv">$ </span>ngi filter <span class="c"># =&gt; filter</span></code></pre></div>
+            </div>
+        </div>
+    </section>
+        <!-- Download Section -->
+    <section class="content-section text-center">
+        <div id="install" class="download-section">
+            <div class="container">
+                <h1>Install</h1>
+                <div class="col-lg-5">
+                    <h2>GitHub</h2>
+                    <p>
+                        Head over to the repo for in-depth instructions.
+                    </p>
+                    <a href="https://github.com/joshbeam/angular_init#installation-in-2-steps" class="btn btn-default btn-lg">Installation (in 2 steps) &raquo;</a>
+                </div>
+                <div class="col-lg-7">
+                    <h2>Terminal</h2>
+                    <p>
+                        Make sure you're in your top-level directory (in Mac, that'll be <code>/</code>, and Windows <code>C:</code>)
+                    </p>
+                    <div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>git clone https://github.com/joshbeam/angular_init.git usr/local/ngi</code></pre></div>
+                    <br>
+                    <div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span><span class="s1">&#39;export PATH=&quot;/usr/local/ngi/bin:$PATH&quot;&#39;</span> &gt;&gt; ~/.bash_profile</code></pre></div>
+                    <br>
+                    <h3>Permission error?</h3>
+                    <pre>/ $ cd usr/local/ngi/bin
+                        <br>
+/usr/local/ngi/bin $ chmod 755 ngi</pre>
+                </div>
+            </div>
+        </div>
+    </section>
+        <!-- Contact Section -->
+    <section id="contact" class="container content-section text-center">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2">
+                <h2>Contact</h2>
+                <p>Questions, issues, feature requests?</p>
+                <p><a href="mailto:frontendcollisionblog@gmail.com">frontendcollisionblog@gmail.com</a>
+                </p>
+                <p>
+                    <a href="http://frontendcollisionblog.com">Front End Collision</a>
+                </p>
+                <ul class="list-inline banner-social-buttons">
+                    
+                    <li>
+                        <a href="https://twitter.com/joshbeam92" class="btn btn-default btn-lg"><i class="fa fa-twitter fa-fw"></i> <span class="network-name">twitter</span></a>
+                    </li>
+                    
+                    <li>
+                        <a href="http://careers.stackoverflow.com/joshbeam" class="btn btn-default btn-lg"><i class="fa fa-stack-overflow fa-fw"></i> <span class="network-name">stackoverflow</span></a>
+                    </li>
+                    
+                    <li>
+                        <a href="https://github.com/joshbeam/angular_init" class="btn btn-default btn-lg"><i class="fa fa-github fa-fw"></i> <span class="network-name">github</span></a>
+                    </li>
+                    
+                </ul>
+            </div>
+        </div>
+    </section>
+        <!-- Footer -->
+    <footer>
+        <div class="container text-center">
+            <p>Copyright &copy; Josh Beam 2015</p>
+            <p>Thanks <a href="http://ironsummitmedia.github.io/startbootstrap-grayscale/">Grayscale</a> :)</a>
+        </div>
+    </footer>
+
+     <!-- jQuery Version 1.11.0 -->
+    <script src="/js/jquery.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="/js/bootstrap.min.js"></script>
+
+    <!-- Plugin JavaScript -->
+    <script src="/js/jquery.easing.min.js"></script>
+
+    <!-- Google Maps API Key - Use your own API key to enable the map feature. More information on the Google Maps API can be found at https://developers.google.com/maps/ -->
+    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCRngKslUGJTlibkQ3FkfTxj3Xss1UlZDA&sensor=false"></script>
+
+    <!-- Custom Theme JavaScript -->
+    <script src="/js/grayscale.js"></script>
+    </body>
+</html>
