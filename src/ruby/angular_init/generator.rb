@@ -1,7 +1,13 @@
+# angular_init (short-name: ngi)
+# Copyright 2015 Joshua Beam
+# github.com/joshbeam/angular_init
+# MIT License
+
 class Generator
 	VERSION = '0.1.0'
 	WHITESPACE = /\s*/
 	EMPTY = ''
+	# REVIEW: Do I need this since it's defined in angular_init.rb?
 	CURRENT_DIR = File.dirname(__FILE__)
 	UP = '/..'
 

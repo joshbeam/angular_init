@@ -1,21 +1,55 @@
 #!/usr/bin/env ruby
 
-#CURRENT_DIR = File.dirname(__FILE__)
+# angular_init (short-name: ngi)
+# Copyright 2015 Joshua Beam
+# github.com/joshbeam/angular_init
+# MIT License
+
+#   STRUCTURE
+
+# 	module AngularInit
+# 		class Manager
+#			class Generator
+#           	# create the template
+#			end
+#
+# 			def run
+#				# decides whether to configure, generate, etc.
+#			end
+#
+# 			class Configure
+#
+# 			end
+# 		end
+# 	end
 
 require File.dirname(__FILE__)+'/../src/ruby/angular_init/angular_init'
-#require 'pathname'
-#puts Pathname.new($0).realpath()
-#puts File.basename(Dir.getwd)
 
 ARGS_SIZE = ARGV.size
 CONFIG = AngularInit::Manager::Configure.get()
+COMMANDS = CONFIG['global']['commands'].collect{ |k,v| v }
 
-if ARGS_SIZE == 2
-	command = ARGV[0]
-	type = ARGV[1]
-	# don't need to check if the variable is acceptable
-	# Generator will do this (plug, the user is allowed
-	# to use custom types, templates, etc., which are all
-	# checked from the YAML config file (angular_init.config.yml)
-	AngularInit::Manager.run(:config => CONFIG, :command => command, :type => type) if CONFIG['global']['commands'].collect{ |k,v| v }.include?(ARGV[0])
+# (2) expect something like => ngi make <type> (e.g. controller, directive, etc.)
+# (1) or expect something like => ngi config
+
+# case (2)
+if ARGS_SIZE > 0
+	command = ARGV[0] # e.g. "make"
+
+	def valid_command?
+		COMMANDS.include?(ARGV[0])
+	end
+
+	raise 'Invalid command! Choose from: '+COMMANDS.to_s unless valid_command?
+
+	new_args = {
+		:command => command,
+		:config => CONFIG
+	}
+
+	new_args[:type] = ARGV[1] if ARGS_SIZE == 2 # e.g. controller, directive, etc.
+
+	# manager will decide whether to run ::Generator, ::Configure, etc.
+	AngularInit::Manager.run(new_args)
+
 end
