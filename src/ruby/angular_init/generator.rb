@@ -3,68 +3,40 @@ class Generator
 	WHITESPACE = /\s*/
 	EMPTY = ''
 	CURRENT_DIR = File.dirname(__FILE__)
-	UP = '../'
-	TEMPLATE_DIRECTORY = CURRENT_DIR+UP+'/templates'
-	BASIC_TEMPLATE = TEMPLATE_DIRECTORY+'/basic.js'
-	CONFIG_TEMPLATE = TEMPLATE_DIRECTORY+'/config.js'
-	# defines the allowable types, and their corresponding templates
-	TYPES = [
-		{
-			:name => 'directive',
-			:file => BASIC_TEMPLATE
-		},
-		{
-			:name => 'controller',
-			:file => BASIC_TEMPLATE
-		},
-		{
-			:name => 'filter',
-			:file => BASIC_TEMPLATE
-		},
-		{
-			:name => 'factory',
-			:file => BASIC_TEMPLATE
-		},
-		{
-			:name => 'service',
-			:file => BASIC_TEMPLATE
-		},
-		{
-			:name => 'module',
-			:file => TEMPLATE_DIRECTORY+'/module.js'
-		},
-		{
-			:name => 'constant',
-			:file => TEMPLATE_DIRECTORY+'/constant.js'
-		},
-		{
-			:name => 'routes',
-			:file => CONFIG_TEMPLATE
-		},
-		{
-			:name => 'run',
-			:file => CONFIG_TEMPLATE
-		},
-		{
-			:name => 'config',
-			:file => CONFIG_TEMPLATE
-		}
-	]
-	ALLOWABLE = TYPES.collect{ |t| t[:name] }
-	def initialize(type)
-		if ALLOWABLE.include?(type)
-			@type = type
-		else
-			raise 'Invalid type, select from the following: '+ALLOWABLE.to_s
+	UP = '/..'
+
+	################################
+
+	# SET UP ALL THE CONFIG OPTIONS
+	# Generator.new (the initialization function) is called in self.run
+
+	def initialize(args)
+		@type = args[:type]
+
+		# passed in from Manager.run()
+		# @CONFIG is a parsed Ruby hash from the angular_init.config.json file
+		@CONFIG = args[:config]['global']
+
+		# types that are valid (e.g. controller, directive, etc.)
+		@TYPES = @CONFIG['types']
+
+		def valid_type?
+			@TYPES.select{ |t| t['name'] == @type }.size > 0
 		end
+
+		# exit if it's not a valid type (e.g. controller, directive, etc.)
+		unless valid_type?
+			raise @type+' is not a valid type! Select from: '+@TYPES.collect{|t| t['name'] }.to_s
+		end
+
+		template_dir = CURRENT_DIR+UP+UP+'/templates/'+@CONFIG['language']
+
+		@TEMPLATE = template_dir + '/' + @TYPES.select{ |t| t['name'] == @type }[0]['template']
+
+		@template_file = IO.read(@TEMPLATE)
 	end
 
-	# REVIEW: Use attr_accessor-style setters?
-	# e.g.
-	# template_file=(file)
-	def set_template_file
-		@template_file = IO.read(TYPES.select{ |obj| obj[:name] == @type }[0][:file])
-	end
+	###############################
 
 	def new_file_name
 		print 'New file name: '
@@ -121,7 +93,7 @@ class Generator
 
 		# REVIEW: Use symbols instead of strings... Memory issue.
 		# REVIEW: Do I need to perform this check?
-		if ALLOWABLE.include?(@type)
+		#if @TYPES.include?(@type)
 
 			# Use 'config' as the type, since 'routes' is really an alias for a specific type of 'config'.
 			@type = 'config' if @type == 'routes'
@@ -143,7 +115,7 @@ class Generator
 									@dependencies.each_with_index.inject(EMPTY) { |str,(dep,i)| str+=dep.to_s+(i == @dependencies.size-1 ? EMPTY : ', ') }
 									: EMPTY
 								)
-		end
+		#end
 	end
 
 	def tag
@@ -157,6 +129,27 @@ class Generator
 
 	def write
 		# create the new file
+		def overwrite?
+			while true
+				print "File exists already, overwrite it? (y/n) "
+				answer = $stdin.gets.strip
+
+				case answer
+					when 'y' #j for Germans (Ja)
+						break
+					when /\A[nN]o?\Z/ #n or no
+						puts 'Exited!'
+						exit
+				end
+
+			end
+
+		end
+
+		if(File.exist?(@new_file))
+			overwrite?
+		end
+
 		File.open(@new_file,'w') do |file|
 			file.write(@template_file)
 			file.close
@@ -164,19 +157,17 @@ class Generator
 	end
 
 	# Use this function to be able to say ______ inside the executable file.
-	def self.run(type)
-		init = Generator.new(type)
-
-		init.set_template_file
+	def self.run(args)
+		init = Generator.new(args)
 
 		init.new_file_name
 
 		# we don't need to define the module if we're creating a module
-		init.module_name unless type == 'module'
+		init.module_name unless args[:type] == 'module'
 
 		# 'run', 'config', and 'routes' don't have custom names in AngularJS
 		# REVIEW: use symbols instead of strings?
-		init.name unless ['run','config','routes'].any? { |t| t == type }
+		init.name unless ['run','config','routes'].any? { |t| t == args[:type] }
 
 		init.inject
 

@@ -1,5 +1,9 @@
 {
 	"global" : {
+		"commands"				:		{
+											"make": "make",
+											"config": "config"
+										},
 		"languages"				:		["es5","es6","coffee"],
 		"language"				:		"es5",
 		"types"					:		[

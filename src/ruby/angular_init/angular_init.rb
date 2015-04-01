@@ -4,13 +4,9 @@
 
 CURRENT_DIR = File.dirname(__FILE__)
 
-require 'json'
-require CURRENT_DIR+'/angular_init-configure'
-require CURRENT_DIR+'/angular_init-generator'
+require CURRENT_DIR+'/manager'
 
 module AngularInit
 	# REVIEW: Is this the best way to do it?
-	Configure = ::Configure
-	Generator = ::Generator
+	Manager = ::Manager
 end
-

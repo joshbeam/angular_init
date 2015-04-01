@@ -11,10 +11,27 @@
 #    by default, "routes" is an alias for a certain
 #    type of AngularJS "config" function)
 
-class Configure
+require CURRENT_DIR+'/../../../lib/json'
+require CURRENT_DIR+'/generator'
+
+class Manager
+	# Review: is this the best way to do it?
+	Generator = ::Generator
+
 	class << self
-		def read(file)
-			puts IO.read(file)
+		def run(args)
+			config = args[:config]
+			type = args[:type]
+
+			Generator.run(:config => config, :type => type) if args[:command] == config['global']['commands']['make']
+		end
+	end
+
+	class Configure
+		def self.get
+			c = Configure.new
+
+			JSON.parse(IO.read(CURRENT_DIR+'/../../config/angular_init.config.json'))
 		end
 	end
 end
