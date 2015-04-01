@@ -4,6 +4,7 @@
 
 CURRENT_DIR = File.dirname(__FILE__)
 
+require 'json'
 require CURRENT_DIR+'/angular_init-configure'
 require CURRENT_DIR+'/angular_init-generator'
 

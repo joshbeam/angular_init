@@ -3,7 +3,8 @@ class Generator
 	WHITESPACE = /\s*/
 	EMPTY = ''
 	CURRENT_DIR = File.dirname(__FILE__)
-	TEMPLATE_DIRECTORY = CURRENT_DIR+'/templates'
+	UP = '../'
+	TEMPLATE_DIRECTORY = CURRENT_DIR+UP+'/templates'
 	BASIC_TEMPLATE = TEMPLATE_DIRECTORY+'/basic.js'
 	CONFIG_TEMPLATE = TEMPLATE_DIRECTORY+'/config.js'
 	# defines the allowable types, and their corresponding templates
