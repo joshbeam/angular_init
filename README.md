@@ -64,19 +64,27 @@ By the way, the output of this little tool is meant to follow [John Papa's Angul
 ## Before you start
 
 1. Open up your command line
-2. Switch to your top-most directory (Linux/Mac: `cd /`)
+2. Switch to your top-most directory (Linux/Mac: `/`, Windows: `C:` )
 
 ## And go!
 
 ### Step 1
 
+**Linux/Mac**
+
 ```shell
 / $ git clone https://github.com/joshbeam/angular_init.git usr/local/ngi
 ```
 
+**Windows**
+
+Clone into your executable directory (for example, `C:/Program Files`)
+
 ### Step 2
 
 We need to make sure your terminal knows where to look. We'll set your `PATH` variable.
+
+**Mac/Linux**
 
 Open `~/.bash_profile` (or wherever you set your environment variables on your machine) and type:
 
@@ -94,6 +102,10 @@ The permissions to run `ngi` should already be set. However, if you're getting a
 / $ cd usr/local/ngi/bin
 /usr/local/ngi/bin $ chmod 755 ngi
 ```
+
+**Windows**
+
+Depending on your version of Windows, follow <a href="http://www.computerhope.com/issues/ch000549.htm">these instructions</a> to set your environment variable.
 
 *Consult an IT professional if you are unsure of any of the above steps*
 
