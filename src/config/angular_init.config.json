@@ -5,8 +5,10 @@
       "types": "types"
     },
     "commands": {
-      "make": "--make",
-      "config": "--config"
+      "make": "make"
+    },
+    "menus": {
+      "options": "-options"
     },
     "languages": [
       "es5",

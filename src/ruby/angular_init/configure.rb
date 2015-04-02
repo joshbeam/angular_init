@@ -67,8 +67,14 @@ class Configure
 		end
 
 		def choose_configurable_property
+			puts "\nCurrent settings: "
+			@CONFIGURABLE.each do | k,v |
+				puts "---> "+v.capitalize+": "+@GLOBAL[v].to_s
+			end
+			puts "\n"
 			print 'Type the property you want to configure: '
 			puts @CONFIGURABLE_STRING
+			puts '(or type ctrl+c to exit)'
 
 			# return
 			Utils::AskLoop.ask(:check => @CONFIGURABLE_PROPERTIES, :valid => @CONFIGURABLE_STRING)
@@ -77,7 +83,7 @@ class Configure
 		def configure_property(property)
 			case property
 			when @CONFIGURABLE['language']
-				puts 'Choose from: '+@LANGUAGES_STRING
+				puts "\nChoose from: "+@LANGUAGES_STRING
 				# return
 				answer = Utils::AskLoop.ask(:check => @LANGUAGES, :valid => @LANGUAGES_STRING)
 			end

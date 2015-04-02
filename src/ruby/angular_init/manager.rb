@@ -21,6 +21,13 @@
 require CURRENT_DIR+'/generator'
 require CURRENT_DIR+'/configure'
 
+# REVIEW:
+
+# Maybe we need some sort of class that maps
+# each command or menu to a specific method,
+# for example: 	'make' => some_method
+# 				'options' => some_method
+
 class Manager
 	# Review: is this the best way to do it?
 	Generator = ::Generator
@@ -29,21 +36,16 @@ class Manager
 	# So we can call Manager.run(args...)
 	class << self
 		def run(args)
-			commands = args[:config]['global']['commands']
+			command_names = args[:config]['global']['commands']
+			menu_names = args[:config]['global']['menus']
 
-			new_args = {
-				:config => args[:config]
-			}
+			if(args.has_key?(:command) && args.has_key?(:type))
 
-			if(args[:command] == commands['make'] && args.has_key?(:type))
+				Generator.run(args) if args[:command] == command_names['make']
 
-				new_args[:type] = args[:type]
+			elsif args.has_key?(:menu)
 
-				Generator.run(new_args)
-
-			elsif args[:command] == commands['config']
-
-				Configure.run()
+				Configure.run() if args[:menu] == menu_names['options']
 
 			end
 

@@ -24,45 +24,35 @@
 # 	end
 
 require File.dirname(__FILE__)+'/../src/ruby/angular_init/angular_init'
-require 'optparse'
 
 ARGS_SIZE = ARGV.size
 CONFIG = AngularInit::Manager::Configure.new.from_json
-COMMANDS = CONFIG['global']['commands'].collect{ |k,v| v }
+COMMANDS = AngularInit::Commands.new(:valid_inputs => CONFIG['global']['commands'].collect{ |k,v| v })
+MENUS = AngularInit::Menus.new(:valid_inputs => CONFIG['global']['menus'].collect{ |k,v| v })
 
-# (2) expect something like => ngi make <type> (e.g. controller, directive, etc.)
-# (1) or expect something like => ngi config
+args = {}
 
-# case (2)
 if ARGS_SIZE > 0
-	# options = {}
-
-	# parser = OptionParser.new do |opts|
-	# 	opts.on('--config CONFIG') do |c|
-	# 		puts CONFIG['global'][c]
-	# 	end
-
-	#   opts.on('--make MAKE') do |type|
-	#     options[:type] = type
-	#   end
-	# end.parse!
-
-	command = ARGV[0] # e.g. "make"
-
-	def valid_command?
-		COMMANDS.include?(ARGV[0])
+	if ARGS_SIZE == 2
+		if COMMANDS.valid?(ARGV[0])
+			args[:command] = ARGV[0]
+			args[:type] = ARGV[1]
+		else
+			# show error and help menu
+		end
 	end
 
-	raise 'Invalid command! Choose from: '+COMMANDS.to_s unless valid_command?
+	if ARGS_SIZE == 1
+		if MENUS.valid?(ARGV[0])
+			args[:menu] = ARGV[0]
+		else
+			# show error and help menu
+		end
+	end
 
-	new_args = {
-		:command => command,
-		:config => CONFIG
-	}
+	args[:config] = CONFIG
+	args[:commands] = COMMANDS
+	args[:menus] = MENUS
 
-	new_args[:type] = ARGV[1] if ARGS_SIZE == 2 # e.g. controller, directive, etc.
-
-	# manager will decide whether to run ::Generator, ::Configure, etc.
-	AngularInit::Manager.run(new_args)
-
+	AngularInit::Manager.run(args)
 end

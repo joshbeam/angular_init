@@ -6,8 +6,13 @@
 CURRENT_DIR = File.dirname(__FILE__)
 
 require CURRENT_DIR+'/manager'
+require CURRENT_DIR+'/commands'
+require CURRENT_DIR+'/menus'
+
 
 module AngularInit
 	# REVIEW: Is this the best way to do it?
 	Manager = ::Manager
+	Commands = ::Commands
+	Menus = ::Menus
 end
