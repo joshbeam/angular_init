@@ -4,7 +4,7 @@
 
 **Why use this and not something else?** Good question. You *could* create your own templates and just copy and paste (but this is cumbersome). You could use a scaffolding tool, but that's like going to a general practice doctor (a huge scaffolding tool), when you know you just need to see the <a href="http://en.wikipedia.org/wiki/Otorhinolaryngology">otolaryngologist</a> (angular_init).
 
-**`ngi` has one task, and one task only, which makes it lightweight and specialized**. Most AngularJS developers are probably using the command line already (Gulp, Bower, NPM, Git, etc.), so why not use the command line to streamline your code-writing too?
+**`ngi` has one task, and one task only, which makes it lightweight and specialized**. Most AngularJS developers are probably using the command line already (Gulp, Bower, npm, Git, etc.), so why not use the command line to streamline your code-writing too?
 
 Type less, write more AngularJS! Use `ngi`, the simple template generator.
 
