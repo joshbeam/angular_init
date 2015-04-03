@@ -54,7 +54,7 @@ else
 	COMMANDS.valid_inputs.each_with_index do |c,i|
 		puts "--> #{c}"
 	end
-	puts 'Or, try "ngi -options" to cofigure ngi'
+	puts 'Or, try "ngi -options" to configure ngi'
 end
 
 ######################################################
