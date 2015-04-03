@@ -15,7 +15,7 @@
       "es6",
       "coffee"
     ],
-    "language": "coffee",
+    "language": "es5",
     "types": [
       {
         "name": "directive",
