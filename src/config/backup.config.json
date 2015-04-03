@@ -1,0 +1,59 @@
+{
+	"global" : {
+		"configurable"			:		{
+											"language": "language",
+											"types": "types"
+										},
+		"commands"				:		{
+											"make": "make",
+											"config": "config"
+										},
+		"languages"				:		["es5","es6","coffee"],
+		"language"				:		"es5",
+		"types"					:		[
+											{
+												"name": "directive",
+												"template": "basic.js"
+											},
+											{
+												"name": "controller",
+												"template": "basic.js"
+											},
+											{
+												"name": "factory",
+												"template": "basic.js"
+											},
+											{
+												"name": "service",
+												"template": "basic.js"
+											},
+											{
+												"name": "config",
+												"template": "config.js"
+											},
+											{
+												"name": "run",
+												"template": "config.js"
+											},
+											{
+												"name": "routes",
+												"template": "config.js"
+											},
+											{
+												"name": "filter",
+												"template": "basic.js"
+											},
+											{
+												"name": "module",
+												"template": "module.js"
+											},
+											{
+												"name": "constant",
+												"template": "constant.js"
+											}
+										],
+		"aliases" : {
+			"config" : ["routes"]
+		}
+	}
+}

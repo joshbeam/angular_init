@@ -1,6 +1,6 @@
 <a href="http://joshbeam.github.io/angular_init">Website</a>
 
-Want to contribute? Current features being worked on are at the <a href="https://github.com/joshbeam/angular_init/tree/coffee">coffee branch</a>.
+**New feature (version 0.1.1)**: use CoffeeScript templates (go to `ngi -options` to change the language); this is backwards compatible with version 0.1.0
 
 ## In simple terms:
 
@@ -19,9 +19,9 @@ Type less, write more AngularJS! Use `ngi`, the simple template generator.
 # Table of Contents
 
 - [Sample Usage][sample-usage]
+- [Features][features]
 - [Installation][install]
 - [Commands][commands]
-- [Coming Soon][coming-soon]
 - [FAQ][faq]
 - [Technical Information][tech-info]
 
@@ -64,6 +64,19 @@ Inject (already injected $scope): $route
 ```
 
 By the way, the output of this little tool is meant to follow [John Papa's AngularJS Style Guide][style-guide].
+
+# Features
+
+## Current features
+
+- Create a module, directive, controller, filter, run, config, "routes" config, constant, service, or factory by saying `ngi <type>`, where `<type>` is any of the above types (module, directive, etc.)
+- Current languages that have default templates: CoffeeScript, ECMAScript5 (choose your language with `ngi -options`)
+
+## Coming soon
+
+- Add custom templates and languages
+
+Feel free to fork the project or get <a href="http://frontendcollisionblog.com/about">in touch with Josh (me)</a> with any feature requests!
 
 # Installation (in 2 steps)
 
@@ -128,15 +141,11 @@ Depending on your version of Windows, follow <a href="http://www.computerhope.co
 ~/MyAwesomeApp $ ngi routes # => a config block with $routeProvider injected
 ~/MyAwesomeApp $ ngi module # => module (you can inject dependencies too)
 ~/MyAwesomeApp $ ngi filter # => filter
+
+# or
+
+~/MyAwesomeApp $ ngi -options # => choose your language to use (CoffeeScript or ECMAScript5)
 ```
-
-# Coming Soon
-
-- Tutorial for customizing templates used to generate components (in order to fit specific individual or organizational needs, patterns, workflows, styles, etc.)
-
-- Flag to generate templates based on alternate syntax (CoffeeScript or ES6)?
-
-Feel free to fork the project or get <a href="http://frontendcollisionblog.com/about">in touch with Josh (me)</a> with any feature requests!
 
 # FAQ
 
@@ -163,7 +172,7 @@ The command line tool itself is written in <a href="https://www.ruby-lang.org/en
 
 # Technical Information
 
-**Version** 0.1.0
+**Version** 0.1.1
 
 **Language** Ruby
 
@@ -175,8 +184,8 @@ The command line tool itself is written in <a href="https://www.ruby-lang.org/en
 
 [install]: #installation-in-2-steps
 [sample-usage]: #sample-usage
+[features]: #features
 [commands]: #commands
-[coming-soon]: #coming-soon
 [faq]: #faq
 [tech-info]: #technical-information
 [style-guide]: https://github.com/johnpapa/angular-styleguide

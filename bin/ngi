@@ -1,10 +1,60 @@
 #!/usr/bin/env ruby
 
-current_dir = File.dirname(__FILE__)
+# angular_init (short-name: ngi)
+# Copyright 2015 Joshua Beam
+# github.com/joshbeam/angular_init
+# MIT License
 
-require current_dir+'/../ruby/angular_init.rb'
-#require 'pathname'
-#puts Pathname.new($0).realpath()
-#puts File.basename(Dir.getwd)
+# AngularInit is the main module (src/ruby/angular_init.rb)
+require File.dirname(__FILE__)+'/../src/ruby/angular_init/angular_init'
 
-AngularInit.run(ARGV[0])
+
+
+
+
+##################### CONSTANTS #####################
+
+# number of arguments
+ARGS_SIZE = ARGV.size
+
+# global JSON config information, which comes from src/config/angular_init.config.json
+CONFIG = AngularInit::Delegate::Configure.new.from_json
+
+# each "type" (e.g., directive, controller, etc.) is a "command"
+COMMANDS = AngularInit::Commands.new(:valid_inputs => CONFIG['global']['types'].collect{ |t| t['name'] })
+
+# as of now, "-options" is the only valid menu (see src/config/angular_init.config.json)
+MENUS = AngularInit::Menus.new(:valid_inputs => CONFIG['global']['menus'].collect{ |k,v| v })
+
+######################################################
+
+
+
+
+
+##################### BEGIN #####################
+
+# command line takes ngi + 1 arguments (e.g. "ngi <type>" or "ngi -options")
+if ARGS_SIZE > 0
+	if COMMANDS.valid?(ARGV[0])
+
+		# if the argument is "<type>", which is a command, then delegate to the generation of a new template
+		AngularInit::Delegate::Generator.run(:type => ARGV[0], :config => CONFIG)
+
+	elsif MENUS.valid?(ARGV[0])
+
+		# if the arguments is a menu (as of now, only "-options"), then delegate to the configuration menu
+		AngularInit::Delegate::Configure.run()
+
+	end
+else
+	# show the "help" menu if no argument is given
+	puts "Try \"ngi <type>\" to create something\n"
+	puts 'Replace <type> with one of the following:'
+	COMMANDS.valid_inputs.each_with_index do |c,i|
+		puts "--> #{c}"
+	end
+	puts 'Or, try "ngi -options" to cofigure ngi'
+end
+
+######################################################
