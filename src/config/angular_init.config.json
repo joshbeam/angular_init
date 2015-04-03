@@ -1,18 +1,13 @@
 {
   "global": {
     "configurable": {
-      "language": "language",
-      "types": "types"
-    },
-    "commands": {
-      "make": "make"
+      "language": "language"
     },
     "menus": {
       "options": "-options"
     },
     "languages": [
       "es5",
-      "es6",
       "coffee"
     ],
     "language": "es5",

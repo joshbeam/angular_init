@@ -3,6 +3,9 @@
 # github.com/joshbeam/angular_init
 # MIT License
 
-require CURRENT_DIR+'/../utils/utils'
+# CURRENT_DIR is defined in angualr_init.rb
+
+# require CURRENT_DIR+'/../utils/utils'
+require_relative '../utils/utils'
 
 class Menus < Utils::UserInput; end

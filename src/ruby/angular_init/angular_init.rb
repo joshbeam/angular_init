@@ -5,14 +5,15 @@
 
 CURRENT_DIR = File.dirname(__FILE__)
 
-require CURRENT_DIR+'/manager'
-require CURRENT_DIR+'/commands'
-require CURRENT_DIR+'/menus'
+require_relative 'delegate'
+require_relative 'commands'
+require_relative 'menus'
 
 
 module AngularInit
+	VERSION = '0.1.1'
 	# REVIEW: Is this the best way to do it?
-	Manager = ::Manager
+	Delegate = ::Delegate
 	Commands = ::Commands
 	Menus = ::Menus
 end

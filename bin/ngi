@@ -5,54 +5,56 @@
 # github.com/joshbeam/angular_init
 # MIT License
 
-#   STRUCTURE
-
-# 	module AngularInit
-# 		class Manager
-#			class Generator
-#           	# create the template
-#			end
-#
-# 			def run
-#				# decides whether to configure, generate, etc.
-#			end
-#
-# 			class Configure
-#
-# 			end
-# 		end
-# 	end
-
+# AngularInit is the main module (src/ruby/angular_init.rb)
 require File.dirname(__FILE__)+'/../src/ruby/angular_init/angular_init'
 
+
+
+
+
+##################### CONSTANTS #####################
+
+# number of arguments
 ARGS_SIZE = ARGV.size
-CONFIG = AngularInit::Manager::Configure.new.from_json
-COMMANDS = AngularInit::Commands.new(:valid_inputs => CONFIG['global']['commands'].collect{ |k,v| v })
+
+# global JSON config information, which comes from src/config/angular_init.config.json
+CONFIG = AngularInit::Delegate::Configure.new.from_json
+
+# each "type" (e.g., directive, controller, etc.) is a "command"
+COMMANDS = AngularInit::Commands.new(:valid_inputs => CONFIG['global']['types'].collect{ |t| t['name'] })
+
+# as of now, "-options" is the only valid menu (see src/config/angular_init.config.json)
 MENUS = AngularInit::Menus.new(:valid_inputs => CONFIG['global']['menus'].collect{ |k,v| v })
 
-args = {}
+######################################################
 
+
+
+
+
+##################### BEGIN #####################
+
+# command line takes ngi + 1 arguments (e.g. "ngi <type>" or "ngi -options")
 if ARGS_SIZE > 0
-	if ARGS_SIZE == 2
-		if COMMANDS.valid?(ARGV[0])
-			args[:command] = ARGV[0]
-			args[:type] = ARGV[1]
-		else
-			# show error and help menu
-		end
+	if COMMANDS.valid?(ARGV[0])
+
+		# if the argument is "<type>", which is a command, then delegate to the generation of a new template
+		AngularInit::Delegate::Generator.run(:type => ARGV[0], :config => CONFIG)
+
+	elsif MENUS.valid?(ARGV[0])
+
+		# if the arguments is a menu (as of now, only "-options"), then delegate to the configuration menu
+		AngularInit::Delegate::Configure.run()
+
 	end
-
-	if ARGS_SIZE == 1
-		if MENUS.valid?(ARGV[0])
-			args[:menu] = ARGV[0]
-		else
-			# show error and help menu
-		end
+else
+	# show the "help" menu if no argument is given
+	puts "Try \"ngi <type>\" to create something\n"
+	puts 'Replace <type> with one of the following:'
+	COMMANDS.valid_inputs.each_with_index do |c,i|
+		puts "--> #{c}"
 	end
-
-	args[:config] = CONFIG
-	args[:commands] = COMMANDS
-	args[:menus] = MENUS
-
-	AngularInit::Manager.run(args)
+	puts 'Or, try "ngi -options" to cofigure ngi'
 end
+
+######################################################

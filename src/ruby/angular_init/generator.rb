@@ -3,8 +3,9 @@
 # github.com/joshbeam/angular_init
 # MIT License
 
+# This class generates templates (hence the name "Generator")
+
 class Generator
-	VERSION = '0.1.0'
 	WHITESPACE = /\s*/
 	EMPTY = ''
 	# REVIEW: Do I need this since it's defined in angular_init.rb?
@@ -135,13 +136,14 @@ class Generator
 
 	def write
 		# create the new file
+		# TODO: use implementation of virtual function Utils::AskLoop
 		def overwrite?
 			while true
 				print "File exists already, overwrite it? (y/n) "
 				answer = $stdin.gets.strip
 
 				case answer
-					when 'y' #j for Germans (Ja)
+					when 'y'
 						break
 					when /\A[nN]o?\Z/ #n or no
 						puts 'Exited!'
@@ -162,7 +164,9 @@ class Generator
 		end
 	end
 
-	# Use this function to be able to say ______ inside the executable file.
+	# Use this function to be able to say AngularInit::Delegate::Generator.run() inside the executable file
+	# This function simply goes through all of the methods in order to interactively
+	# prompt the user to generate a new template
 	def self.run(args)
 		init = Generator.new(args)
 
