@@ -1,8 +1,14 @@
 <a href="http://joshbeam.github.io/angular_init">Website</a>
 
-**In simple terms:** This tool, also called by its short-name `ngi`, can make (for example) an AngularJS controller template file for you (`.js`), so that **whenever you want to make a new controller for your app, you don't have to type the same starting code over and over again** (by the way, this tool doesn't only create controllers. It does directives, filters... almost anything).
+Want to contribute? Current features being worked on are at the <a href="https://github.com/joshbeam/angular_init/tree/coffee">coffee branch</a>.
 
-**Why use this and not something else?** Good question. You *could* create your own templates and just copy and paste (but this is cumbersome). You could use a scaffolding tool, but that's like going to a general practice doctor (a huge scaffolding tool), when you know you just need to see the <a href="http://en.wikipedia.org/wiki/Otorhinolaryngology">otolaryngologist</a> (angular_init).
+## In simple terms:
+
+This tool, also called by its short-name `ngi`, can make (for example) an AngularJS controller template file for you (`.js`), so that **whenever you want to make a new controller for your app, you don't have to type the same starting code over and over again** (by the way, this tool doesn't only create controllers. It does directives, filters... almost anything).
+
+## Why use `ngi` (and not something else)?
+
+Good question. You *could* create your own templates and just copy and paste (but this is cumbersome). You could use a scaffolding tool, but that's like going to a general practice doctor (a huge scaffolding tool), when you know you just need to see the <a href="http://en.wikipedia.org/wiki/Otorhinolaryngology">otolaryngologist</a> (angular_init).
 
 **`ngi` has one task, and one task only, which makes it lightweight and specialized**. Most AngularJS developers are probably using the command line already (Gulp, Bower, npm, Git, etc.), so why not use the command line to streamline your code-writing too?
 
@@ -148,6 +154,10 @@ This feature is coming soon!
 **3. Why are you using `$inject`?**
 
 Check out [John Papa's Style Guide][style-guide].
+
+**4. Why are you following the snake-case convention (`angular_init`) and not camelCase (`angularInit`) if this is a JavaScript project?**
+
+The command line tool itself is written in <a href="https://www.ruby-lang.org/en/">Ruby</a>, and the <a href="https://github.com/bbatsov/ruby-style-guide#snake-case-files">convention</a> is to use snake-case for class file naming.
 
 *For other questions and comments, check out this <a href="http://www.reddit.com/r/angularjs/comments/30ydha/command_line_tool_to_create_angularjs_controllers/">Reddit discussion</a> about `ngi` (feel free to post your own question too). Or, open a new issue on GitHub.*
 
