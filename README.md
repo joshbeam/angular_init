@@ -1,6 +1,6 @@
 <a href="http://joshbeam.github.io/angular_init">Website</a>
 
-**New feature (version 0.1.1)**: use CoffeeScript templates (go to `ngi -options` to change the language)
+**New feature (version 0.1.1)**: use CoffeeScript templates (go to `ngi -options` to change the language); this is backwards compatible with version 0.1.0
 
 ## In simple terms:
 
@@ -22,7 +22,6 @@ Type less, write more AngularJS! Use `ngi`, the simple template generator.
 - [Features][features]
 - [Installation][install]
 - [Commands][commands]
-- [Coming Soon][coming-soon]
 - [FAQ][faq]
 - [Technical Information][tech-info]
 
@@ -76,6 +75,8 @@ By the way, the output of this little tool is meant to follow [John Papa's Angul
 ## Coming soon
 
 - Add custom templates and languages
+
+Feel free to fork the project or get <a href="http://frontendcollisionblog.com/about">in touch with Josh (me)</a> with any feature requests!
 
 # Installation (in 2 steps)
 
@@ -146,14 +147,6 @@ Depending on your version of Windows, follow <a href="http://www.computerhope.co
 ~/MyAwesomeApp $ ngi -options # => choose your language to use (CoffeeScript or ECMAScript5)
 ```
 
-# Coming Soon
-
-- Tutorial for customizing templates used to generate components (in order to fit specific individual or organizational needs, patterns, workflows, styles, etc.)
-
-- Flag to generate templates based on alternate syntax (CoffeeScript or ES6)?
-
-Feel free to fork the project or get <a href="http://frontendcollisionblog.com/about">in touch with Josh (me)</a> with any feature requests!
-
 # FAQ
 
 **1. Can you explain why the module name is passed as the argument to the IIFE (in the default template)?**
@@ -193,7 +186,6 @@ The command line tool itself is written in <a href="https://www.ruby-lang.org/en
 [sample-usage]: #sample-usage
 [features]: #features
 [commands]: #commands
-[coming-soon]: #coming-soon
 [faq]: #faq
 [tech-info]: #technical-information
 [style-guide]: https://github.com/johnpapa/angular-styleguide
