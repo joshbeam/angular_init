@@ -46,7 +46,7 @@ After you [do the 1-step installation][install] of `ngi` (the short-name for the
 # all done!
 ```
 
-## Output (your new boilerplate code)
+## Output (new boilerplate code)
 
 ```javascript
 // ~/MyAwesomeApp/myAwesome.controller.js
