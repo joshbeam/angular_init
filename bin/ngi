@@ -1,0 +1,35 @@
+#!/usr/bin/env ruby
+
+# angular_init (short-name: ngi)
+# Copyright 2015 Joshua Beam
+# github.com/joshbeam/angular_init
+# MIT License
+
+# Ngi is the main module (src/ruby/angular_init.rb)
+require_relative '../lib/ngi'
+require_relative '../lib/ngi/utils/utils'
+
+class Parser
+	@@config = Ngi::Delegate::Configure.new.from_json
+	@@types = Ngi::UserInput.new(valid_inputs: @@config['global']['components'].collect{ |t| t['name'] })
+
+	def self.parse(args)
+		parser = Utils::CommandParser.new do |parser|
+			parser.name = "ngi"
+			parser.version = Ngi::VERSION
+			parser.banner << "\n(<command> can be one of the following)"
+
+			parser.on(@@types.valid_inputs, "Create a new component") do |command|
+				Ngi::Delegate::Generator.run(type: command, config: @@config)
+			end
+
+			parser.on(["-o","--options"], "Configure ngi") do
+				Ngi::Delegate::Configure.run()
+			end
+		end
+
+		parser.parse(args)
+	end
+end
+
+Parser.parse(ARGV)
