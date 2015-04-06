@@ -1,4 +1,4 @@
-# angular_init 0.2.0
+# angular_init 0.2.1
 
 <a href="http://joshbeam.github.io/angular_init">Website</a>
 
