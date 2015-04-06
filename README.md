@@ -142,7 +142,7 @@ The command line tool itself is written in <a href="https://www.ruby-lang.org/en
 
 # Technical Information
 
-**Version** 0.2.0
+**Version** 0.2.1
 
 **Language** Ruby
 
