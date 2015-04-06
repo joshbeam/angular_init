@@ -48,10 +48,10 @@
                         <a href="#page-top"></a>
                     </li>
                     <li>
-                        <a class="page-scroll" href="#about">About</a>
+                        <a class="page-scroll" href="#see-it-in-action">In Action</a>
                     </li>
                     <li>
-                        <a class="page-scroll" href="#see-it-in-action">In Action</a>
+                        <a class="page-scroll" href="#about">About</a>
                     </li>
                     <li>
                         <a class="page-scroll" href="#use">Use</a>
@@ -74,8 +74,8 @@
             <div class="container">
                 <div class="row">
                     <div class="col-md-8 col-md-offset-2">
-                        <h1 class="brand-heading">angular_init</h1>
-                        <p class="intro-text">Type less, write more AngularJS! Use <code>ngi</code>, the simple template generator.</p>
+                        <h1 class="brand-heading">ngi</h1>
+                        <p class="intro-text">Speed up AngularJS development by creating templates for all your components from the command line.<br><br><code>gem install ngi</code></p>
                         <a href="#about" class="btn btn-circle page-scroll">
                             <i class="fa fa-angle-double-down animated"></i>
                         </a>
@@ -84,25 +84,6 @@
             </div>
         </div>
     </header>
-        <!-- About Section -->
-    <section class="container content-section text-center">
-        <div id="about" class="row">
-            <div class="col-lg-8 col-lg-offset-2">
-                <h2>About angular_init</h2>
-                <h3>In simple terms</h3>
-                <p>
-                This tool, also called by its short-name <code>ngi</code>, can make (for example) an AngularJS controller template file for you (.js), so that <em>whenever you want to make a new controller for your app, you don't have to type the same starting code over and over again</em> (by the way, this tool doesn't only create controllers. It does directives, filters... almost anything).
-                </p>
-                <h3>Why <code>ngi</code> and not something else?</h3>
-                <p>
-                Good question. You could create your own templates and just copy and paste (but this is cumbersome). There are also all-encompassing scaffolding tools that handle a variety of tasks, like generating templates. But that's like going to a general practice doctor (a huge scaffolding tool), when you know you just need to see the otolaryngologist (angular_init).
-                </p>
-                <p>
-                <em><code>ngi</code> has one task, and one task only, which makes it lightweight and specialized.</em> Most AngularJS developers are probably using the command line already (Gulp, Bower, NPM, Git, etc.), so why not use the command line to streamline your code-writing too?
-                </p>         
-            </div>
-        </div>
-    </section>
         <!-- See It In Action Section -->
     <section class="container content-section text-center">
         <div class="row">
@@ -111,13 +92,7 @@
                 <img class="example" src="/angular_init/img/ngi_example.gif" />
                 
                 <br><br><br><br>
-<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="cm">/*</span>
-<span class="cm">*</span>
-<span class="cm">*                           OUTPUT ~/MyAwesomeApp/my.controller.js</span>
-<span class="cm">*</span>
-<span class="cm">**/</span>
-
-<span class="p">;(</span><span class="kd">function</span><span class="p">(</span><span class="nx">app</span><span class="p">)</span> <span class="p">{</span>
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="p">;(</span><span class="kd">function</span><span class="p">(</span><span class="nx">app</span><span class="p">)</span> <span class="p">{</span>
 
     <span class="s1">&#39;use strict&#39;</span><span class="p">;</span>
 
@@ -130,6 +105,26 @@
     <span class="p">}</span>
 
 <span class="p">})(</span><span class="nx">angular</span><span class="p">.</span><span class="nx">module</span><span class="p">(</span><span class="s1">&#39;myModule&#39;</span><span class="p">));</span></code></pre></div>
+            </div>
+        </div>
+    </section>
+        <!-- About Section -->
+    <section class="container content-section text-center">
+        <div id="about" class="row">
+            <div class="col-lg-8 col-lg-offset-2">
+                <h1>About angular_init</h1>
+                <h2>In simple terms</h2>
+                <p>
+                This tool, also called by its short-name <code>ngi</code>, can make (for example) an AngularJS controller template file for you (.js), so that <em>whenever you want to make a new controller for your app, you don't have to type the same starting code over and over again</em> (by the way, this tool doesn't only create controllers. It does directives, filters... almost anything).
+                </p>
+                <h2>Why ngi and not something else?</h2>
+                <p>
+                You could create your own templates and just copy and paste (but this is cumbersome). There are also all-encompassing scaffolding tools that handle a variety of tasks, like generating templates. But that's like going to a general practice doctor, when you know you just need to see the otolaryngologist.
+                </p>
+                <h2>ngi has one task, which makes it lightweight and specialized.</h2> 
+                <p>
+                Most AngularJS developers are probably using the command line already (Gulp, Bower, NPM, Git, etc.), so why not use the command line to streamline your code-writing too?
+                </p>         
             </div>
         </div>
     </section>
@@ -147,7 +142,16 @@
 ~/MyAwesomeApp <span class="nv">$ </span>ngi config <span class="c"># =&gt; a config block</span>
 ~/MyAwesomeApp <span class="nv">$ </span>ngi routes <span class="c"># =&gt; a config block with $routeProvider injected</span>
 ~/MyAwesomeApp <span class="nv">$ </span>ngi module <span class="c"># =&gt; module (you can inject dependencies too)</span>
-~/MyAwesomeApp <span class="nv">$ </span>ngi filter <span class="c"># =&gt; filter</span></code></pre></div>
+~/MyAwesomeApp <span class="nv">$ </span>ngi filter <span class="c"># =&gt; filter</span>
+
+<span class="c"># or</span>
+
+~/MyAwesomeApp <span class="nv">$ </span>ngi index <span class="c"># =&gt; an index page in HTML</span>
+
+<span class="c"># or</span>
+
+<span class="c"># use either --options or -o</span>
+~/MyAwesomeApp <span class="nv">$ </span>ngi --options <span class="c"># =&gt; choose your language to use (CoffeeScript or ECMAScript5)</span></code></pre></div>
             </div>
         </div>
     </section>
@@ -155,27 +159,36 @@
     <section class="content-section text-center">
         <div id="install" class="download-section">
             <div class="container">
-                <h1>Install</h1>
-                <div class="col-lg-5">
-                    <h2>GitHub</h2>
-                    <p>
-                        Head over to the repo for in-depth instructions.
-                    </p>
-                    <a href="https://github.com/joshbeam/angular_init#installation-in-2-steps" class="btn btn-default btn-lg">Installation (in 2 steps) &raquo;</a>
-                </div>
-                <div class="col-lg-7">
-                    <h2>Terminal</h2>
-                    <p>
-                        Make sure you're in your top-level directory (in Mac, that'll be <code>/</code>, and Windows <code>C:</code>)
-                    </p>
-                    <div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>git clone https://github.com/joshbeam/angular_init.git usr/local/ngi</code></pre></div>
-                    <br>
-                    <div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span><span class="nb">echo</span> <span class="s1">&#39;export PATH=&quot;/usr/local/ngi/bin:$PATH&quot;&#39;</span> &gt;&gt; ~/.bash_profile</code></pre></div>
-                    <br>
-                    <h3>Permission error?</h3>
-                    <pre>/ $ cd usr/local/ngi/bin
-                        <br>
-/usr/local/ngi/bin $ chmod 755 ngi</pre>
+                <div class="row">
+                    <h1>Install</h1>
+                    <div class="col-lg-8 col-lg-offset-2">
+<p>
+<strong>Add this line to your application's Gemfile:</strong>
+
+<pre>gem 'ngi'</pre>
+</p>
+
+<p>
+<strong>And then execute:</strong>
+<pre>$ bundle</pre>
+</p>
+
+<p>
+<strong>Or install it yourself as:</strong>
+
+<pre>$ gem install ngi</pre>  
+</p>
+
+<a href="https://rubygems.org/gems/ngi" class="btn btn-default btn-lg">RubyGems</a>
+<a href="https://github.com/joshbeam/angular_init" class="btn btn-default btn-lg">GitHub</a>
+                        
+                        <p>
+                            <br><br>
+                            <small>
+                                <strong>Dependencies</strong> <a href="https://www.ruby-lang.org/en/downloads/">Ruby 2.1</a> and <a href="https://rubygems.org/pages/download">RubyGems</a> (optional <a href="http://bundler.io/">Bundler</a>)
+                            </small>
+                        </p>
+                    </div>
                 </div>
             </div>
         </div>
