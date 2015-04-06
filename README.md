@@ -1,5 +1,19 @@
 # angular_init 0.2.1
 
+## Quick Start
+
+ngi creates AngularJS templates for you from the command line.
+
+**Get up and running in seconds:**
+
+```shell
+$ gem install ngi
+$ cd ~/MyAwesomeApp # => go to your app
+$ ngi controller # => creates a new AngularJS controller
+```
+
+## Know everything
+
 <a href="http://joshbeam.github.io/angular_init">Website</a>
 
 **Having issues?** Email me (Josh) at <a href="mailto:frontendcollisionblog@gmail.com">frontendcollisionblog@gmail.com</a>. I'll usually respond within an hour or so. You can also report a bug by opening a new issue through GitHub, or if you want to add a feature yourself, just fork and submit a pull request!
