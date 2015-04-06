@@ -2,7 +2,9 @@
 
 <a href="http://joshbeam.github.io/angular_init">Website</a>
 
-**What's different?**
+**Having issues?** Email me (Josh) at <a href="mailto:frontendcollisionblog@gmail.com">frontendcollisionblog@gmail.com</a>. I'll usually respond within an hour or so. You can also report a bug by opening a new issue through GitHub, or if you want to add a feature yourself, just fork and submit a pull request!
+
+**What's new?**
 - Install it as a gem (`gem install ngi`)
 - You can now make an `index` boilerplate HTML page (`ngi index`)
 - Use `ngi -h` to see all commands
