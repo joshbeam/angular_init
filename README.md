@@ -1,8 +1,6 @@
-# angular_init
+# angular_init 0.2.0
 
 <a href="http://joshbeam.github.io/angular_init">Website</a>
-
-**Version 0.2.0**
 
 **What's different?**
 - Install it as a gem (`gem install ngi`)
@@ -85,6 +83,8 @@ Feel free to fork the project or get <a href="http://frontendcollisionblog.com/a
 
 # Installation (in 1 step)
 
+**Dependencies** [Ruby 2.1.0][ruby] and [RubyGems][rubygems] (optional [Bundler][bundler])
+
 Add this line to your application's Gemfile:
 
     gem 'ngi'
@@ -118,7 +118,7 @@ Or install it yourself as:
 # or
 
 # use either --options or -o
-~/MyAwesomeApp $ ngi --config # => choose your language to use (CoffeeScript or ECMAScript5)
+~/MyAwesomeApp $ ngi --options # => choose your language to use (CoffeeScript or ECMAScript5)
 ```
 
 # FAQ
@@ -159,3 +159,6 @@ The command line tool itself is written in <a href="https://www.ruby-lang.org/en
 [faq]: #faq
 [tech-info]: #technical-information
 [style-guide]: https://github.com/johnpapa/angular-styleguide
+[rubygems]: https://rubygems.org/pages/download
+[ruby]: https://www.ruby-lang.org/en/downloads/
+[bundler]: http://bundler.io/
