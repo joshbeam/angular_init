@@ -1,21 +1,13 @@
 # angular_init
 
-## Contributing
-
-1. Fork it ( https://github.com/[my-github-username]/ngi/fork )
-2. Create your feature branch (`git checkout -b my-new-feature`)
-3. Commit your changes (`git commit -am 'Add some feature'`)
-4. Push to the branch (`git push origin my-new-feature`)
-5. Create a new Pull Request
-
 <a href="http://joshbeam.github.io/angular_init">Website</a>
 
 **Version 0.2.0** (not backwards compatible with previous versions)
 
 **What's different?**
-- New syntax, example: `ngi --make controller`
-- No more `ngi -options` (use `ngi --config` instead)
-- ability to make an `index` HTML page (`ngi -m index`)
+- Install it as a gem (`gem install ngi`)
+- You can now make an `index` boilerplate HTML page (`ngi index`)
+- Use `ngi -h` to see all commands
 
 ## In simple terms:
 
