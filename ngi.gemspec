@@ -12,6 +12,7 @@ Gem::Specification.new do |spec|
   spec.description   = %q{This tool can make (for example) an AngularJS controller template file for you (.js), so that whenever you want to make a new controller for your app, you don't have to type the same starting code over and over again (by the way, this tool doesn't only create controllers. It does directives, filters... almost anything). ngi has one task, and one task only, which makes it lightweight and specialized. Most AngularJS developers are probably using the command line already (Gulp, Bower, npm, Git, etc.), so why not use the command line to streamline your code-writing too? Type less, write more AngularJS!}
   spec.homepage      = "https://github.com/joshbeam/angular_init"
   spec.license       = "MIT"
+  spec.required_ruby_version = ">= 2.1"
 
   spec.files         = `git ls-files -z`.split("\x0")
   spec.executables   = ["ngi"]
