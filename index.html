@@ -75,8 +75,14 @@
                 <div class="row">
                     <div class="col-md-8 col-md-offset-2">
                         <h1 class="brand-heading">ngi</h1>
-                        <p class="intro-text">Speed up AngularJS development by creating templates for all your components from the command line.<br><br><code>gem install ngi</code></p>
-                        <a href="#about" class="btn btn-circle page-scroll">
+                        <p class="intro-text">
+                            Speed up AngularJS development by creating templates for all your components from the command line.
+                            
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>gem install ngi <span class="c"># =&gt; installs current version, 0.2.2</span>
+<span class="nv">$ </span>ngi controller <span class="c"># =&gt; makes a controller for your app</span></code></pre></div>
+                        </p>
+                        <h1>See it in action</h1>
+                        <a href="#see-it-in-action" class="btn btn-circle page-scroll">
                             <i class="fa fa-angle-double-down animated"></i>
                         </a>
                     </div>
@@ -181,11 +187,13 @@
 
 <a href="https://rubygems.org/gems/ngi" class="btn btn-default btn-lg">RubyGems</a>
 <a href="https://github.com/joshbeam/angular_init" class="btn btn-default btn-lg">GitHub</a>
+<br><br>
+<a href="http://badge.fury.io/rb/ngi"><img src="https://badge.fury.io/rb/ngi.svg" alt="Gem Version" height="18"></a>
                         
                         <p>
                             <br><br>
                             <small>
-                                <strong>Dependencies</strong> <a href="https://www.ruby-lang.org/en/downloads/">Ruby 2.1</a> and <a href="https://rubygems.org/pages/download">RubyGems</a> (optional <a href="http://bundler.io/">Bundler</a>)
+                                <strong>Dependencies</strong> <a href="https://www.ruby-lang.org/en/downloads/">Ruby 2.1</a> and <a href="https://rubygems.org/pages/download">RubyGems <span id="gem-couter"></span></a> (optional <a href="http://bundler.io/">Bundler</a>)
                             </small>
                         </p>
                     </div>
@@ -225,8 +233,19 @@
         <!-- Footer -->
     <footer>
         <div class="container text-center">
-            <p>Copyright &copy; Josh Beam 2015</p>
-            <p>Thanks <a href="http://ironsummitmedia.github.io/startbootstrap-grayscale/">Grayscale</a> :)</a>
+            <p>
+              Copyright &copy; Josh Beam 2015 (<a href="https://raw.githubusercontent.com/joshbeam/angular_init/master/LICENSE.txt">MIT License</a>)
+              <br><br>
+            </p>
+
+            <p>
+              <small>Thanks <a href="http://ironsummitmedia.github.io/startbootstrap-grayscale/">Grayscale</a> :)</small>
+            </p>
+
+
+            <p>
+              <small>angular_init and ngi and the author, Joshua Beam, are not directly associated with <a href="http://angularjs.org">AngularJS</a></small>
+            </p>
         </div>
     </footer>
 
@@ -244,5 +263,7 @@
 
     <!-- Custom Theme JavaScript -->
     <script src="/angular_init/js/grayscale.js"></script>
+
+   <!-- <script src="/angular_init/js/counters.js"></script>-->
     </body>
 </html>
