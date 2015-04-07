@@ -20,7 +20,7 @@ $ ngi controller # => creates a new AngularJS controller
 
 **Having issues?** Email me (Josh) at <a href="mailto:frontendcollisionblog@gmail.com">frontendcollisionblog@gmail.com</a>. I'll usually respond within an hour or so. You can also report a bug by opening a new issue through GitHub, or if you want to add a feature yourself, just fork and submit a pull request!
 
-**What's new in 0.2?**
+**What's new in 0.2.x?**
 - Install it as a gem (`gem install ngi`)
 - You can now make an `index` boilerplate HTML page (`ngi index`)
 - Use `ngi -h` to see all commands
@@ -161,7 +161,7 @@ The command line tool itself is written in <a href="https://www.ruby-lang.org/en
 
 # Technical Information
 
-**Version** 0.2.2
+**Version** 0.2.2 (uses <a href="http://semver.org/">Semantic Versioning</a>)
 
 **Language** Ruby
 
