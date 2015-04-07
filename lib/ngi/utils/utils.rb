@@ -6,6 +6,8 @@
 require_relative 'command_parser'
 require_relative 'jser'
 
+# This module holds classes of basic utility
+# functions used throughout Ngi
 module Utils
   CommandParser = ::CommandParser
   JSArray = JSer::JSArray

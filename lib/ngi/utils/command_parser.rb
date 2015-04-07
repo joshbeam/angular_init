@@ -5,7 +5,6 @@
 
 # Similar to Ruby's OptionParser
 # However, this is customized for angular_init
-
 class CommandParser
   attr_reader :args
   attr_accessor :banner, :version, :separator, :name
@@ -67,7 +66,7 @@ class CommandParser
       end
     end
 
-    unless matched_listener[:options].nil?
+    if !matched_listener[:options].nil?
       # matched_listener[:options] should always be an array
       # when we call, we can each member of that array to be
       # passed separately
@@ -85,8 +84,9 @@ class CommandParser
       puts @banner
 
       @listeners.each_with_index do |listener, i|
-        puts "\n"
-        puts "(#{i + 1}) #{listener[:description]}: #{listener[:options].join(', ')}"
+        desc = "\n" << "(#{i + 1}) #{listener[:description]}: "
+        desc << "#{listener[:options].join(', ')}"
+        puts desc
       end
       puts @separator
     end

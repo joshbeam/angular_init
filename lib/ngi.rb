@@ -9,6 +9,9 @@ require_relative 'ngi/delegate'
 require_relative 'ngi/utils/utils'
 require_relative 'ngi/version'
 
+# This module wraps the basic classes
+# of the tool ngi (in other words, this
+# module simply provides namespace)
 module Ngi
   # REVIEW: Is this the best way to do it?
   Delegate = ::Delegate

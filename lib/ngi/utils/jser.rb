@@ -3,18 +3,18 @@
 # github.com/joshbeam/angular_init
 # MIT License
 
+# Since ngi is an AngularJS tool and the users
+# are familiar with JavaScript, this module of classes
+# prints a string version of a Ruby hash or array
+# as it would appear in normal JavaScript syntax
+# For example:
+# { "hello" => "world" }
+# becomes:
+# { 'hello': 'world' }
+# and ["some","array"]
+# becomes:
+# ['some','array']
 module JSer
-  # Since ngi is an AngularJS tool and the users
-  # are familiar with JavaScript, this class
-  # prints a string version of a Ruby hash or array
-  # as it would appear in normal JavaScript syntax
-  # For example:
-  # { "hello" => "world" }
-  # becomes:
-  # { 'hello': 'world' }
-  # and ["some","array"]
-  # becomes:
-  # ['some','array']
   def to_str
     to_s.gsub(/\"/, "'").gsub(/\=\>/, ': ')
   end
