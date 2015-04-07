@@ -5,7 +5,8 @@
 
 # CURRENT_DIR is defined in angualr_init.rb
 
-require_relative '../dep/json'
+# require_relative '../dep/json'
+require 'json'
 require_relative 'utils/utils'
 
 # Run the user through an interactive

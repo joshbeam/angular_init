@@ -6,6 +6,8 @@ ngi creates AngularJS templates for you from the command line.
 
 **Get up and running in seconds:**
 
+[![Gem Version](https://badge.fury.io/rb/ngi.svg)](http://badge.fury.io/rb/ngi)
+
 ```shell
 $ gem install ngi
 $ cd ~/MyAwesomeApp # => go to your app
@@ -18,7 +20,7 @@ $ ngi controller # => creates a new AngularJS controller
 
 **Having issues?** Email me (Josh) at <a href="mailto:frontendcollisionblog@gmail.com">frontendcollisionblog@gmail.com</a>. I'll usually respond within an hour or so. You can also report a bug by opening a new issue through GitHub, or if you want to add a feature yourself, just fork and submit a pull request!
 
-**What's new?**
+**What's new in 0.2?**
 - Install it as a gem (`gem install ngi`)
 - You can now make an `index` boilerplate HTML page (`ngi index`)
 - Use `ngi -h` to see all commands
@@ -94,6 +96,7 @@ By the way, the output of this little tool is meant to follow [John Papa's Angul
 ## Coming soon
 
 - Add custom templates and languages
+- Possible Node.js version
 
 Feel free to fork the project or get <a href="http://frontendcollisionblog.com/about">in touch with Josh (me)</a> with any feature requests!
 
@@ -166,7 +169,32 @@ The command line tool itself is written in <a href="https://www.ruby-lang.org/en
 
 <hr>
 
-&copy; 2015 Joshua Beam (MIT License) &mdash; <a href="http://frontendcollisionblog.com">Front End Collision</a>
+**Disclaimer**
+
+`angular_init` and `ngi` and the author (Joshua Beam) are not directly associated with <a href="http://angularjs.org">AngularJS</a>.
+
+**Copyright (c) 2015 Joshua Beam** &mdash; <a href="http://frontendcollisionblog.com">Front End Collision</a>
+
+MIT License
+
+Permission is hereby granted, free of charge, to any person obtaining
+a copy of this software and associated documentation files (the
+"Software"), to deal in the Software without restriction, including
+without limitation the rights to use, copy, modify, merge, publish,
+distribute, sublicense, and/or sell copies of the Software, and to
+permit persons to whom the Software is furnished to do so, subject to
+the following conditions:
+
+The above copyright notice and this permission notice shall be
+included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
+OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 [install]: #installation-in-1-step
 [sample-usage]: #sample-usage
