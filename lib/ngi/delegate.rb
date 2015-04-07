@@ -16,9 +16,7 @@ require_relative 'configure'
 # the flow of control to either the Generator class
 # or the Configure class, based on the argument passed
 # in (which is handled by bin/ngi)
-
 class Delegate
-	# Review: is this the best way to do it?
-	Generator = ::Generator
-	Configure = ::Configure
+  Generator = ::Generator
+  Configure = ::Configure
 end
