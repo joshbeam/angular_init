@@ -121,8 +121,8 @@ class Configure
   # The only thing we do here is load the JSON config file basically
   # as just a string in JSON format.
   # It will be converted to a Ruby hash in from_json below
-  def initialize
-    @location = CURRENT_DIR + '/config/angular_init.config.json'
+  def initialize(location)
+    @location = location
     @file = IO.read(@location)
 
     yield(self) if block_given?
@@ -150,11 +150,13 @@ class Configure
     end
   end
 
-  def self.run
-    Configure.new do |c|
-      c.file = Configure::Questioner.run(c.from_json)
+  def self.run(args)
+    Configure.new(args[:file_path]) do |c|
+      json_file = c.from_json
 
-      c.write
+      c.file = Configure::Questioner.run(json_file)
+
+      c.write if args[:write] == true
     end
   end
 end

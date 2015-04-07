@@ -12,9 +12,11 @@ require_relative '../lib/ngi/utils/utils'
 # This class is just a wrapper for the main process
 # of ngi
 class Parser
+  CURRENT_DIR = File.dirname(__FILE__)
   def self.parse(args)
     p = Utils::CommandParser.new do |parser|
-      config = Ngi::Delegate::Configure.new.from_json
+      config_file = "#{CURRENT_DIR}/../lib/config/angular_init.config.json"
+      config = Ngi::Delegate::Configure.new(config_file).from_json
       components = config['global']['components'].collect { |t| t['name'] }
       types = Ngi::UserInput.new(valid_inputs: components)
 
@@ -27,7 +29,7 @@ class Parser
       end
 
       parser.on(['-o', '--options'], 'Configure ngi') do
-        Ngi::Delegate::Configure.run
+        Ngi::Delegate::Configure.run(write: true, file_path: config_file)
       end
     end
 
