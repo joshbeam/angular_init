@@ -9,20 +9,18 @@ require_relative 'utils/utils'
 class Generator
   Utils = ::Utils
 
+  # Here we just implement
+  # the virtual class Utils::AskLoop
   class AskLoop < Utils::AskLoop
     def self.ask(args)
-      puts "\n"
-      print args[:prompt]
+      print "\n#{args[:prompt]}"
 
       answer = $stdin.gets.strip.downcase
 
       loop do
-        if args[:check] == answer
-          break
-        else
-          puts 'Exited!'
-          exit
-        end
+        break if args[:check] == answer
+        puts 'Exited!'
+        exit
       end
 
       answer
@@ -39,18 +37,15 @@ class Generator
   # Generator.new (the initialization function) is called in self.run
 
   def initialize(args)
-    @type = args[:type]
-    @config = args[:config]['global']
+    @type, @config = args[:type], args[:config]['global']
 
-    all_components = @config['components']
-    component = all_components.find { |t| t['name'] == @type }
+    component = @config['components'].find { |t| t['name'] == @type }
 
     # basically just rebuilding the object so we can use it here
     @component = {
       of_type: component['type'],
       language: @config['language'][component['type']],
-      using: component['using'],
-      template: component['template']
+      using: component['using'], template: component['template']
     }
 
     template_dir = "#{CURRENT_DIR}/../templates/"
@@ -85,14 +80,8 @@ class Generator
     # REVIEW: use symbols instead of strings?
     special = %w(routes controller).include?(@type)
     auto_injections = [
-      {
-        for_type: 'routes',
-        service: '$routeProvider'
-      },
-      {
-        for_type: 'controller',
-        service: '$scope'
-      }
+      { for_type: 'routes', service: '$routeProvider' },
+      { for_type: 'controller', service: '$scope' }
     ]
 
     injection = special ? auto_injections.select { |inj| inj[:for_type] == @type }[0][:service] : nil
