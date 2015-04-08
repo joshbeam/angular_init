@@ -74,7 +74,7 @@ describe Ngi do
         c = Ngi::Delegate::Configure
         @hash_config_file = @config.from_json
         @configurable_properties = @hash_config_file['global']['configurable'].collect { |_, v| v }
-        @questioner = c::Questioner.new(@ruby_hashed_config_file)
+        @questioner = c::Questioner.new(@hash_config_file)
       end
 
       describe '#initialize' do
