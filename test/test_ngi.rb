@@ -53,11 +53,27 @@ describe Ngi do
       end
     end
 
+    describe '::Configurable' do
+      before do
+        c = Ngi::Delegate::Configure
+        @hash_config_file = @config.from_json
+        @questioner = c::Questioner.new(@hash_config_file)
+      end
+
+      describe '#language' do
+        it 'must output a hash' do
+          output = Configure::Configurable.language(@questioner)
+
+          output.must_be_instance_of Hash
+        end
+      end
+    end
+
     describe '::Questioner' do
       before do
         c = Ngi::Delegate::Configure
-        @ruby_hashed_config_file = @config.from_json
-        @configurable_properties = @ruby_hashed_config_file['global']['configurable'].collect { |k,v| v }
+        @hash_config_file = @config.from_json
+        @configurable_properties = @hash_config_file['global']['configurable'].collect { |_, v| v }
         @questioner = c::Questioner.new(@ruby_hashed_config_file)
       end
 
