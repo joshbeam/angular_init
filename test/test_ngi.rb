@@ -16,44 +16,60 @@ describe Ngi do
         @config.file.must_equal IO.read(@path)
       end
     end
+
+    describe '#from_json' do
+      it 'must convert the file to a Ruby hash' do
+        file_parsed_from_json_to_ruby = @config.from_json
+        regular_file = IO.read(@path)
+
+        file_parsed_from_json_to_ruby.must_equal JSON.parse(regular_file)
+      end
+    end
+
+    # describe '#self.run' do
+    #   it 'must create an instance of Configure' do
+
+    #   end
+    # end
+
+    describe '#to_json' do
+      it 'must convert the file to a prettified JSON file if file is a hash' do
+        regular_file = IO.read(@path)
+
+        # set the file to a Ruby hash version of the JSON file
+        @config.file = @config.from_json
+
+        # convert the file back to a prettified JSON representation
+        # if the file was a Ruby hash
+        back_to_json = @config.to_json
+
+        back_to_json.must_equal regular_file
+
+        # set the file to a JSON version
+        @config.file = regular_file
+        attempt_to_generate_json = @config.to_json
+
+        attempt_to_generate_json.must_equal regular_file
+      end
+    end
+
+    describe '::Questioner' do
+      before do
+        c = Ngi::Delegate::Configure
+        @ruby_hashed_config_file = @config.from_json
+        @configurable_properties = @ruby_hashed_config_file['global']['configurable'].collect { |k,v| v }
+        @questioner = c::Questioner.new(@ruby_hashed_config_file)
+      end
+
+      describe '#initialize' do
+        it 'must set its file in JSON format' do
+          @questioner.file.must_equal @config.from_json
+        end
+
+        it 'must collect all the configurable properties in an array' do
+          @questioner.configurable_properties.must_equal @configurable_properties
+        end
+      end
+    end
   end
 end
-# class TestNgi < Test::Unit::TestCase
-#   CURRENT_DIR = File.dirname(__FILE__)
-
-#   def configure_init
-#     path = CURRENT_DIR + '/sup/test.config.json'
-#     configure = Ngi::Delegate::Configure.new(path)
-
-#     r = {
-#       path: path,
-#       configure: configure
-#     }
-
-#     r
-#   end
-
-#   def test_configure_file
-#     c = configure_init
-
-#     assert_equal(c[:configure].file, IO.read(c[:path]))
-#   end
-
-#   def test_configure_json
-#     c = configure_init
-#     file = c[:configure].file
-#     json_file = c[:configure].from_json
-
-#     assert_equal(json_file, JSON.parse(file))
-#   end
-
-#   def test_configure_run
-#     c = configure_init
-#     file = c[:configure].file
-#     Ngi::Delegate::Configure.run(write: false, file_path: c[:path])
-
-#     # assert that even if we change a property in the config file,
-#     # it never gets written UNLESS in Configure#run, write == true
-#     assert_equal(file, IO.read(c[:path]))
-#   end
-# end

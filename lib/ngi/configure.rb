@@ -25,50 +25,55 @@ class Configure
   # options (like language to use, templates, etc.)
   class Questioner
     attr_accessor :file
+    attr_reader :configurable_properties, :languages, :global, :configurable
 
     def initialize(file)
       @file = file
 
-      @GLOBAL = @file['global']
+      @global = @file['global']
       # TODO: extend array with this inject function?
 
       # The options for languages to use
-      @LANGUAGES = @GLOBAL['languages']
+      @languages = @global['languages']
 
-      # The properties in key => value format of the properties the user can configure
-      @CONFIGURABLE = @GLOBAL['configurable']
+      # The properties in key => value format
+      # of the properties the user can configure
+      @configurable = @global['configurable']
 
       # An array of the properties that the user is allowed to configure,
       # according to src/config/angular_init.config.json
-      @CONFIGURABLE_PROPERTIES = @CONFIGURABLE.collect { |_k, v| v }
+      @configurable_properties = @configurable.collect { |_k, v| v }
 
       yield(self) if block_given?
     end
 
     def choose_configurable_property
-      line_break = "\n------------------"
-
-      puts "\nCurrent settings #{line_break}"
-      @CONFIGURABLE.each_with_index do |(_k, v), i|
-        puts "#{i + 1}) " + v.capitalize + ': ' + JSHash.new(@GLOBAL[v]).to_str
+      @configurable_properties.each_with_index do |p, i|
+        puts "#{i + 1}) #{p.capitalize}: #{JSHash.new(@global[p]).to_str}"
       end
 
+      valid = JSArray.new(@configurable_properties).to_str
       # return
-      AskLoop.ask(check: @CONFIGURABLE_PROPERTIES, valid: JSArray.new(@CONFIGURABLE_PROPERTIES).to_str)
+      AskLoop.ask(check: @configurable_properties, valid: valid)
     end
 
     def configure_property(property)
       case property
-      when @CONFIGURABLE['language']
-        language_types = @LANGUAGES.collect { |type, languages| type if languages.size > 1 }.reject(&:nil?)
+      when @configurable['language']
+        language_types = @languages.select do |type, languages|
+          type if languages.size > 1
+        end
 
-        type = AskLoop.ask(check: language_types, valid: JSArray.new(language_types).to_str)
+        language_types = language_types.collect { |type, _| type }.flatten
+        valid = JSArray.new(language_types).to_str
 
-        language_opts = @LANGUAGES.reject { |t, languages| languages if t != type }[type].reject { |l| l == @GLOBAL['language'][type] }
+        type = AskLoop.ask(check: language_types, valid: valid)
+
+        language_opts = @languages.reject { |t, languages| languages if t != type }[type].reject { |l| l == @global['language'][type] }
 
         language = AskLoop.ask(check: language_opts, valid: JSArray.new(language_opts).to_str)
 
-        answer = @GLOBAL['language']
+        answer = @global['language']
 
         answer[type] = language
       end
@@ -86,7 +91,8 @@ class Configure
 
         q.file['global'][configurable_property] = result
 
-        puts configurable_property.capitalize + ' set to: ' + JSHash.new(result).to_str
+        result_string_hash = JSHash.new(result).to_str
+        puts "#{configurable_property.capitalize} set to: #{result_string_hash}"
       end
 
       questioner.file
@@ -99,8 +105,7 @@ class Configure
   # for user input
   class AskLoop < Utils::AskLoop
     def self.ask(args)
-      puts "\n"
-      puts 'Choose from: ' + args[:valid]
+      puts "\nChoose from: #{args[:valid]}"
 
       answer = $stdin.gets.strip
 
@@ -108,8 +113,7 @@ class Configure
         if args[:check].include?(answer)
           break
         else
-          puts 'Choose from: ' + args[:valid]
-          puts '(or press ctrl+c to exit)'
+          puts "Choose from: #{args[:valid]}\n(or press ctrl+c to exit)"
           answer = $stdin.gets.strip
         end
       end
@@ -136,7 +140,11 @@ class Configure
   # Generate a "prettified" JSON version of our
   # newly updated Ruby hash with the user's options
   def to_json
-    JSON.pretty_generate(@file)
+    if @file.is_a? Hash
+      JSON.pretty_generate(@file)
+    else
+      @file
+    end
   end
 
   # Here we actually write the new JSON config file
