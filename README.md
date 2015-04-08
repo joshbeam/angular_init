@@ -161,7 +161,7 @@ The command line tool itself is written in <a href="https://www.ruby-lang.org/en
 
 # Technical Information
 
-**Version** 0.2.3 (uses <a href="http://semver.org/">Semantic Versioning</a>)
+Uses <a href="http://semver.org/">Semantic Versioning</a>
 
 **Language** Ruby
 
