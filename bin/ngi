@@ -51,6 +51,8 @@ class Parser
           destination: CONFIG_FILE,
           languages: LANGUAGES_HASH,
           config: CONFIG_HASH,
+          components: COMPONENTS,
+          components_hash: COMPONENTS_HASH,
           configurable: CONFIGURABLE
         )
       end

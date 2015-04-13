@@ -16,6 +16,7 @@ class Configure
   Utils = ::Utils
   JSArray = Utils::JSArray
   JSHash = Utils::JSHash
+  JSer = Utils::JSer
 
   # Here, we implement the virtual class "Utils::AskLoop"
   # (see src/ruby/utils/utils.rb)
@@ -39,19 +40,49 @@ class Configure
   # that are configurable
   class Configurable
     def self.language(config)
-      v = JSArray.new(config.lang_types).to_str
+      v = JSer.new(config.lang_types).to_str
       type = AskLoop.ask(check: config.lang_types, valid: v)
       curr_lang = config.config['language'][type]
-      puts curr_lang
       lang_opts = config.languages[type].reject { |l| l if curr_lang == l }
 
-      v = JSArray.new(lang_opts).to_str
+      v = JSer.new(lang_opts).to_str
       language = AskLoop.ask(check: lang_opts, valid: v)
 
       answer = config.config['language']
       answer[type] = language
 
       answer
+    end
+
+    def self.templates(config)
+      v = JSer.new(config.components).to_str
+      component = AskLoop.ask(check: config.components, valid: v)
+
+      print '[?] Use file: '
+      file_name = $stdin.gets.strip
+
+      answer = []
+
+      if config.config.has_key? 'templates'
+        answer = config.config['templates']
+      end
+
+      answer = answer.reject { |c| c['name'] == component }
+
+      unless file_name == 'default'
+        answer << {
+          'name' => component,
+          'type' => config.components_hash.find { |c| c['name'] == component }['type'],
+          'template' => file_name
+        }
+      end
+
+      if answer.size == 0
+        nil
+      else
+        answer
+      end
+
     end
   end
 
@@ -65,6 +96,8 @@ class Configure
     attr_reader :configurable,
                 :languages,
                 :config,
+                :components,
+                :components_hash,
                 :lang_types
 
     def initialize(args)
@@ -73,6 +106,8 @@ class Configure
         type if languages.size > 1
       end
       @lang_types = language_types.collect { |type, _| type }.flatten
+      @components_hash = args[:components_hash]
+      @components = args[:components]
       @config = args[:config]
       @configurable = args[:configurable]
 
@@ -81,10 +116,14 @@ class Configure
 
     def choose_configurable_property
       @configurable.each_with_index do |p, i|
-        puts "#{i + 1}) #{p.capitalize}: #{JSHash.new(@config[p]).to_str}"
+        json_string = 'Default'
+        if @config.has_key? p
+          json_string = JSer.new(@config[p]).to_str
+        end
+        puts "#{i + 1}) #{p.capitalize}: #{json_string}"
       end
 
-      valid = JSArray.new(@configurable).to_str
+      valid = JSer.new(@configurable).to_str
       # return
       AskLoop.ask(check: @configurable, valid: valid)
     end
@@ -98,6 +137,8 @@ class Configure
       case property
       when 'language'
         return Configurable.language(self)
+      when 'templates'
+        return Configurable.templates(self)
       end
     end
 
@@ -119,9 +160,12 @@ class Configure
         # and is inside of this instance of Questioner
         q.config[property] = result
 
+        # delete any properties that are nil
+        q.config.delete_if { |_,v| v.nil? }
+
         # This just tells the user that we were
         # successful
-        result_string_hash = JSHash.new(result).to_str
+        result_string_hash = JSer.new(result).to_str rescue 'null'
         puts "#{property.capitalize} set to: #{result_string_hash}"
       end
 

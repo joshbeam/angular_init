@@ -14,6 +14,9 @@
 # and ["some","array"]
 # becomes:
 # ['some','array']
+
+# TODO: Use JSer.new() and delegate to JSHash or JSArray
+# depending on the class of the object passed in
 module JSer
   def to_str
     to_s.gsub(/\"/, "'").gsub(/\=\>/, ': ')
@@ -42,5 +45,15 @@ module JSer
     end
 
     include JSer
+  end
+
+  module_function
+
+  def new(obj)
+    if obj.class == Array
+      return JSArray.new(obj)
+    elsif obj.class == Hash
+      return JSHash.new(obj)
+    end
   end
 end

@@ -10,6 +10,7 @@ require_relative 'jser'
 # functions used throughout Ngi
 module Utils
   CommandParser = ::CommandParser
+  JSer = ::JSer
   JSArray = JSer::JSArray
   JSHash = JSer::JSHash
 
