@@ -61,7 +61,7 @@ Use normal JavaScript or CoffeeScript syntax.
 
 ## 1. Placeholders
 
-Use the following *placeholders* in your template:
+Use the following **placeholders** in your template:
 
 - `{{type}}`
   - The type of component (directive, controller, etc. Type ngi -h to see the available components)
@@ -77,14 +77,12 @@ Use the following *placeholders* in your template:
     - `[?] Inject: someService, anotherService`
     - `=> ['someService', 'anotherService']`
 
-{{inject | comma_delimited_variables}}
-  [?] Inject: <user input>
-  This will turn the user's input for the injectable components into a
-  comma-delimited string of arguments
-
-  For example:
-  [?] Inject: someService, anotherService
-  => 'someService', 'anotherService'
+- `{{inject | comma_delimited_variables}}`
+  - `[?] Inject: <user input>`
+  - This will turn the user's input for the injectable components into a comma-delimited string of arguments
+  - For example:
+    - `[?] Inject: someService, anotherService`
+    - `=> 'someService', 'anotherService'`
 
 ## 2. Tags
     
@@ -93,8 +91,10 @@ For example, the above example template for "basic.js" allows you
 to use the same template for multiple components, including controllers,
 directives, and filters.
 
-Use the following *tags* in your template:
+Use the following **tags** in your template:
 
-  {% if <component> %}
-    // conditional code here
-  {% endif <component> %}
+```javascript
+{% if <component> %}
+  // conditional code here
+{% endif <component> %}
+```
