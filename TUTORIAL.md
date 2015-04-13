@@ -1,8 +1,27 @@
+# Create your own ngi template
+
 Hello!
 
 Here you'll learn the basics of creating your own custom template to use with ngi.
 
+## Quick Start
+
+- Create a new template file (call it, say, `my.directive.template.js`)
+- Run `$ ngi -o`
+- Choose `templates`, then `directive`
+- When prompted to select the file to use, type `my.directive.template.js`
+- All done!
+
+*If you want to revert back to using default files at any time, when you're prompted to type the file name of the template you want to use, just type the keyword `default` instead, and you'll be good to go!*
+
 # Example (basic.js)
+
+This example template is actually the default template used for the following components:
+- Factory
+- Controller
+- Directive
+- Service
+- Filter
 
 ```javascript
 ;(function(app) {
@@ -44,29 +63,28 @@ Use normal JavaScript or CoffeeScript syntax.
 
 Use the following *placeholders* in your template:
 
-  {{type}}
-    The type of component (directive, controller, etc. Type ngi -h to see the available components)
+- `{{type}}`
+  - The type of component (directive, controller, etc. Type ngi -h to see the available components)
 
-  {{name}}
-    [?] <component> name: <user input>
-    The user will inject the name of the component here (e.g. MyAwesomeController)
+- `{{name}}`
+  - `[?] <component> name: <user input>`
+  - This will be replaced with the name of the component (e.g. MyAwesomeController)
 
-  {{inject | array_string}}
-    [?] Inject: <user input>
-    This will turn the user's input for the injectable components into an array
+- `{{inject | array_string}}`
+  - `[?] Inject: <user input>`
+  - This will turn the user's input for the injectable components into an array
+  - For example:
+    - `[?] Inject: someService, anotherService`
+    - `=> ['someService', 'anotherService']`
 
-    For example:
-    [?] Inject: someService, anotherService
-    => ['someService', 'anotherService']
+{{inject | comma_delimited_variables}}
+  [?] Inject: <user input>
+  This will turn the user's input for the injectable components into a
+  comma-delimited string of arguments
 
-  {{inject | comma_delimited_variables}}
-    [?] Inject: <user input>
-    This will turn the user's input for the injectable components into a
-    comma-delimited string of arguments
-
-    For example:
-    [?] Inject: someService, anotherService
-    => 'someService', 'anotherService'
+  For example:
+  [?] Inject: someService, anotherService
+  => 'someService', 'anotherService'
 
 ## 2. Tags
     
