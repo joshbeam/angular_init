@@ -6,6 +6,7 @@
 # CURRENT_DIR is defined in angualr_init.rb
 
 require_relative 'utils/utils'
+require 'fileutils'
 require 'yaml'
 
 # Run the user through an interactive
@@ -54,6 +55,22 @@ class Configure
       answer
     end
 
+    def self.create_template_file(component,config)
+      puts component
+      component['language'] = config['language'][component['type']]
+      template_dir = "#{CURRENT_DIR}/../templates/"
+      template_dir << "#{component['type']}/#{component['language']}"
+      template_dir << "/#{component['using']}/#{component['template']}"
+
+      dirname = File.dirname(template_dir)
+      
+      unless File.directory?(dirname)
+        FileUtils.mkdir_p(dirname)
+      end
+
+      puts template_dir
+    end
+
     def self.templates(config)
       v = JSer.new(config.components).to_str
       component = AskLoop.ask(check: config.components, valid: v)
@@ -73,16 +90,17 @@ class Configure
         answer << {
           'name' => component,
           'type' => config.components_hash.find { |c| c['name'] == component }['type'],
-          'template' => file_name
+          'template' => file_name,
+          'using' => 'user'
         }
       end
 
       if answer.size == 0
         nil
       else
+        create_template_file(answer.last, config.config)
         answer
       end
-
     end
   end
 

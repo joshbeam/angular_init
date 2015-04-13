@@ -37,10 +37,18 @@ class Parser
       parser.banner << "\n(<command> can be one of the following)"
 
       parser.on(components.valid_inputs, 'Create a new component') do |type|
+        component = COMPONENTS_HASH.find { |c| c['name'] == type }
+
+        if CONFIG_HASH.has_key? 'templates'
+          custom = CONFIG_HASH['templates'].find { |c| c['name'] == type }
+
+          component = custom unless custom.nil?
+        end
+        
         Ngi::Delegate::Generator.run(
           type: type,
           config: CONFIG_HASH,
-          component: COMPONENTS_HASH.find { |c| c['name'] == type }
+          component: component
         )
       end
 
