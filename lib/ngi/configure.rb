@@ -5,7 +5,6 @@
 
 # CURRENT_DIR is defined in angualr_init.rb
 
-require_relative '../dep/json'
 require_relative 'utils/utils'
 require 'yaml'
 
@@ -42,14 +41,14 @@ class Configure
     def self.language(config)
       v = JSArray.new(config.lang_types).to_str
       type = AskLoop.ask(check: config.lang_types, valid: v)
-
-      curr_lang = config.global['language'][type]
+      curr_lang = config.config['language'][type]
+      puts curr_lang
       lang_opts = config.languages[type].reject { |l| l if curr_lang == l }
 
       v = JSArray.new(lang_opts).to_str
       language = AskLoop.ask(check: lang_opts, valid: v)
 
-      answer = config.global['language']
+      answer = config.config['language']
       answer[type] = language
 
       answer
@@ -63,44 +62,31 @@ class Configure
   # options (like language to use, templates, etc.)
   class Questioner
     attr_accessor :file
-    attr_reader :configurable_properties,
-                :languages, :global,
-                :configurable, :lang_types
+    attr_reader :configurable,
+                :languages,
+                :config,
+                :lang_types
 
-    def initialize(file)
-      @file = file
-
-      @global = @file['global']
-      # TODO: extend array with this inject function?
-
-      # The options for languages to use
-      @languages = @global['languages']
-
+    def initialize(args)
+      @languages = args[:languages]
       language_types = @languages.select do |type, languages|
         type if languages.size > 1
       end
-      # For example, ['script','markup']
       @lang_types = language_types.collect { |type, _| type }.flatten
-
-      # The properties in key => value format
-      # of the properties the user can configure
-      @configurable = @global['configurable']
-
-      # An array of the properties that the user is allowed to configure,
-      # according to src/config/angular_init.config.json
-      @configurable_properties = @configurable.collect { |_k, v| v }
+      @config = args[:config]
+      @configurable = args[:configurable]
 
       yield(self) if block_given?
     end
 
     def choose_configurable_property
-      @configurable_properties.each_with_index do |p, i|
-        puts "#{i + 1}) #{p.capitalize}: #{JSHash.new(@global[p]).to_str}"
+      @configurable.each_with_index do |p, i|
+        puts "#{i + 1}) #{p.capitalize}: #{JSHash.new(@config[p]).to_str}"
       end
 
-      valid = JSArray.new(@configurable_properties).to_str
+      valid = JSArray.new(@configurable).to_str
       # return
-      AskLoop.ask(check: @configurable_properties, valid: valid)
+      AskLoop.ask(check: @configurable, valid: valid)
     end
 
     # This method delegates to the appropriate
@@ -110,7 +96,7 @@ class Configure
     # from_json config object from config/angular_init.config.json
     def configure_property(property)
       case property
-      when @configurable['language']
+      when 'language'
         return Configurable.language(self)
       end
     end
@@ -131,7 +117,7 @@ class Configure
         # Hash from_json object that came from
         # config/angular_init.config.json
         # and is inside of this instance of Questioner
-        q.file['global'][property] = result
+        q.config[property] = result
 
         # This just tells the user that we were
         # successful
@@ -143,16 +129,18 @@ class Configure
       # (For example, Configure might write this
       # new hash as a JSON file to
       # config/angular_init.config.json)
-      questioner.file
+      questioner.config
     end
   end
 
   # The only thing we do here is load the JSON config file basically
   # as just a string in JSON format.
   # It will be converted to a Ruby hash in from_json below
-  def initialize(location)
-    @location = location
-    @file = IO.read(@location)
+  def initialize(location = nil)
+    unless location.nil?
+      @location = location
+      @file = IO.read(@location)
+    end
 
     yield(self) if block_given?
   end
@@ -187,11 +175,9 @@ class Configure
 
   # Here we actually write the new JSON config file
   # to config/angular_init.config.json
-  def write
-    new_file = to_json
-
-    File.open(@location, 'w') do |f|
-      f.write(new_file)
+  def write(args)
+    File.open(args[:destination], 'w') do |f|
+      f.write(args[:file])
       f.close
     end
   end
@@ -204,23 +190,15 @@ class Configure
   # to actually write the file in JSON format
   # to config/angular_init.config.json
   def self.run(args)
-    Configure.new(args[:file_path]) do |c|
-      # Get the config file as a Ruby Hash
-      hash = c.to_ruby(from: args[:from])
+    Configure.new do |c|
+      c.file = Configure::Questioner.run(args)
 
-      # Pass it off to Questioner so that
-      # we can interact with the user and
-      # have the user configure the Hash.
-      # Then, we set the Configure file
-      # to the output of however the user
-      # configured it with Questioner
-      c.file = Configure::Questioner.run(hash)
-
-      # We'll write the hash to
-      # config/angular_init.config.json.
-      # Configure#write converts the Hash
-      # to JSON and then uses File.write
-      c.write if args[:write] == true
+      if args[:write] == true
+        c.write(
+          destination: args[:destination],
+          file: c.from_ruby(to: args[:to])
+        )
+      end
     end
   end
 end

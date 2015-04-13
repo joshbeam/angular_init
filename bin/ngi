@@ -23,6 +23,12 @@ class Parser
   CONFIG_FILE = "#{CURRENT_DIR}/../lib/config/config.yml"
   CONFIG_HASH = Ngi::Delegate::Configure.new(CONFIG_FILE).to_ruby(from: 'yaml')
 
+  CONFIGURABLE_FILE = "#{CURRENT_DIR}/../lib/config/config.configurable.yml"
+  CONFIGURABLE = Ngi::Delegate::Configure.new(CONFIGURABLE_FILE).to_ruby(from: 'yaml')
+
+  LANGUAGES_FILE = "#{CURRENT_DIR}/../lib/config/config.languages.yml"
+  LANGUAGES_HASH = Ngi::Delegate::Configure.new(LANGUAGES_FILE).to_ruby(from: 'yaml')
+
   def self.parse(args)
     p = Utils::CommandParser.new do |parser|
       components = Ngi::UserInput.new(valid_inputs: COMPONENTS)
@@ -39,11 +45,14 @@ class Parser
       end
 
       parser.on(['-o', '--options'], 'Configure ngi') do
-        # Ngi::Delegate::Configure.run(
-        #   write: true,
-        #   file_path: config_file,
-        #   from: 'yaml'
-        # )
+        Ngi::Delegate::Configure.run(
+          write: true,
+          to: 'yaml',
+          destination: CONFIG_FILE,
+          languages: LANGUAGES_HASH,
+          config: CONFIG_HASH,
+          configurable: CONFIGURABLE
+        )
       end
     end
 
