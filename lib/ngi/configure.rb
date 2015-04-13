@@ -5,6 +5,8 @@
 
 # CURRENT_DIR is defined in angualr_init.rb
 
+# TODO: Method to clean out unused custom template files
+
 require_relative 'utils/utils'
 require 'fileutils'
 require 'yaml'
@@ -56,19 +58,34 @@ class Configure
     end
 
     def self.create_template_file(component,config)
-      puts component
+      #working_dir = File.basename(Dir.getwd)
+
       component['language'] = config['language'][component['type']]
-      template_dir = "#{CURRENT_DIR}/../templates/"
+      template_dir = "#{CURRENT_DIR}/templates/"
       template_dir << "#{component['type']}/#{component['language']}"
       template_dir << "/#{component['using']}/#{component['template']}"
 
-      dirname = File.dirname(template_dir)
-      
-      unless File.directory?(dirname)
-        FileUtils.mkdir_p(dirname)
-      end
+      destination = File.dirname(template_dir)
 
-      puts template_dir
+      # Create the directory "user" unless it already exists
+      FileUtils.mkdir_p(destination) unless File.directory?(destination)
+
+      # The actual custom file
+      custom_file = "#{Dir.pwd}/#{component['template']}"
+
+      # Copy the custom file into the new or existing "user" directory
+      if File.exist? custom_file
+        # TODO: Add a 'safety net' by checking if the user
+        # has already added the custom template before
+        # so that they don't overwrite it
+        FileUtils.cp(custom_file, destination)
+      else
+        puts "Cannot find custom template file: '#{custom_file}'
+Check to make sure the custom template file exists,
+and that you're in the correct directory of the custom template."
+
+        exit
+      end
     end
 
     def self.templates(config)
@@ -93,12 +110,13 @@ class Configure
           'template' => file_name,
           'using' => 'user'
         }
+
+        create_template_file(answer.last, config.config)
       end
 
       if answer.size == 0
         nil
       else
-        create_template_file(answer.last, config.config)
         answer
       end
     end

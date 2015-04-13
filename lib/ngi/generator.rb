@@ -42,8 +42,6 @@ class Generator
     @component = args[:component]
     @component['language'] = @config['language'][@component['type']]
 
-    puts @component
-
     template_dir = "#{CURRENT_DIR}/../templates/"
     template_dir << "#{@component['type']}/#{@component['language']}"
     template_dir << "/#{@component['using']}/#{@component['template']}"
@@ -162,22 +160,22 @@ class Generator
   # prompt the user to generate a new template
   def self.run(args)
     Generator.new(args) do |g|
-      # g.new_file_name
+      g.new_file_name
 
-      # # we don't need to define the module if we're creating a module
-      # g.module_name unless args[:type] == 'module'
+      # we don't need to define the module if we're creating a module
+      g.module_name unless args[:type] == 'module'
 
-      # # 'run', 'config', and 'routes' don't have custom names in AngularJS
-      # # REVIEW: use symbols instead of strings?
-      # g.name unless %w(run config routes index).include? args[:type]
+      # 'run', 'config', and 'routes' don't have custom names in AngularJS
+      # REVIEW: use symbols instead of strings?
+      g.name unless %w(run config routes index).include? args[:type]
 
-      # g.inject unless ['index'].include? args[:type]
+      g.inject unless ['index'].include? args[:type]
 
-      # g.replace
+      g.replace
 
-      # g.tag
+      g.tag
 
-      # g.write
+      g.write
     end
 
     puts 'All done!'

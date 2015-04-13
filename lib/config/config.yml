@@ -2,13 +2,3 @@
 language:
   script: es5
   markup: html
-templates:
-- name: controller
-  type: script
-  template: test.c.js
-  using: user
-- name: directive
-  type: script
-  template: test.js
-  using: user
-  language: es5
