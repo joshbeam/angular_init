@@ -7,6 +7,7 @@
 
 require_relative '../dep/json'
 require_relative 'utils/utils'
+require 'yaml'
 
 # Run the user through an interactive
 # session of configuring ngi
@@ -157,17 +158,30 @@ class Configure
   end
 
   # Convert the file to a Ruby hash
-  def from_json
-    JSON.parse(@file)
+  # def from_json
+  #   JSON.parse(@file)
+  # end
+
+  # Convert the file to a Ruby hash
+  # Usage: Configure.new('file/path').to_ruby(from: 'yaml')
+  def to_ruby(args)
+    case args[:from]
+    when 'json'
+      JSON.parse(@file)
+    when 'yaml'
+      YAML.load(@file)
+    end
   end
 
-  # Generate a "prettified" JSON version of our
-  # newly updated Ruby hash with the user's options
-  def to_json
-    if @file.is_a? Hash
+  # Convert the file from a Ruby hash
+  # into whatever language is specified
+  # Usage: <Configure instance>.from_ruby(to: 'yaml')
+  def from_ruby(args)
+    case args[:to]
+    when 'json'
       JSON.pretty_generate(@file)
-    else
-      @file
+    when 'yaml'
+      @file.to_yaml
     end
   end
 
@@ -191,8 +205,8 @@ class Configure
   # to config/angular_init.config.json
   def self.run(args)
     Configure.new(args[:file_path]) do |c|
-      # Get the JSON file as a Ruby Hash
-      json_file = c.from_json
+      # Get the config file as a Ruby Hash
+      hash = c.to_ruby(from: args[:from])
 
       # Pass it off to Questioner so that
       # we can interact with the user and
@@ -200,7 +214,7 @@ class Configure
       # Then, we set the Configure file
       # to the output of however the user
       # configured it with Questioner
-      c.file = Configure::Questioner.run(json_file)
+      c.file = Configure::Questioner.run(hash)
 
       # We'll write the hash to
       # config/angular_init.config.json.

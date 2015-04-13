@@ -37,19 +37,14 @@ class Generator
   # Generator.new (the initialization function) is called in self.run
 
   def initialize(args)
-    @type, @config = args[:type], args[:config]['global']
+    @type, @config = args[:type], args[:config]
 
-    component = @config['components'].find { |t| t['name'] == @type }
-
-    # basically just rebuilding the object so we can use it here
-    @component = {
-      of_type: component['type'],
-      language: @config['language'][component['type']],
-      using: component['using'], template: component['template']
-    }
+    @component = args[:component]
+    @component['language'] = @config['language'][@component['type']]
 
     template_dir = "#{CURRENT_DIR}/../templates/"
-    template_dir << "#{@component[:of_type]}/#{@component[:language]}/#{@component[:using]}/#{@component[:template]}"
+    template_dir << "#{@component['type']}/#{@component['language']}"
+    template_dir << "/#{@component['using']}/#{@component['template']}"
 
     @template_file = IO.read(template_dir)
 
@@ -143,7 +138,10 @@ class Generator
   def write
     # create the new file
     def overwrite?
-      AskLoop.ask(check: 'y', prompt: 'File exists already, overwrite it? (y/n) ')
+      AskLoop.ask(
+        check: 'y',
+        prompt: 'File exists already, overwrite it? (y/n) '
+      )
     end
 
     overwrite? if File.exist?(@new_file)
@@ -154,8 +152,11 @@ class Generator
     end
   end
 
-  # Use this function to be able to say AngularInit::Delegate::Generator.run() inside the executable file
-  # This function simply goes through all of the methods in order to interactively
+  # Use this function to be able to say
+  # AngularInit::Delegate::Generator.run() inside
+  # the executable file.
+  # This function simply goes through all of the
+  # methods in order to interactively
   # prompt the user to generate a new template
   def self.run(args)
     Generator.new(args) do |g|
