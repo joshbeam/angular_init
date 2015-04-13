@@ -63,12 +63,15 @@ Use normal JavaScript or CoffeeScript syntax. You'll notice that the custom synt
 
 Use the following **placeholders** in your template:
 
+- `{{module}}`
+  - The name of the module (e.g. `myModule`)
+
 - `{{type}}`
   - The type of component (directive, controller, etc. Type `ngi -h` to see the available components)
 
 - `{{name}}`
   - `[?] <component> name: <user input>`
-  - This will be replaced with the name of the component (e.g. MyAwesomeController)
+  - This will be replaced with the name of the component (e.g. `MyAwesomeController`)
 
 - `{{inject | array_string}}`
   - `[?] Inject: <user input>`
