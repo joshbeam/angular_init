@@ -12,7 +12,7 @@ Here you'll learn the basics of creating your own custom template to use with ng
 - When prompted to select the file to use, type `my.directive.template.js`
 - All done!
 
-*If you want to revert back to using default files at any time, when you're prompted to type the file name of the template you want to use, just type the keyword `default` instead, and you'll be good to go!*
+***If you want to revert back to using default templates at any time:** when you're prompted to type the file name of the template you want to use, just type the keyword `default` instead, and you'll be good to go!*
 
 # Example (basic.js)
 
@@ -57,14 +57,14 @@ function {{name}}({{inject | comma_delimited_variables}}) {
 
 # Syntax
 
-Use normal JavaScript or CoffeeScript syntax.
+Use normal JavaScript or CoffeeScript syntax. You'll notice that the custom syntax below is somewhat similar to the style of [Liquid][liquid], but don't be fooled! You cannot use Liquid here.
 
 ## 1. Placeholders
 
 Use the following **placeholders** in your template:
 
 - `{{type}}`
-  - The type of component (directive, controller, etc. Type ngi -h to see the available components)
+  - The type of component (directive, controller, etc. Type `ngi -h` to see the available components)
 
 - `{{name}}`
   - `[?] <component> name: <user input>`
@@ -98,3 +98,5 @@ Use the following **tags** in your template:
   // conditional code here
 {% endif <component> %}
 ```
+
+[liquid]: http://liquidmarkup.org/
