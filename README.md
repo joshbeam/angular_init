@@ -23,7 +23,7 @@ $ ngi controller # => creates a new AngularJS controller
 **What's new in 0.3.x?**
 
 *This version is backwards-compatible with 0.2.x*
-- Use custom template files
+- Use custom template files (see the [tutorial][tutorial])
 
 ## In simple terms:
 
@@ -95,7 +95,6 @@ By the way, the output of this little tool is meant to follow [John Papa's Angul
 
 ## Coming soon
 
-- Add custom templates and languages
 - Possible Node.js version
 
 Feel free to fork the project or get <a href="http://frontendcollisionblog.com/about">in touch with Josh (me)</a> with any feature requests!
@@ -206,3 +205,4 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 [rubygems]: https://rubygems.org/pages/download
 [ruby]: https://www.ruby-lang.org/en/downloads/
 [bundler]: http://bundler.io/
+[tutorial]: https://github.com/joshbeam/angular_init/blob/master/TUTORIAL.md
