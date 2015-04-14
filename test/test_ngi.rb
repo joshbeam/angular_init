@@ -3,9 +3,18 @@ require 'minitest/autorun'
 require 'fakefs/spec_helpers'
 
 describe Ngi do
-  describe '::Configure' do
-    it 'should say hi' do
 
+  before do
+    def stdin(*args)
+      begin
+        $stdin = StringIO.new
+        $stdin.puts(args.shift) until args.empty?
+        $stdin.rewind
+        yield
+      ensure
+        $stdin = STDIN
+      end
     end
   end
+
 end

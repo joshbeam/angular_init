@@ -1,0 +1,5 @@
+script:
+  - coffee
+  - es5
+markup:
+  - html
