@@ -14,7 +14,7 @@ Gem::Specification.new do |spec|
   spec.license       = "MIT"
   spec.required_ruby_version = ">= 2.1"
 
-  spec.files         = `git ls-files -z`.split("\x0") - %w(.gitignore ngi_example.gif pkg README.md TUTORIAL.md)
+  spec.files         = `git ls-files -z`.split("\x0") - %w(.gitignore ngi_example.gif pkg README.md TUTORIAL.md test.template.js)
   spec.executables   = ["ngi"]
   spec.test_files    = spec.files.grep(%r{^(test|spec|features)/})
   spec.require_paths = ["lib"]

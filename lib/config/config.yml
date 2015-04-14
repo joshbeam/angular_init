@@ -1,4 +1,10 @@
 ---
 language:
-  script: coffee
+  script: es5
   markup: html
+templates:
+- name: directive
+  type: script
+  templates:
+  - language: es5
+    template: test.template.js
