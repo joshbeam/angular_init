@@ -17,8 +17,6 @@ class Configure
   attr_accessor :file, :location
 
   Utils = ::Utils
-  JSArray = Utils::JSArray
-  JSHash = Utils::JSHash
   JSer = Utils::JSer
 
   # Here, we implement the virtual class "Utils::AskLoop"
@@ -57,13 +55,15 @@ class Configure
       answer
     end
 
-    def self.create_template_file(component,config)
-      #working_dir = File.basename(Dir.getwd)
+    def self.create_template_file(args)
+      # component['language'] = config['language'][component['type']]
+      component = args[:component]
+      language = args[:language]
+      template = args[:template]
 
-      component['language'] = config['language'][component['type']]
       template_dir = "#{CURRENT_DIR}/templates/"
-      template_dir << "#{component['type']}/#{component['language']}"
-      template_dir << "/#{component['using']}/#{component['template']}"
+      template_dir << "#{component['type']}/#{language}"
+      template_dir << "/user/#{template}"
 
       destination = File.dirname(template_dir)
 
@@ -71,7 +71,8 @@ class Configure
       FileUtils.mkdir_p(destination) unless File.directory?(destination)
 
       # The actual custom file
-      custom_file = "#{Dir.pwd}/#{component['template']}"
+      # custom_file = "#{Dir.pwd}/#{component['template']}"
+      custom_file = template
 
       # Copy the custom file into the new or existing "user" directory
       if File.exist? custom_file
@@ -89,29 +90,90 @@ and that you're in the correct directory of the custom template."
     end
 
     def self.templates(config)
-      v = JSer.new(config.components).to_str
-      component = AskLoop.ask(check: config.components, valid: v)
+      v_c = JSer.new(config.components).to_str
+      component = AskLoop.ask(check: config.components, valid: v_c)
+      chosen_component = -> (c) { c['name'] == component }
 
-      print '[?] Use file: '
+      print '[?] Use the following template file: '
       file_name = $stdin.gets.strip
 
+      print '[?] What language is this template for?'
+      type = config.components_hash.find(&chosen_component)['type']
+      v_l = JSer.new(config.languages[type]).to_str
+      language = AskLoop.ask(check: config.languages[type], valid: v_l)
+      chosen_language = -> (t) { t['language'] == language }
+
+      # Our answer will be an empty array first,
+      # because Tempaltes: might not exist the
+      # config.yml file
       answer = []
 
-      if config.config.has_key? 'templates'
-        answer = config.config['templates']
-      end
+      # Set the answer to Templates: from the config.yml
+      # file if it exists
+      answer = config.config['templates'] if config.config.key? 'templates'
 
-      answer = answer.reject { |c| c['name'] == component }
+      # Then we want to see if the component already exists in
+      # the config file
+      exists = false
+      existing_component = answer.find(&chosen_component)
+      exists = true if !existing_component == false
 
-      unless file_name == 'default'
-        answer << {
-          'name' => component,
-          'type' => config.components_hash.find { |c| c['name'] == component }['type'],
-          'template' => file_name,
-          'using' => 'user'
-        }
+      if file_name != 'default'
+        if exists == true
+          # Remove the current existing component (it's already saved above)
+          answer = answer
+                   .reject(&chosen_component)
 
-        create_template_file(answer.last, config.config)
+          # Remove the existing template object
+          existing_component['templates'] = existing_component['templates']
+                                            .reject(&chosen_language)
+
+          # Put in the updated template object
+          existing_component['templates'] << {
+            'language' => language,
+            'template' => file_name
+          }
+
+          # Push the existing component back into the templates array
+          answer << existing_component
+
+        elsif exists == false
+
+          # If it isn't already there,
+          # go ahead and add it to the templates array
+          answer << {
+            'name' => component,
+            'type' => type,
+            'templates' => [
+              {
+                'language' => language,
+                'template' => file_name
+              }
+            ]
+          }
+        end
+
+        create_template_file(
+          config: config.config,
+          component: answer.last,
+          language: language,
+          template: file_name
+        )
+      else
+        # If default is chosen as the template,
+        # then delete the template from the templates
+        # array for that component
+        answer
+          .find(&chosen_component)['templates']
+          .delete_if(&chosen_language)
+
+        # If the templates array of the component
+        # is empty, then delete the entire component
+        # from the answer
+        answer
+          .delete_if(&chosen_component) if answer
+                                           .find(&chosen_component)['templates']
+                                           .size == 0
       end
 
       if answer.size == 0
@@ -151,11 +213,10 @@ and that you're in the correct directory of the custom template."
     end
 
     def choose_configurable_property
+      puts "Current settings\n================"
       @configurable.each_with_index do |p, i|
-        json_string = 'Default'
-        if @config.has_key? p
-          json_string = JSer.new(@config[p]).to_str
-        end
+        json_string = 'Currently using default settings'
+        json_string = JSer.new(@config[p]).to_str if @config.key? p
         puts "#{i + 1}) #{p.capitalize}: #{json_string}"
       end
 
@@ -197,7 +258,7 @@ and that you're in the correct directory of the custom template."
         q.config[property] = result
 
         # delete any properties that are nil
-        q.config.delete_if { |_,v| v.nil? }
+        q.config.delete_if { |_, v| v.nil? }
 
         # This just tells the user that we were
         # successful

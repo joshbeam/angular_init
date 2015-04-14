@@ -41,8 +41,9 @@ class Parser
 
         if CONFIG_HASH.has_key? 'templates'
           custom = CONFIG_HASH['templates'].find { |c| c['name'] == type }
+          using_language = CONFIG_HASH['language'].collect { |_,v| v }
 
-          component = custom unless custom.nil?
+          component = custom unless (custom.nil? || !using_language.include?(custom['language']))
         end
         
         Ngi::Delegate::Generator.run(

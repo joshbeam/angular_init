@@ -12,7 +12,7 @@ Here you'll learn the basics of creating your own custom template to use with ng
 - When prompted to select the file to use, type `my.directive.template.js`
 - All done!
 
-***If you want to revert back to using default templates at any time:** when you're prompted to type the file name of the template you want to use, just type the keyword `default` instead, and you'll be good to go!*
+*If you want to revert back to using default templates at any time: when you're prompted to type the file name of the template you want to use, just type the keyword `default` instead, and you'll be good to go!*
 
 # Example (basic.js)
 
