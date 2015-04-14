@@ -9,13 +9,28 @@ require_relative 'utils/utils'
 class Generator
   Utils = ::Utils
 
+  # STDIN is separated into a class so that
+  # it can be extracted and tested
+  class AcceptInput
+    def self.str(type)
+      case type
+      when :condensed
+        $stdin.gets.gsub(WHITESPACE, EMPTY)
+      when :comma_delimited_to_array
+        $stdin.gets.split(',').map(&:strip).reject(&:empty?)
+      when :downcased
+        $stdin.gets.strip.downcase
+      end
+    end
+  end
+
   # Here we just implement
   # the virtual class Utils::AskLoop
   class AskLoop < Utils::AskLoop
     def self.ask(args)
       print "\n#{args[:prompt]}"
 
-      answer = $stdin.gets.strip.downcase
+      answer = AcceptInput.str(:downcased)
 
       loop do
         break if args[:check] == answer
@@ -56,19 +71,19 @@ class Generator
   def new_file_name
     print '[?] New file name: '
 
-    @new_file = $stdin.gets.gsub(WHITESPACE, EMPTY)
+    @new_file = AcceptInput.str(:condensed)
   end
 
   def module_name
     print '[?] Module name: '
 
-    @module_name = $stdin.gets.gsub(WHITESPACE, EMPTY)
+    @module_name = AcceptInput.str(:condensed)
   end
 
   def name
     print "[?] #{@type.capitalize} name: "
 
-    @name = $stdin.gets.gsub(WHITESPACE, EMPTY)
+    @name = AcceptInput.str(:condensed)
   end
 
   def inject
@@ -88,7 +103,7 @@ class Generator
     # accepts a comma-delimited list
     # EXAMPLE: testService, testService2
     # => [testService,testService2]
-    @dependencies = $stdin.gets.split(',').map(&:strip).reject(&:empty?)
+    @dependencies = AcceptInput.str(:comma_delimited_to_array)
 
     # automatically inject $scope into a controller
     # FIXME: don't use index accessors (numbers are confusing)
