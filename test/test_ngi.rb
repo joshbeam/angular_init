@@ -25,99 +25,80 @@ describe Ngi do
     @configurable = Ngi::Delegate::Configure
                     .new(@configurable_file).to_ruby(from: 'yaml')
 
-    class Redefine
-      def initialize(use_stdin)
-        @use_stdin = use_stdin
-      end
-      # Open this up to redefine some stuff
-      module Ngi
-        # This mocks the user input for creating a new component
-        GENERATOR_MOCKED_ATTRS = []
+    # Open this up to redefine some stuff
+    module Ngi
+      # This mocks the user input for creating a new component
+      GENERATOR_MOCKED_ATTRS = [
+        'test.directive.js',
+        'myModule',
+        'myDirective',
+        ['someService, anotherService']
+      ]
 
-        CONFIGURE_MOCKED_INPUT = []
+      CONFIGURE_MOCKED_INPUT = [
+        'templates',
+        'directive',
+        'test.template.js',
+        'es5'
+      ]
+      class Delegate
 
-        case @use_stdin
-        when :configure_custom_template
-          CONFIGURE_MOCKED_INPUT = [
-            'templates',
-            'directive',
-            'test.template.js',
-            'es5'
-          ]
-        when :generate_directive
-          GENERATOR_MOCKED_ATTRS = [
-            'test.directive.js',
-            'myModule',
-            'myDirective',
-            ['someService, anotherService']
-          ]
-        when :configure_language
-          CONFIGURE_MOCKED_INPUT = [
-            'language',
-            'script',
-            'coffee'
-          ]
-        end
-
-        class Delegate
-
-          class Generator
-            # Redefine the $stdin in Generator
-            class AcceptInput
-              def self.str(type)
-                case type
-                when :condensed
-                  GENERATOR_MOCKED_ATTRS.shift
-                when :comma_delimited_to_array
-                  GENERATOR_MOCKED_ATTRS.shift
-                when :downcased
-                  GENERATOR_MOCKED_ATTRS.shift
-                end
-              end
-            end
-
-            class TemplateDir
-              attr_reader :d
-              def initialize(component)
-                @d = "#{@dir}/templates/"
-                @d << "#{component['type']}/#{component['language']}"
-                @d << "/#{component['using']}/#{component['template']}"              
-              end
-
-              def read
-                f = File.open(@d)
-                content = f.read
-                f.close
-
-                content
+        class Generator
+          # Redefine the $stdin in Generator
+          class AcceptInput
+            def self.str(type)
+              case type
+              when :condensed
+                GENERATOR_MOCKED_ATTRS.shift
+              when :comma_delimited_to_array
+                GENERATOR_MOCKED_ATTRS.shift
+              when :downcased
+                GENERATOR_MOCKED_ATTRS.shift
               end
             end
           end
 
-          class Configure
-            # Redefine the $stdin in Generator
-            class AcceptInput
-              def self.str(type)
-                case type
-                when :stripped
-                  CONFIGURE_MOCKED_INPUT.shift
-                end
-              end
+          class TemplateDir
+            attr_reader :d
+            def initialize(component)
+              @d = "#{@dir}/templates/"
+              @d << "#{component['type']}/#{component['language']}"
+              @d << "/#{component['using']}/#{component['template']}"              
             end
 
-            class TemplateDir
-              attr_reader :d
+            def read
+              f = File.open(@d)
+              content = f.read
+              f.close
 
-              def initialize(component, language, template)
-                @d = "#{@dir}/templates/"
-                @d << "#{component['type']}/#{language}"
-                @d << "/user/#{template}"
+              content
+            end
+          end
+        end
+
+        class Configure
+          # Redefine the $stdin in Generator
+          class AcceptInput
+            def self.str(type)
+              case type
+              when :stripped
+                CONFIGURE_MOCKED_INPUT.shift
               end
             end
+          end
 
+          class TemplateDir
+            attr_reader :d
+
+            def initialize(component, language, template)
+              @d = "#{@dir}/templates/"
+              @d << "#{component['type']}/#{language}"
+              @d << "/user/#{template}"
+            end
           end
 
         end
+
       end
     end
 
@@ -283,67 +264,79 @@ describe Ngi do
     end
 
     it 'should use the default if the current language is different from a custom template' do
-     ############
+     # ############
 
-      # We're going to configure ngi,
-      # according to the new CONFIGURE_MOCKED_INPUT
-      # This will just change the language to coffee
-      Ngi::Delegate::Configure.run(
-        write: true,
-        to: 'yaml',
-        destination: @config_file,
-        languages: @languages_hash,
-        config: @config_hash,
-        components: @components,
-        components_hash: @components_hash,
-        configurable: @configurable
-      )
+     #  CONFIGURE_MOCKED_INPUT = [
+     #    'language',
+     #    'script',
+     #    'coffee'
+     #  ]
 
-      # Now we'll create a directive (our language
-      # is still es5, so it should use the custom template)
+     #  # We're going to configure ngi,
+     #  # according to the new CONFIGURE_MOCKED_INPUT
+     #  # This will just change the language to coffee
+     #  Ngi::Delegate::Configure.run(
+     #    write: true,
+     #    to: 'yaml',
+     #    destination: @config_file,
+     #    languages: @languages_hash,
+     #    config: @config_hash,
+     #    components: @components,
+     #    components_hash: @components_hash,
+     #    configurable: @configurable
+     #  )
 
-      type = 'directive'
+     #  # Now we'll create a directive (our language
+     #  # is still es5, so it should use the custom template)
+     #  GENERATOR_MOCKED_ATTRS = [
+     #    'test.directive.js',
+     #    'myModule',
+     #    'myDirective',
+     #    ['someService, anotherService']
+     #  ]
 
-      chosen_type = -> (c) { c['name'] == type }
-      component = @components_hash.find(&chosen_type)
+     #  type = 'directive'
 
-      config_hash = Ngi::Delegate::Configure
-                    .new('test/config/config.yml')
-                    .to_ruby(from: 'yaml')
+     #  chosen_type = -> (c) { c['name'] == type }
+     #  component = @components_hash.find(&chosen_type)
 
-      # This just runs through the gambit of checking
-      # whether a custom template exists for the given
-      # componenet
-      if config_hash.key? 'templates'
-        custom = config_hash['templates'].find(&chosen_type)
-        language = config_hash['language'].collect { |_, v| v }
+     #  config_hash = Ngi::Delegate::Configure
+     #                .new('test/config/config.yml')
+     #                .to_ruby(from: 'yaml')
 
-        unless custom.nil?
-          template = custom['templates']
-                     .find { |t| language.include? t['language'] }
+     #  # This just runs through the gambit of checking
+     #  # whether a custom template exists for the given
+     #  # componenet
+     #  if config_hash.key? 'templates'
+     #    custom = config_hash['templates'].find(&chosen_type)
+     #    language = config_hash['language'].collect { |_, v| v }
 
-          unless template.nil?
-            template = template['template']
-            # Rebuild the object to be used by Delegate::Generator
-            custom = {
-              'type' => custom['type'],
-              'using' => 'user',
-              'template' => template,
-              'name' => custom['name']
-            }
+     #    unless custom.nil?
+     #      template = custom['templates']
+     #                 .find { |t| language.include? t['language'] }
 
-            component = custom
-          end
-        end
-      end
+     #      unless template.nil?
+     #        template = template['template']
+     #        # Rebuild the object to be used by Delegate::Generator
+     #        custom = {
+     #          'type' => custom['type'],
+     #          'using' => 'user',
+     #          'template' => template,
+     #          'name' => custom['name']
+     #        }
 
-      Ngi::Delegate::Generator.run(
-        type: type,
-        config: config_hash,
-        component: component
-      )
+     #        component = custom
+     #      end
+     #    end
+     #  end
 
-      puts File.read('test.directive.js')
+     #  Ngi::Delegate::Generator.run(
+     #    type: type,
+     #    config: config_hash,
+     #    component: component
+     #  )
+
+     #  puts File.read('test.directive.js')
     end
   end
 end
