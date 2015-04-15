@@ -15,7 +15,7 @@ class Configure
   attr_accessor :file, :location
 
   JSer = Utils::JSer
-  CURRENT_DIR = File.dirname(__FILE__)
+  Utils::CurrentDir.dir = File.dirname(__FILE__)
 
   # STDIN is separated into a class so that
   # it can be extracted and tested
@@ -53,7 +53,7 @@ class Configure
     attr_reader :d
 
     def initialize(component, language, template)
-      @d = "#{CURRENT_DIR}/../templates/"
+      @d = "#{Utils::CurrentDir.dir}/templates/"
       @d << "#{component['type']}/#{language}"
       @d << "/user/#{template}"
     end
@@ -86,14 +86,9 @@ class Configure
     end
 
     def self.create_template_file(args)
-      # component['language'] = config['language'][component['type']]
       component = args[:component]
       language = args[:language]
       template = args[:template]
-
-      # template_dir = "#{CURRENT_DIR}/templates/"
-      # template_dir << "#{component['type']}/#{language}"
-      # template_dir << "/user/#{template}"
 
       template_dir = TemplateDir.new(component, language, template).d
 
@@ -103,7 +98,6 @@ class Configure
       FileUtils.mkdir_p(destination) unless File.directory?(destination)
 
       # The actual custom file
-      # custom_file = "#{Dir.pwd}/#{component['template']}"
       custom_file = template
 
       # Copy the custom file into the new or existing "user" directory

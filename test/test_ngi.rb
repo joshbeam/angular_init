@@ -56,6 +56,8 @@ describe Ngi do
       class Delegate
         # Redefine some methods/classes
         class Generator
+          Utils::CurrentDir.dir = @dir
+
           # Redefine the $stdin in Generator
           class AcceptInput
             def self.str(type)
@@ -69,27 +71,12 @@ describe Ngi do
               end
             end
           end
-
-          # Abstracted template directory
-          class TemplateDir
-            attr_reader :d
-            def initialize(component)
-              @d = "#{@dir}/templates/"
-              @d << "#{component['type']}/#{component['language']}"
-              @d << "/#{component['using']}/#{component['template']}"
-            end
-
-            def read
-              f = File.open(@d)
-              content = f.read
-              f.close
-
-              content
-            end
-          end
         end
 
+        # Redefine
         class Configure
+          Utils::CurrentDir.dir = @dir
+
           # Redefine the $stdin in Generator
           class AcceptInput
             def self.str(type)
@@ -99,20 +86,7 @@ describe Ngi do
               end
             end
           end
-
-          # Redefine this abstracted class
-          class TemplateDir
-            attr_reader :d
-
-            def initialize(component, language, template)
-              @d = "#{@dir}/templates/"
-              @d << "#{component['type']}/#{language}"
-              @d << "/user/#{template}"
-            end
-          end
-
         end
-
       end
     end
 
@@ -148,6 +122,20 @@ describe Ngi do
     # actually create any files in the file system
     MemFs.activate!
 
+    # Make this directory in memory using MemFs (won't
+    # actually create this directory in the file system)
+    FileUtils.mkdir_p('templates/script/es5/default')
+
+    # Make the default template in memory from the actual one using IO.read
+    # since MemFs doesn't use IO (it only uses File)
+    # This will just save me from having to write the whole template
+    # out as a string inside a variable right here...
+    dir_str = 'templates/script/es5/default/basic.js'
+    File.open(dir_str, 'w') do |f|
+      f.write(IO.read("#{@dir}/templates/script/es5/default/basic.js"))
+      f.close
+    end
+
     def check_generated_content(type, file, comparison)
       # Now we're going to "create" a new directive using the default template
       Ngi::GeneratorMockedInput.input = @generator_mocked_input[type]
@@ -180,20 +168,6 @@ describe Ngi do
         f.close
       end
       ##########################
-    end
-
-    # Make this directory in memory using MemFs (won't
-    # actually create this directory in the file system)
-    FileUtils.mkdir_p('templates/script/es5/default')
-
-    # Make the default template in memory from the actual one using IO.read
-    # since MemFs doesn't use IO (it only uses File)
-    # This will just save me from having to write the whole template
-    # out as a string inside a variable right here...
-    dir_str = 'templates/script/es5/default/basic.js'
-    File.open(dir_str, 'w') do |f|
-      f.write(IO.read("#{@dir}/templates/script/es5/default/basic.js"))
-      f.close
     end
     #########################################################
   end

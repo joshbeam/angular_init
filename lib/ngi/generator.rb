@@ -42,7 +42,7 @@ class Generator
 
   WHITESPACE = /\s*/
   EMPTY = ''
-  CURRENT_DIR = File.dirname(__FILE__)
+  Utils::CurrentDir.dir = File.dirname(__FILE__)
 
   ################################
 
@@ -56,7 +56,7 @@ class Generator
     attr_reader :dir
 
     def initialize(component)
-      @dir = "#{CURRENT_DIR}/../templates/"
+      @dir = "#{Utils::CurrentDir.dir}/templates/"
       @dir << "#{component['type']}/#{component['language']}"
       @dir << "/#{component['using']}/#{component['template']}"
     end

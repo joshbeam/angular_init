@@ -9,6 +9,7 @@ module Utils
   require_relative 'command_parser'
   require_relative 'jser'
   require_relative 'user_input'
+  require_relative 'current_dir'
 
   class AskLoop; end
 end
