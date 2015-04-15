@@ -16,7 +16,6 @@ require 'yaml'
 class Configure
   attr_accessor :file, :location
 
-  Utils = ::Utils
   JSer = Utils::JSer
 
   # STDIN is separated into a class so that
