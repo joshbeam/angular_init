@@ -8,6 +8,7 @@ CURRENT_DIR = File.dirname(__FILE__)
 require_relative 'ngi/delegate'
 require_relative 'ngi/utils/utils'
 require_relative 'ngi/version'
+require_relative 'ngi/parser'
 
 # This module wraps the basic classes
 # of the tool ngi (in other words, this
@@ -15,5 +16,6 @@ require_relative 'ngi/version'
 module Ngi
   # REVIEW: Is this the best way to do it?
   Delegate = ::Delegate
-  UserInput = ::Utils::UserInput
+  # UserInput = ::Utils::UserInput
+  Parser = ::Parser
 end

@@ -159,8 +159,15 @@ describe Ngi do
       # Now we're going to "create" a new directive using the default template
       type = 'directive'
 
-      chosen_type = -> (c) { c['name'] == type }
-      component = @components_hash.find(&chosen_type)
+      # chosen_type = -> (c) { c['name'] == type }
+      # component = @components_hash.find(&chosen_type)
+      component = Ngi::Parser::ComponentChooser
+                  .new(
+                    type: type,
+                    components_hash: @components_hash,
+                    config_hash: @config_hash
+                  )
+                  .component
 
       Ngi::Delegate::Generator.run(
         type: type,
@@ -212,42 +219,23 @@ describe Ngi do
       # is still es5, so it should use the custom template)
       type = 'directive'
 
-      chosen_type = -> (c) { c['name'] == type }
-      component = @components_hash.find(&chosen_type)
+      # chosen_type = -> (c) { c['name'] == type }
+      # component = @components_hash.find(&chosen_type)
 
       config_hash = Ngi::Delegate::Configure
                     .new('test/config/config.yml')
                     .to_ruby(from: 'yaml')
 
-      # TODO: extract this class from ngi and put it
-      # in a separate class so I don't have to copy
-      # and paste it here
-
       # This just runs through the gambit of checking
       # whether a custom template exists for the given
-      # componenet
-      if config_hash.key? 'templates'
-        custom = config_hash['templates'].find(&chosen_type)
-        language = config_hash['language'].collect { |_, v| v }
-
-        unless custom.nil?
-          template = custom['templates']
-                     .find { |t| language.include? t['language'] }
-
-          unless template.nil?
-            template = template['template']
-            # Rebuild the object to be used by Delegate::Generator
-            custom = {
-              'type' => custom['type'],
-              'using' => 'user',
-              'template' => template,
-              'name' => custom['name']
-            }
-
-            component = custom
-          end
-        end
-      end
+      # component
+      component = Ngi::Parser::ComponentChooser
+                  .new(
+                    type: type,
+                    components_hash: @components_hash,
+                    config_hash: @config_hash
+                  )
+                  .component
 
       Ngi::Delegate::Generator.run(
         type: type,
@@ -261,82 +249,6 @@ describe Ngi do
 
         assert content == 'hello myDirective'
       end
-    end
-
-    it 'should use the default if the current language is different from a custom template' do
-     # ############
-
-     #  CONFIGURE_MOCKED_INPUT = [
-     #    'language',
-     #    'script',
-     #    'coffee'
-     #  ]
-
-     #  # We're going to configure ngi,
-     #  # according to the new CONFIGURE_MOCKED_INPUT
-     #  # This will just change the language to coffee
-     #  Ngi::Delegate::Configure.run(
-     #    write: true,
-     #    to: 'yaml',
-     #    destination: @config_file,
-     #    languages: @languages_hash,
-     #    config: @config_hash,
-     #    components: @components,
-     #    components_hash: @components_hash,
-     #    configurable: @configurable
-     #  )
-
-     #  # Now we'll create a directive (our language
-     #  # is still es5, so it should use the custom template)
-     #  GENERATOR_MOCKED_ATTRS = [
-     #    'test.directive.js',
-     #    'myModule',
-     #    'myDirective',
-     #    ['someService, anotherService']
-     #  ]
-
-     #  type = 'directive'
-
-     #  chosen_type = -> (c) { c['name'] == type }
-     #  component = @components_hash.find(&chosen_type)
-
-     #  config_hash = Ngi::Delegate::Configure
-     #                .new('test/config/config.yml')
-     #                .to_ruby(from: 'yaml')
-
-     #  # This just runs through the gambit of checking
-     #  # whether a custom template exists for the given
-     #  # componenet
-     #  if config_hash.key? 'templates'
-     #    custom = config_hash['templates'].find(&chosen_type)
-     #    language = config_hash['language'].collect { |_, v| v }
-
-     #    unless custom.nil?
-     #      template = custom['templates']
-     #                 .find { |t| language.include? t['language'] }
-
-     #      unless template.nil?
-     #        template = template['template']
-     #        # Rebuild the object to be used by Delegate::Generator
-     #        custom = {
-     #          'type' => custom['type'],
-     #          'using' => 'user',
-     #          'template' => template,
-     #          'name' => custom['name']
-     #        }
-
-     #        component = custom
-     #      end
-     #    end
-     #  end
-
-     #  Ngi::Delegate::Generator.run(
-     #    type: type,
-     #    config: config_hash,
-     #    component: component
-     #  )
-
-     #  puts File.read('test.directive.js')
     end
   end
 end
