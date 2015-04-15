@@ -1,6 +1,16 @@
 require_relative '../lib/ngi'
+# require_relative 'testing_utils'
 require 'minitest/autorun'
 require 'memfs'
+
+# Overwrite output so that we don't see it when testing
+def puts(_)
+  nil
+end
+
+def print(_)
+  nil
+end
 
 describe Ngi do
   before do
@@ -27,43 +37,46 @@ describe Ngi do
 
     # Open this up to redefine some stuff
     module Ngi
-      # This mocks the user input for creating a new component
-      GENERATOR_MOCKED_ATTRS = [
-        'test.directive.js',
-        'myModule',
-        'myDirective',
-        ['someService, anotherService']
-      ]
+      # Be able to mock $stdin
+      class MockedInput
+        @@input = []
 
-      CONFIGURE_MOCKED_INPUT = [
-        'templates',
-        'directive',
-        'test.template.js',
-        'es5'
-      ]
+        def self.input=(input)
+          @@input = input
+        end
+
+        def self.input
+          return @@input
+        end
+      end
+
+      class GeneratorMockedInput < MockedInput; end
+      class ConfigureMockedInput < MockedInput; end
+
       class Delegate
-
+        # Redefine some methods/classes
         class Generator
           # Redefine the $stdin in Generator
           class AcceptInput
             def self.str(type)
               case type
               when :condensed
-                GENERATOR_MOCKED_ATTRS.shift
+                GeneratorMockedInput.input.shift
               when :comma_delimited_to_array
-                GENERATOR_MOCKED_ATTRS.shift
+                GeneratorMockedInput.input.shift
               when :downcased
-                GENERATOR_MOCKED_ATTRS.shift
+                GeneratorMockedInput.input.shift
               end
             end
           end
 
+          # Abstracted template directory
           class TemplateDir
             attr_reader :d
             def initialize(component)
               @d = "#{@dir}/templates/"
               @d << "#{component['type']}/#{component['language']}"
-              @d << "/#{component['using']}/#{component['template']}"              
+              @d << "/#{component['using']}/#{component['template']}"
             end
 
             def read
@@ -82,11 +95,12 @@ describe Ngi do
             def self.str(type)
               case type
               when :stripped
-                CONFIGURE_MOCKED_INPUT.shift
+                ConfigureMockedInput.input.shift
               end
             end
           end
 
+          # Redefine this abstracted class
           class TemplateDir
             attr_reader :d
 
@@ -103,64 +117,41 @@ describe Ngi do
     end
 
     # Expected file output
-    @finished_file = ";(function(app) {
-
-  'use strict';
-
-  app.directive('myDirective',myDirective);
-
-  myDirective.$inject = ['someService, anotherService'];
-
-  function myDirective(someService, anotherService) {
-
-    var d = {
-      restrict: 'A',
-      link: link
-    };
-
-    return d;
-
-    function link(scope, element, attrs) {
-
+    @finished_files = {
+      'directive' => IO.read("#{@dir}/finished_files/directive.finished.js"),
+      'controller' => IO.read("#{@dir}/finished_files/controller.finished.js"),
+      'filter' => IO.read("#{@dir}/finished_files/filter.finished.js")
     }
 
-
-  }
-
-})(angular.module('myModule'));".gsub(/\s/, '')
+    @generator_mocked_input = {
+      'directive' => [
+        'test.directive.js',
+        'myModule',
+        'myDirective',
+        %w(someService anotherService)
+      ],
+      'controller' => [
+        'test.controller.js',
+        'myModule',
+        'MyController',
+        %w(someService anotherService)
+      ],
+      'filter' => [
+        'test.filter.js',
+        'myModule',
+        'someFilter',
+        %w(aService andAnotherOne)
+      ]
+    }
 
     # Now we can activate MemFs so that we don't
     # actually create any files in the file system
     MemFs.activate!
 
-    # Make this directory in memory using MemFs (won't
-    # actually create this directory in the file system)
-    Dir.mkdir('templates')
-    Dir.mkdir('templates/script')
-    Dir.mkdir('templates/script/es5')
-    Dir.mkdir('templates/script/es5/default')
-
-    # Make the default template in memory from the actual one using IO.read
-    # since MemFs doesn't use IO (it only uses File)
-    # This will just save me from having to write the whole template
-    # out as a string inside a variable right here...
-    dir_str = 'templates/script/es5/default/basic.js'
-    File.open(dir_str, 'w') do |f|
-      f.write(IO.read("#{@dir}/templates/script/es5/default/basic.js"))
-      f.close
-    end
-    #########################################################
-  end
-
-  after { MemFs.deactivate! }
-
-  describe 'Generator' do
-    it 'should make a template for the given component' do
+    def check_generated_content(type, file, comparison)
       # Now we're going to "create" a new directive using the default template
-      type = 'directive'
-
-      # chosen_type = -> (c) { c['name'] == type }
-      # component = @components_hash.find(&chosen_type)
+      Ngi::GeneratorMockedInput.input = @generator_mocked_input[type]
+      type = type
       component = Ngi::Parser::ComponentChooser
                   .new(
                     type: type,
@@ -177,15 +168,60 @@ describe Ngi do
 
       ###### ASSERTIONS ########
       # It should've created the directive
-      File.exist?('test.directive.js').must_equal true
+      File.exist?(file).must_equal true
 
       # The directive should match the expected output,
       # which is shown in @finished_file
-      File.open('test.directive.js', 'r') do |f|
-        assert f.read.to_s.gsub(/\s/, '') == @finished_file
+      File.open(file, 'r') do |f|
+        content = f.read.to_s.gsub(/\s/, '')
+        puts content
+        puts comparison
+        assert content == comparison
         f.close
       end
       ##########################
+    end
+
+    # Make this directory in memory using MemFs (won't
+    # actually create this directory in the file system)
+    FileUtils.mkdir_p('templates/script/es5/default')
+
+    # Make the default template in memory from the actual one using IO.read
+    # since MemFs doesn't use IO (it only uses File)
+    # This will just save me from having to write the whole template
+    # out as a string inside a variable right here...
+    dir_str = 'templates/script/es5/default/basic.js'
+    File.open(dir_str, 'w') do |f|
+      f.write(IO.read("#{@dir}/templates/script/es5/default/basic.js"))
+      f.close
+    end
+    #########################################################
+  end
+
+  after { MemFs.deactivate! }
+
+  describe 'Generator' do
+    describe 'Default Templates' do
+      it 'should make a directive' do
+        type = 'directive'
+        check_generated_content(
+          type, 'test.directive.js', @finished_files[type].gsub(/\s/, '')
+        )
+      end
+
+      it 'should make a controller' do
+        type = 'controller'
+        check_generated_content(
+          type, 'test.controller.js', @finished_files[type].gsub(/\s/, '')
+        )
+      end
+
+      it 'should make a filter' do
+        type = 'filter'
+        check_generated_content(
+          type, 'test.filter.js', @finished_files[type].gsub(/\s/, '')
+        )
+      end
     end
 
     it 'should use the custom template if one was set' do
@@ -197,8 +233,10 @@ describe Ngi do
       end
 
       # Make this directory in memory with MemFs
-      Dir.mkdir('test')
-      Dir.mkdir('test/config')
+      FileUtils.mkdir_p('test/config')
+
+      Ngi::ConfigureMockedInput
+        .input = %w(templates directive test.template.js es5)
 
       # We're going to configure ngi,
       # according to CONFIGURE_MOCKED_INPUT
@@ -215,40 +253,8 @@ describe Ngi do
         configurable: @configurable
       )
 
-      # Now we'll create a directive (our language
-      # is still es5, so it should use the custom template)
       type = 'directive'
-
-      # chosen_type = -> (c) { c['name'] == type }
-      # component = @components_hash.find(&chosen_type)
-
-      config_hash = Ngi::Delegate::Configure
-                    .new('test/config/config.yml')
-                    .to_ruby(from: 'yaml')
-
-      # This just runs through the gambit of checking
-      # whether a custom template exists for the given
-      # component
-      component = Ngi::Parser::ComponentChooser
-                  .new(
-                    type: type,
-                    components_hash: @components_hash,
-                    config_hash: @config_hash
-                  )
-                  .component
-
-      Ngi::Delegate::Generator.run(
-        type: type,
-        config: config_hash,
-        component: component
-      )
-
-      File.open('test.directive.js', 'r') do |f|
-        content = f.read
-        f.close
-
-        assert content == 'hello myDirective'
-      end
+      check_generated_content(type, 'test.directive.js', 'hellomyDirective')
     end
   end
 end
