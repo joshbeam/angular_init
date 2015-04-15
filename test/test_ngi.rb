@@ -92,9 +92,16 @@ describe Ngi do
 
     # Expected file output
     @finished_files = {
-      'directive' => IO.read("#{@dir}/finished_files/directive.finished.js"),
-      'controller' => IO.read("#{@dir}/finished_files/controller.finished.js"),
-      'filter' => IO.read("#{@dir}/finished_files/filter.finished.js")
+      'directive' => {
+        'es5' => IO.read("#{@dir}/finished_files/script/es5/directive.finished.js"),
+        'coffee' => IO.read("#{@dir}/finished_files/script/coffee/directive.finished.coffee")
+      },
+      'controller' => {
+        'es5' => IO.read("#{@dir}/finished_files/script/es5/controller.finished.js")
+      },
+      'filter' => {
+        'es5' => IO.read("#{@dir}/finished_files/script/es5/filter.finished.js")
+      }
     }
 
     @generator_mocked_input = {
@@ -125,6 +132,7 @@ describe Ngi do
     # Make this directory in memory using MemFs (won't
     # actually create this directory in the file system)
     FileUtils.mkdir_p('templates/script/es5/default')
+    FileUtils.mkdir_p('templates/script/coffee/default')
 
     # Make the default template in memory from the actual one using IO.read
     # since MemFs doesn't use IO (it only uses File)
@@ -136,9 +144,18 @@ describe Ngi do
       f.close
     end
 
-    def check_generated_content(type, file, comparison)
+    dir_str = 'templates/script/coffee/default/basic.js'
+    File.open(dir_str, 'w') do |f|
+      f.write(IO.read("#{@dir}/templates/script/coffee/default/basic.js"))
+      f.close
+    end
+
+    def check_generated_content(type, language, file, comparison)
       # Now we're going to "create" a new directive using the default template
-      Ngi::GeneratorMockedInput.input = @generator_mocked_input[type]
+      if Ngi::GeneratorMockedInput.input.size == 0
+        Ngi::GeneratorMockedInput.input = @generator_mocked_input[type].dup
+      end
+
       type = type
       component = Ngi::Parser::ComponentChooser
                   .new(
@@ -162,8 +179,6 @@ describe Ngi do
       # which is shown in @finished_file
       File.open(file, 'r') do |f|
         content = f.read.to_s.gsub(/\s/, '')
-        puts content
-        puts comparison
         assert content == comparison
         f.close
       end
@@ -178,27 +193,33 @@ describe Ngi do
     describe 'Default Templates' do
       it 'should make a directive' do
         type = 'directive'
+        language = 'es5'
         check_generated_content(
-          type, 'test.directive.js', @finished_files[type].gsub(/\s/, '')
+          type, language,
+          'test.directive.js', @finished_files[type][language].gsub(/\s/, '')
         )
       end
 
       it 'should make a controller' do
         type = 'controller'
+        language = 'es5'
         check_generated_content(
-          type, 'test.controller.js', @finished_files[type].gsub(/\s/, '')
+          type, language, 'test.controller.js',
+          @finished_files[type][language].gsub(/\s/, '')
         )
       end
 
       it 'should make a filter' do
         type = 'filter'
+        language = 'es5'
         check_generated_content(
-          type, 'test.filter.js', @finished_files[type].gsub(/\s/, '')
+          type, language,
+          'test.filter.js', @finished_files[type][language].gsub(/\s/, '')
         )
       end
     end
 
-    it 'should use the custom template if one was set' do
+    it 'should use the custom template if one was set for that language (and it should use the default for all other languages not set)' do
       # First we'll create our custom template in memory
       # using MemFs to mock it
       File.open('test.template.js', 'w') do |f|
@@ -227,8 +248,43 @@ describe Ngi do
         configurable: @configurable
       )
 
+      check_generated_content(
+        'directive', 'es5',
+        'test.directive.js', 'hellomyDirective'
+      )
+
+      # Change the language to coffee so we can
+      # make sure that it will use the default
+      # coffee template, since only the es5
+      # custom template was set
+      Ngi::ConfigureMockedInput
+        .input = %w(language script coffee)
+
+      Ngi::Delegate::Configure.run(
+        write: true,
+        to: 'yaml',
+        destination: @config_file,
+        languages: @languages_hash,
+        config: @config_hash,
+        components: @components,
+        components_hash: @components_hash,
+        configurable: @configurable
+      )
+
       type = 'directive'
-      check_generated_content(type, 'test.directive.js', 'hellomyDirective')
+      language = 'coffee'
+      Ngi::GeneratorMockedInput
+        .input = [
+          'second.test.directive.js',
+          'myModule',
+          'myDirective',
+          %w(someService anotherService)
+        ]
+      check_generated_content(
+        type, language,
+        'second.test.directive.js',
+        @finished_files[type][language].gsub(/\s/, '')
+      )
     end
   end
 end
