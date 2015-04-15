@@ -10,6 +10,7 @@ Here you'll learn the basics of creating your own custom template to use with ng
 - Run `$ ngi -o`
 - Choose `templates`, then `directive`
 - When prompted to select the file to use, type `my.directive.template.js`
+- You'll then be prompted to choose the JavaScript syntax (current options are `es5` and `coffee`)
 - All done!
 
 *If you want to revert back to using default templates at any time: when you're prompted to type the file name of the template you want to use, just type the keyword `default` instead, and you'll be good to go!*

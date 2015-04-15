@@ -92,6 +92,7 @@ By the way, the output of this little tool is meant to follow [John Papa's Angul
 
 - Create a module, directive, controller, filter, run, config, "routes" config, constant, service, factory, or index HTML page by saying `ngi <component>`, where `<component>` is any of the above types (module, directive, etc.)
 - Current languages that have default templates: CoffeeScript, ECMAScript5 (choose your language with `ngi --config (or -c)`)
+- Use custom templates
 
 ## Coming soon
 
