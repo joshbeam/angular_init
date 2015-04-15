@@ -3,8 +3,6 @@
 # github.com/joshbeam/angular_init
 # MIT License
 
-# CURRENT_DIR is defined in angualr_init.rb
-
 # TODO: Method to clean out unused custom template files
 
 require_relative 'utils/utils'
@@ -17,6 +15,7 @@ class Configure
   attr_accessor :file, :location
 
   JSer = Utils::JSer
+  CURRENT_DIR = File.dirname(__FILE__)
 
   # STDIN is separated into a class so that
   # it can be extracted and tested
@@ -54,7 +53,7 @@ class Configure
     attr_reader :d
 
     def initialize(component, language, template)
-      @d = "#{CURRENT_DIR}/templates/"
+      @d = "#{CURRENT_DIR}/../templates/"
       @d << "#{component['type']}/#{language}"
       @d << "/user/#{template}"
     end

@@ -5,9 +5,6 @@
 # github.com/joshbeam/angular_init
 # MIT License
 
-# Ngi is the main module (src/ruby/angular_init.rb)
 require_relative '../lib/ngi'
-#require_relative '../lib/ngi/utils/utils'
-#require_relative '../lib/ngi/parser'
 
 Ngi::Parser.parse(ARGV)
