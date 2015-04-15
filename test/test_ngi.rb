@@ -35,6 +35,17 @@ describe Ngi do
     @configurable = Ngi::Delegate::Configure
                     .new(@configurable_file).to_ruby(from: 'yaml')
 
+    module Utils
+      class CommandParser
+        # Redefine the output so we can test it
+        class Output
+          def to_s
+            @str
+          end
+        end
+      end
+    end
+
     # Open this up to redefine some stuff
     module Ngi
       # Be able to mock $stdin
@@ -188,6 +199,14 @@ describe Ngi do
   end
 
   after { MemFs.deactivate! }
+
+  describe 'Parser' do
+    describe '-v' do
+      it 'should show the version of ngi' do
+        assert Parser.parse(['-v']) == "ngi #{Ngi::VERSION}"
+      end
+    end
+  end
 
   describe 'Generator' do
     describe 'Default Templates' do

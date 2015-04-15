@@ -11,6 +11,18 @@ module Utils
     attr_reader :args
     attr_accessor :banner, :version, :separator, :name
 
+    # Create an abstraction of puts
+    # so that we can test it
+    class Output
+      def initialize(str)
+        @str = str
+      end
+
+      def to_s
+        puts @str
+      end
+    end
+
     def initialize
       # TODO: to "Usage #{file_name}", etc.
       @name = '<CLI>'
@@ -82,22 +94,22 @@ module Utils
     def register_help
       # automaticaly register this listener
       on(['-h', '--help'], 'Show the help menu') do
-        puts @separator
-        puts @banner
+        Output.new(@separator).to_s
+        Output.new(@banner).to_s
 
         @listeners.each_with_index do |listener, i|
           desc = "\n" << "(#{i + 1}) #{listener[:description]}: "
           desc << "#{listener[:options].join(', ')}"
-          puts desc
+          Output.new(desc).to_s
         end
-        puts @separator
+        Output.new(@separator).to_s
       end
     end
 
     def register_version
       # automaticaly register this listener
       on(['-v', '--version'], 'Show the version') do
-        puts "#{@name} #{@version}"
+        Output.new("#{@name} #{@version}").to_s
       end
     end
   end
