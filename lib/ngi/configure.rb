@@ -19,6 +19,17 @@ class Configure
   Utils = ::Utils
   JSer = Utils::JSer
 
+  # STDIN is separated into a class so that
+  # it can be extracted and tested
+  class AcceptInput
+    def self.str(type)
+      case type
+      when :stripped
+        $stdin.gets.strip
+      end
+    end
+  end
+
   # Here, we implement the virtual class "Utils::AskLoop"
   # (see src/ruby/utils/utils.rb)
   # This implementation just creates a loop that asks
@@ -26,14 +37,35 @@ class Configure
   class AskLoop < Utils::AskLoop
     def self.ask(args)
       puts "\nChoose from: #{args[:valid]}"
-      answer = $stdin.gets.strip
+      answer = AcceptInput.str(:stripped)
 
       loop do
         break if args[:check].include?(answer)
         puts "Choose from: #{args[:valid]}\n(or press ctrl+c to exit)"
-        answer = $stdin.gets.strip
+        answer = AcceptInput.str(:stripped)
       end
       answer
+    end
+  end
+
+  # An extraction of the template file/directory for
+  # the generator... This way it can be separated, redefined,
+  # and tested.
+  class TemplateDir
+    attr_reader :d
+
+    def initialize(component, language, template)
+      @d = "#{CURRENT_DIR}/templates/"
+      @d << "#{component['type']}/#{language}"
+      @d << "/user/#{template}"
+    end
+
+    def read
+      f = File.open(@d)
+      content = f.read
+      f.close
+
+      content
     end
   end
 
@@ -61,9 +93,11 @@ class Configure
       language = args[:language]
       template = args[:template]
 
-      template_dir = "#{CURRENT_DIR}/templates/"
-      template_dir << "#{component['type']}/#{language}"
-      template_dir << "/user/#{template}"
+      # template_dir = "#{CURRENT_DIR}/templates/"
+      # template_dir << "#{component['type']}/#{language}"
+      # template_dir << "/user/#{template}"
+
+      template_dir = TemplateDir.new(component, language, template).d
 
       destination = File.dirname(template_dir)
 
@@ -95,7 +129,7 @@ and that you're in the correct directory of the custom template."
       chosen_component = -> (c) { c['name'] == component }
 
       print '[?] Use the following template file: '
-      file_name = $stdin.gets.strip
+      file_name = AcceptInput.str(:stripped)
 
       print '[?] What language is this template for?'
       type = config.components_hash.find(&chosen_component)['type']
@@ -280,7 +314,9 @@ and that you're in the correct directory of the custom template."
   def initialize(location = nil)
     unless location.nil?
       @location = location
-      @file = IO.read(@location)
+      f = File.open(@location, 'r')
+      @file = f.read
+      f.close
     end
 
     yield(self) if block_given?

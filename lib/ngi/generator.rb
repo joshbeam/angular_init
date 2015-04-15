@@ -51,17 +51,34 @@ class Generator
   # SET UP ALL THE CONFIG OPTIONS
   # Generator.new (the initialization function) is called in self.run
 
+  # An extraction of the template file/directory for
+  # the generator... This way it can be separated, redefined,
+  # and tested.
+  class TemplateDir
+    attr_reader :dir
+
+    def initialize(component)
+      @dir = "#{CURRENT_DIR}/../templates/"
+      @dir << "#{component['type']}/#{component['language']}"
+      @dir << "/#{component['using']}/#{component['template']}"
+    end
+
+    def read
+      f = File.open(@dir)
+      content = f.read
+      f.close
+
+      content
+    end
+  end
+
   def initialize(args)
     @type, @config = args[:type], args[:config]
 
     @component = args[:component]
     @component['language'] = @config['language'][@component['type']]
 
-    template_dir = "#{CURRENT_DIR}/../templates/"
-    template_dir << "#{@component['type']}/#{@component['language']}"
-    template_dir << "/#{@component['using']}/#{@component['template']}"
-
-    @template_file = IO.read(template_dir)
+    @template_file = TemplateDir.new(@component).read
 
     yield(self) if block_given?
   end

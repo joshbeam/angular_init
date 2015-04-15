@@ -1,4 +1,4 @@
 ---
 language:
-  script: es5
+  script: coffee
   markup: html
