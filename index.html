@@ -78,7 +78,7 @@
                         <p class="intro-text">
                             Speed up AngularJS development by creating templates for all your components from the command line.
                             
-<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>gem install ngi <span class="c"># =&gt; installs current version, 0.2.x</span>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>gem install ngi <span class="c"># =&gt; installs current version, 0.3.x</span>
 <span class="nv">$ </span><span class="nb">cd</span> ~/MyAwesomeApp <span class="c"># =&gt; goes to your project</span>
 <span class="nv">$ </span>ngi controller <span class="c"># =&gt; makes a controller for your app</span></code></pre></div>
                         </p>
@@ -116,22 +116,16 @@
         </div>
     </section>
         <!-- About Section -->
-    <section class="container content-section text-center">
-        <div id="about" class="row">
+    <section id="about" class="container content-section text-center">
+        <div class="row">
             <div class="col-lg-8 col-lg-offset-2">
-                <h1>About angular_init</h1>
-                <h2>In simple terms</h2>
+                <h1>About</h1>
                 <p>
-                This tool, also called by its short-name <code>ngi</code>, can make (for example) an AngularJS controller template file for you (.js), so that <em>whenever you want to make a new controller for your app, you don't have to type the same starting code over and over again</em> (by the way, this tool doesn't only create controllers. It does directives, filters... almost anything).
+                    angular_init (called <code>ngi</code>) creates AngularJS templates for you from the command line <strong>so you don't have to type the same starting code over and over again</strong>. It's a tool with just one purpose, so it's small and fast.
                 </p>
-                <h2>Why ngi and not something else?</h2>
                 <p>
-                You could create your own templates and just copy and paste (but this is cumbersome). There are also all-encompassing scaffolding tools that handle a variety of tasks, like generating templates. But that's like going to a general practice doctor, when you know you just need to see the otolaryngologist.
+                    Most developers are probably using the command line anyways in their normal workflow, so why not also create AngularJS code from the command line?
                 </p>
-                <h2>ngi has one task, which makes it lightweight and specialized.</h2> 
-                <p>
-                Most AngularJS developers are probably using the command line already (Gulp, Bower, NPM, Git, etc.), so why not use the command line to streamline your code-writing too?
-                </p>         
             </div>
         </div>
     </section>
@@ -159,6 +153,12 @@
 
 <span class="c"># use either --options or -o</span>
 ~/MyAwesomeApp <span class="nv">$ </span>ngi --options <span class="c"># =&gt; choose your language to use (CoffeeScript or ECMAScript5)</span></code></pre></div>
+              <p>
+                By default, ngi uses default templates that follow <a href="https://github.com/johnpapa/angular-styleguide">John Papa's AngularJS style guide</a>.
+              </p>
+              <p>
+                You can also use your own custom templates. Check out the <a href="https://github.com/joshbeam/angular_init/blob/master/TUTORIAL.md">tutorial on ngi's GitHub page</a>.
+              </p>
             </div>
         </div>
     </section>
@@ -194,7 +194,7 @@
                         <p>
                             <br><br>
                             <small>
-                                <strong>Dependencies</strong> <a href="https://www.ruby-lang.org/en/downloads/">Ruby 2.1</a> and <a href="https://rubygems.org/pages/download">RubyGems <span id="gem-couter"></span></a> (optional <a href="http://bundler.io/">Bundler</a>)
+                                You need <a href="https://www.ruby-lang.org/en/downloads/">Ruby 2.1</a> and <a href="https://rubygems.org/pages/download">RubyGems <span id="gem-couter"></span></a> (optional <a href="http://bundler.io/">Bundler</a>)
                             </small>
                         </p>
                     </div>
