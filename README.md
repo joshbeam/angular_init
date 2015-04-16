@@ -3,8 +3,6 @@
 
 ## Quick Start
 
-### Description
-
 ngi creates AngularJS templates for you from the command line.
 
 ### Install in seconds
@@ -17,7 +15,17 @@ $ cd ~/MyAwesomeApp # => go to your app
 $ ngi controller # => creates a new AngularJS controller
 ```
 
-# Technical Information
+## Features
+
+- Has default templates to create components for you (directives, controllers, etc.) in ECMAScript5 and CoffeeScript (type `ngi -h` to see all the available components)
+- Supports custom templates
+
+## Tutorials
+
+- Type `ngi -h` to see a list of all available components that can be created (directives, controllers, etc.)
+- [How to use custom templates instead of the default ones][tutorial]
+
+## Technical Information
 
 Uses <a href="http://semver.org/">Semantic Versioning</a>
 
