@@ -6,12 +6,31 @@ Here you'll learn the basics of creating your own custom template to use with ng
 
 ## Quick Start
 
-- Create a new template file (call it, say, `my.directive.template.js`)
-- Run `$ ngi -o`
-- Choose `templates`, then `directive`
-- When prompted to select the file to use, type `my.directive.template.js`
-- You'll then be prompted to choose the JavaScript syntax (current options are `es5` and `coffee`)
-- All done!
+**Step 1** First, create a template following the [syntax below][syntax]. You can use your own styling to make the template fit your own workflow. Then you want to give the template a name. For this example, we'll use `my.directive.template.js`
+
+**Step 2** Execute `$ ngi -o` so that you can configure ngi. This is where we're going to tell ngi to use the new template file you just created.
+
+**Step 3** You'll see something like this:
+
+```shell
+Current settings
+================
+1) Language: {'script': 'es5', 'markup': 'html'}
+2) Templates: Currently using default settings
+
+Choose from: ['language', 'templates']
+templates # type this to select templates
+
+Choose from: ['directive', 'controller', 'factory', 'service', 'config', 'run', 'routes', 'filter', 'module', 'constant', 'index']
+directive # here, we're creating a directive
+[?] Use the following template file: my.directive.template.js # this is where you choose the new custom template to use
+```
+
+*Pro Tip: Make sure that if you are not currently in the same directory as your custom template file, that you use the absolute path to the template file (like `User/yourname/Sites/MyAwesomeApp/my.directive.template.js`), or else ngi will tell you that it can't find the file!*
+
+**Step 4** Follow the rest of the prompts (you'll choose the syntax that the template is in, which is either `es5` for ECMAScript5 or `coffee` for CoffeeScript). In this example, we'll say we set the language to `es5`.
+
+Now, whenever your current language is set to `es5` and you execute `ngi directive`, ngi will **now use your custom template file when generating a directive**.
 
 *If you want to revert back to using default templates at any time: when you're prompted to type the file name of the template you want to use, just type the keyword `default` instead, and you'll be good to go!*
 
@@ -103,4 +122,5 @@ Use the following **tags** in your template:
 {% endif <component> %}
 ```
 
+[syntax]: #syntax
 [liquid]: http://liquidmarkup.org/
