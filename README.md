@@ -11,7 +11,7 @@
 
 ## Quick Start
 
-angular_init (short-name: ngi) creates AngularJS templates for you from the command line.
+angular_init (short-name: ngi) creates AngularJS templates for you from the command line **so you don't have to type the same starting code over and over again**. It's a tool with just one purpose, so it's small and fast.
 
 ### Get up and running in seconds
 
