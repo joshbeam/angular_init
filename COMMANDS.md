@@ -1,4 +1,4 @@
-```javascript
+```shell
 ~/MyAwesomeApp $ ngi controller # => controller
 ~/MyAwesomeApp $ ngi directive # => directive
 ~/MyAwesomeApp $ ngi factory # => factory

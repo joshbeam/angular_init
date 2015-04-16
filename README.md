@@ -1,5 +1,5 @@
 
-# ngi 0.3.0
+# ngi 0.3.0 [Website][]
 
 - [Quick Start][quick-start]
 - [Example][example]
@@ -11,7 +11,7 @@
 
 ## Quick Start
 
-angular_init (short-name: ngi) creates AngularJS templates for you from the command line **so you don't have to type the same starting code over and over again**. It's a tool with just one purpose, so it's small and fast.
+angular_init (called `ngi`) creates AngularJS templates for you from the command line **so you don't have to type the same starting code over and over again**. It's a tool with just one purpose, so it's small and fast.
 
 ### Get up and running in seconds
 
@@ -20,7 +20,7 @@ angular_init (short-name: ngi) creates AngularJS templates for you from the comm
 ```shell
 $ gem install ngi
 $ cd ~/MyAwesomeApp # => go to your app
-$ ngi controller # => creates a new AngularJS controller
+$ ngi controller # => create a new AngularJS controller
 ```
 
 ## Example
@@ -53,14 +53,14 @@ By the way, the output of this little tool is meant to follow [John Papa's Angul
 
 ## Features
 
-*Have an idea for a feature? Email frontendcollisionblog@gmail.com! Just write: "Hey, I think it would be awesome if you included ____ in ngi because _____."*
+*Have an idea for a feature? Email frontendcollisionblog@gmail.com! Just write: "Hey, I think it would be awesome if you included ____ in ngi because ____."*
 
-- Has **default templates** to create components for you (directives, controllers, etc.) in ECMAScript5 and CoffeeScript (type `ngi -h` to see all the available components)
-- Supports **custom templates**
+- Has **default templates** to create components for you (directives, controllers, etc.) in ECMAScript5 and CoffeeScript (type `ngi -h` to see all the available components). By the way, the default templates follow [John Papa's AngularJS Style Guide][style-guide].
+- Supports **custom templates** (see the [tutorial][tutorial] for that)
 
 ## Installation
 
-**Dependencies** [Ruby 2.1.0][ruby] and [RubyGems][rubygems] (optional [Bundler][bundler])
+You need [Ruby 2.1.0][ruby] and [RubyGems][rubygems] (optional [Bundler][bundler])
 
 Add this line to your application's Gemfile:
 
@@ -76,19 +76,19 @@ Or install it yourself as:
 
 ## Tutorials
 
-- [See all available commands][commands]
+- [See all available commands/components][commands]
 - [How to use custom templates instead of the default ones][tutorial]
 
 ## Contributing
 
 - Contribute just like you would any other GitHub project (fork and submit a pull request; check out [GitHub's guide for that][contributing-guide])
-- Or, email frontendcollisionblog@gmail.com if you have an awesome for a feature!
+- Or, email frontendcollisionblog@gmail.com if you have an awesome idea for a feature!
 
 ## Info
 
 ### Requirements
 
-Only tested with `ruby 2.1.0p0 (2013-12-25 revision 44422) [x86_64-darwin13.0]`. Compatibility with previous versions of Ruby cannot be guaranteed.
+Only tested with Ruby 2.1 on Mac OSX Mavericks. Compatibility with previous versions of Ruby cannot be guaranteed.
 
 ### Disclaimer
 
@@ -104,6 +104,7 @@ The above copyright notice and this permission notice shall be included in all c
 
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
+[website]: http://frontendcollisionblog.com/angular_init
 [install]: #installation
 [quick-start]: #quick-start
 [example]: #example
