@@ -77,15 +77,17 @@ Or install it yourself as:
 
 ## Info
 
-**Requirements** Only tested with `ruby 2.1.0p0 (2013-12-25 revision 44422) [x86_64-darwin13.0]`. Compatibility with previous versions of Ruby cannot be guaranteed.
+### Requirements
+
+Only tested with `ruby 2.1.0p0 (2013-12-25 revision 44422) [x86_64-darwin13.0]`. Compatibility with previous versions of Ruby cannot be guaranteed.
 
 ### Disclaimer
 
 `angular_init` and `ngi` and the author (Joshua Beam) are not directly associated with <a href="http://angularjs.org">AngularJS</a>.
 
-**Copyright (c) 2015 Joshua Beam** &mdash; <a href="http://frontendcollisionblog.com">Front End Collision</a>
+**Copyright &copy; 2015 Joshua Beam** &mdash; <a href="http://frontendcollisionblog.com">Front End Collision</a>
 
-MIT License
+[MIT License][mit]
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
 
@@ -103,3 +105,4 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 [ruby]: https://www.ruby-lang.org/en/downloads/
 [bundler]: http://bundler.io/
 [tutorial]: https://github.com/joshbeam/angular_init/blob/master/TUTORIAL.md
+[mit]: http://opensource.org/licenses/MIT
