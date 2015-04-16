@@ -1,14 +1,14 @@
 # Create your own ngi template
 
-Hello!
+Hello! Here you'll learn the basics of creating your own custom template to use with ngi.
 
-Here you'll learn the basics of creating your own custom template to use with ngi.
+Why? Well, the default templates follow [John Papa's style guide][style-guide], so certain conventions are used. But maybe you don't like all those conventions, or maybe you or your organization prefer a different style. If that's the case, then you can just create your own custom template files to use!
 
 ## Quick Start
 
 **Step 1** First, create a template following the [syntax below][syntax]. You can use your own styling to make the template fit your own workflow. Then you want to give the template a name. For this example, we'll use `my.directive.template.js`
 
-**Step 2** Execute `$ ngi -o` so that you can configure ngi. This is where we're going to tell ngi to use the new template file you just created.
+**Step 2** Execute `ngi -o` so that you can configure ngi. This is where we're going to tell ngi to use the new template file you just created.
 
 **Step 3** You'll see something like this:
 
@@ -124,3 +124,4 @@ Use the following **tags** in your template:
 
 [syntax]: #syntax
 [liquid]: http://liquidmarkup.org/
+[style-guide]: https://github.com/johnpapa/angular-styleguide
