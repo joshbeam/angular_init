@@ -1,6 +1,12 @@
 
 # ngi 0.3.0
 
+- [Quick Start][quick-start]
+- [Example][example]
+- [Features][features]
+- [Installation][install]
+- [Tutorials][tutorials]
+
 ## Quick Start
 
 angular_init (short-name: ngi) creates AngularJS templates for you from the command line.
@@ -45,17 +51,31 @@ By the way, the output of this little tool is meant to follow [John Papa's Angul
 
 ## Features
 
-- Has default templates to create components for you (directives, controllers, etc.) in ECMAScript5 and CoffeeScript (type `ngi -h` to see all the available components)
-- Supports custom templates
+- Has **default templates** to create components for you (directives, controllers, etc.) in ECMAScript5 and CoffeeScript (type `ngi -h` to see all the available components)
+- Supports **custom templates**
+
+## Installation
+
+**Dependencies** [Ruby 2.1.0][ruby] and [RubyGems][rubygems] (optional [Bundler][bundler])
+
+Add this line to your application's Gemfile:
+
+    gem 'ngi'
+
+And then execute:
+
+    $ bundle
+
+Or install it yourself as:
+
+    $ gem install ngi
 
 ## Tutorials
 
 - Type `ngi -h` to see a list of all available components that can be created (directives, controllers, etc.)
 - [How to use custom templates instead of the default ones][tutorial]
 
-## Technical Information
-
-**Language** Ruby
+## Info
 
 **Requirements** Only tested with `ruby 2.1.0p0 (2013-12-25 revision 44422) [x86_64-darwin13.0]`. Compatibility with previous versions of Ruby cannot be guaranteed.
 
@@ -63,14 +83,21 @@ By the way, the output of this little tool is meant to follow [John Papa's Angul
 
 `angular_init` and `ngi` and the author (Joshua Beam) are not directly associated with <a href="http://angularjs.org">AngularJS</a>.
 
-**Copyright (c) 2015 Joshua Beam** &mdash; <a href="http://frontendcollisionblog.com">Front End Collision</a> (MIT License)
+**Copyright (c) 2015 Joshua Beam** &mdash; <a href="http://frontendcollisionblog.com">Front End Collision</a>
 
-[install]: #installation-in-1-step
-[sample-usage]: #sample-usage
+MIT License
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+[install]: #installation
+[quick-start]: #quick-start
+[example]: #example
 [features]: #features
-[commands]: #commands
-[faq]: #faq
-[tech-info]: #technical-information
+[tutorials]: #tutorials
 [style-guide]: https://github.com/johnpapa/angular-styleguide
 [rubygems]: https://rubygems.org/pages/download
 [ruby]: https://www.ruby-lang.org/en/downloads/
