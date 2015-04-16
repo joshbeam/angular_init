@@ -6,6 +6,8 @@
 - [Features][features]
 - [Installation][install]
 - [Tutorials][tutorials]
+- [Contributing][contributing]
+- [Info][info]
 
 ## Quick Start
 
@@ -51,6 +53,8 @@ By the way, the output of this little tool is meant to follow [John Papa's Angul
 
 ## Features
 
+*Have an idea for a feature? Email frontendcollisionblog@gmail.com! Just write: "Hey, I think it would be awesome if you included ____ in ngi because _____."*
+
 - Has **default templates** to create components for you (directives, controllers, etc.) in ECMAScript5 and CoffeeScript (type `ngi -h` to see all the available components)
 - Supports **custom templates**
 
@@ -72,8 +76,13 @@ Or install it yourself as:
 
 ## Tutorials
 
-- Type `ngi -h` to see a list of all available components that can be created (directives, controllers, etc.)
+- [See all available commands][commands]
 - [How to use custom templates instead of the default ones][tutorial]
+
+## Contributing
+
+- Contribute just like you would any other GitHub project (fork and submit a pull request; check out [GitHub's guide for that][contributing-guide])
+- Or, email frontendcollisionblog@gmail.com if you have an awesome for a feature!
 
 ## Info
 
@@ -100,9 +109,13 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 [example]: #example
 [features]: #features
 [tutorials]: #tutorials
+[contributing]: #contributing
+[contributing-guide]: https://guides.github.com/activities/contributing-to-open-source/#contributing
+[info]: #info
 [style-guide]: https://github.com/johnpapa/angular-styleguide
 [rubygems]: https://rubygems.org/pages/download
 [ruby]: https://www.ruby-lang.org/en/downloads/
 [bundler]: http://bundler.io/
 [tutorial]: https://github.com/joshbeam/angular_init/blob/master/TUTORIAL.md
+[commands]: https://github.com/joshbeam/angular_init/blob/master/COMMANDS.md
 [mit]: http://opensource.org/licenses/MIT
