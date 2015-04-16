@@ -57,11 +57,11 @@ By the way, the output of this little tool is meant to follow [John Papa's Angul
 
 ## Features
 
+### What's new in 0.3.x?
+
+- You can now use **custom templates** ([tutorial][tutorial])
+
 *Have an idea for a feature? Email frontendcollisionblog@gmail.com! Just write: "Hey, I think it would be awesome if you included ____ in ngi because ____."*
-
-**What's new in 0.3.x?**
-
-- Use **custom templates**
 
 - Has **default templates** to create components for you (directives, controllers, etc.) in ECMAScript5 and CoffeeScript (type `ngi -h` to see all the available components). By the way, the default templates follow [John Papa's AngularJS Style Guide][style-guide].
 - Supports **custom templates** (see the [tutorial][tutorial] for that)
