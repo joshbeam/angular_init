@@ -1,5 +1,9 @@
 
-# ngi 0.3.0 [Website][]
+# ngi 0.3.0
+
+Check out the [website][website].
+
+## Table of Contents
 
 - [Quick Start][quick-start]
 - [Example][example]
