@@ -1,11 +1,11 @@
 
-# angular_init (short-name: ngi) 0.3.0
+# ngi 0.3.0
 
 ## Quick Start
 
-ngi creates AngularJS templates for you from the command line.
+angular_init (short-name: ngi) creates AngularJS templates for you from the command line.
 
-### Install in seconds
+### Get up and running in seconds
 
 [![Gem Version](https://badge.fury.io/rb/ngi.svg)](http://badge.fury.io/rb/ngi)
 
@@ -14,6 +14,44 @@ $ gem install ngi
 $ cd ~/MyAwesomeApp # => go to your app
 $ ngi controller # => creates a new AngularJS controller
 ```
+
+## Example
+
+![Example](https://github.com/joshbeam/angular_init/blob/master/ngi_example.gif "Example")
+
+```shell
+~/MyAwesomeApp $ ngi controller # this will create a controller!
+
+# you'll be prompted for some quick info
+[?] New file name: myAwesome.controller.js
+[?] Module name: myModule
+[?] Controller name: MyAwesomeController
+[?] Inject (already injected $scope): $route
+
+# all done!
+```
+
+## Output (new boilerplate code)
+
+```javascript
+// ~/MyAwesomeApp/myAwesome.controller.js
+
+;(function(app) {
+
+  'use strict';
+
+  app.controller('MyAwesomeController',MyAwesomeController);
+
+  MyAwesomeController.$inject = ['$route', '$scope'];
+
+  function MyAwesomeController($route, $scope) {
+  
+  }
+
+})(angular.module('myModule'));
+```
+
+By the way, the output of this little tool is meant to follow [John Papa's AngularJS Style Guide][style-guide].
 
 ## Features
 
