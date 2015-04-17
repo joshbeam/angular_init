@@ -1,5 +1,5 @@
 
-# ngi 0.3.0
+# ngi 0.3.1
 
 Check out the [website][website].
 
