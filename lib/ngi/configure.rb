@@ -9,17 +9,30 @@ require_relative 'utils/utils'
 require 'fileutils'
 require 'yaml'
 
-# Run the user through an interactive
-# session of configuring ngi
+# This class handles configuring Ngi.
+# It is divided into basically two parts.
+# The first part collects user input in the
+# command line in sort of an interactive
+# Q&A session, and the second part is involved
+# in manipulating the configuration files,
+# which are stored in lib/config. THe configuration
+# file that stores the user's config
+# information is actually lib/config/config.yml.
+# All the other files in lib/config are supporting
+# files that hold default, unchangeable information.
 class Configure
   attr_accessor :file, :location
 
   JSer = Utils::JSer
   Utils::CurrentDir.dir = File.dirname(__FILE__)
 
-  # STDIN is separated into a class so that
-  # it can be extracted and tested
-  class AcceptInput
+  # This class is used in place of just
+  # using $stdin.gets (or similar methods)
+  # to collect input. This is so that
+  # this class can be redefined in tests,
+  # basically making #gets testable because
+  # it can be replaced with whatever you want.
+  class AcceptInput < Utils::AcceptInput
     def self.str(type)
       case type
       when :stripped
@@ -28,11 +41,14 @@ class Configure
     end
   end
 
-  # Here, we implement the virtual class "Utils::AskLoop"
-  # (see src/ruby/utils/utils.rb)
   # This implementation just creates a loop that asks
-  # for user input
+  # for user input in the format of
+  # "Choose from: <options>". The result of the
+  # user's input is returned so that it can be
+  # used later in the code.
   class AskLoop < Utils::AskLoop
+    # Starts the loop and waits for user
+    # input.
     def self.ask(args)
       puts "\nChoose from: #{args[:valid]}"
       answer = AcceptInput.str(:stripped)
@@ -46,10 +62,10 @@ class Configure
     end
   end
 
-  # An extraction of the template file/directory for
-  # the generator... This way it can be separated, redefined,
+  # An extraction of the template file/directory.
+  # This way it can be separated, redefined,
   # and tested.
-  class TemplateDir
+  class TemplateDir < Utils::TemplateDir
     attr_reader :d
 
     def initialize(component, language, template)
@@ -68,8 +84,12 @@ class Configure
   end
 
   # Holds all the configure functions for the properties
-  # that are configurable
+  # that are configurable. lib/config/config.configurable.yml
+  # holds a list of the properties that the user is allowed
+  # to configure.
   class Configurable
+    # Allows the user to define the language
+    # of the languages that they are allowed to configure.
     def self.language(config)
       v = JSer.new(config.lang_types).to_str
       type = AskLoop.ask(check: config.lang_types, valid: v)
@@ -85,6 +105,10 @@ class Configure
       answer
     end
 
+    # This method creates the actual template file
+    # by copying the user's custom template file
+    # into ngi's templates directory.
+    # This method is used inside of #self.templates
     def self.create_template_file(args)
       component = args[:component]
       language = args[:language]
@@ -115,6 +139,8 @@ and that you're in the correct directory of the custom template."
       end
     end
 
+    # Allows the user to configure the templates for the various
+    # components, like directives, controllers, etc.
     def self.templates(config)
       v_c = JSer.new(config.components).to_str
       component = AskLoop.ask(check: config.components, valid: v_c)
@@ -210,10 +236,10 @@ and that you're in the correct directory of the custom template."
     end
   end
 
-  # Make Questioner accesible as in: Configure::Questioner.run()
-  # "Questioner" simply starts an interactive prompt to guide
-  # the user in configuring src/config/agular_init.config.json,
-  # which is a JSON file that holds all the global configurable
+  # Make Questioner accesible as in: Configure::Questioner.run().
+  # Questioner simply starts an interactive prompt to guide
+  # the user in configuring ngi,
+  # which is a file that holds all the global configurable
   # options (like language to use, templates, etc.)
   class Questioner
     attr_accessor :file
@@ -265,6 +291,11 @@ and that you're in the correct directory of the custom template."
       end
     end
 
+    # Creates a new instance of Questioner and
+    # in a "functional programming" sort of way,
+    # runs through the various methods of choosing
+    # a configurable property based on the user's
+    # input and configuring that property.
     def self.run(file)
       questioner = Questioner.new(file) do |q|
         # First, the user chooses a property
@@ -278,8 +309,8 @@ and that you're in the correct directory of the custom template."
 
         # The hash that was spit out as the
         # result is "merged" into the original
-        # Hash from_json object that came from
-        # config/angular_init.config.json
+        # Hash object that came from
+        # config/config.yml
         # and is inside of this instance of Questioner
         q.config[property] = result
 
@@ -293,16 +324,13 @@ and that you're in the correct directory of the custom template."
       end
 
       # Returns the file so that it can be used
-      # (For example, Configure might write this
-      # new hash as a JSON file to
-      # config/angular_init.config.json)
       questioner.config
     end
   end
 
-  # The only thing we do here is load the JSON config file basically
-  # as just a string in JSON format.
-  # It will be converted to a Ruby hash in from_json below
+  # The only thing we do here is load the config file
+  # as just a string.
+  # It will be converted to a Ruby hash in #to_ruby
   def initialize(location = nil)
     unless location.nil?
       @location = location
@@ -314,12 +342,7 @@ and that you're in the correct directory of the custom template."
     yield(self) if block_given?
   end
 
-  # Convert the file to a Ruby hash
-  # def from_json
-  #   JSON.parse(@file)
-  # end
-
-  # Convert the file to a Ruby hash
+  # Convert the file to a Ruby hash.
   # Usage: Configure.new('file/path').to_ruby(from: 'yaml')
   def to_ruby(args)
     case args[:from]
@@ -342,8 +365,8 @@ and that you're in the correct directory of the custom template."
     end
   end
 
-  # Here we actually write the new JSON config file
-  # to config/angular_init.config.json
+  # Here we actually write the new config file
+  # to config/config.yml
   def write(args)
     File.open(args[:destination], 'w') do |f|
       f.write(args[:file])
@@ -352,12 +375,12 @@ and that you're in the correct directory of the custom template."
   end
 
   # All this method does is handle retrieving
-  # the file from config/angular_init.config.json
+  # the file from config/config.yml
   # so that it can pass it off to Questioner,
   # which can in turn change the Hash and pass it
   # *back* to Configure, which can then choose
-  # to actually write the file in JSON format
-  # to config/angular_init.config.json
+  # to actually write the file
+  # to config/config.yml
   def self.run(args)
     Configure.new do |c|
       c.file = Configure::Questioner.run(args)

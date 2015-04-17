@@ -12,18 +12,13 @@ module Utils
   # For example:
   # { "hello" => "world" }
   # becomes:
-  # { 'hello': 'world' }
-  # and ["some","array"]
-  # becomes:
-  # ['some','array']
+  # { 'hello': 'world' }.
   module JSer
     def to_str
       to_s.gsub(/\"/, "'").gsub(/\=\>/, ': ')
     end
 
-    # A JSer class
-    # Usage:
-    #     JSHash.new({"hello" => "world"}).to_str
+    # Usage: JSHash.new({"hello" => "world"}).to_str
     class JSHash < Hash
       def initialize(hash)
         super
@@ -35,9 +30,7 @@ module Utils
       include JSer
     end
 
-    # Another JSer class
-    # Usage:
-    #     JSArray.new(["some","array"]).to_str
+    # Usage: JSArray.new(["some","array"]).to_str
     class JSArray < Array
       def initialize(array)
         super
@@ -48,6 +41,12 @@ module Utils
 
     module_function
 
+    # This makes the module JSer "look like"
+    # a class that can be "newed", even though
+    # JSer is a module. When we "new" JSer,
+    # it delegates flow of control
+    # to either JSArray or JSHash, depending
+    # on what type of object is passed in.
     def new(obj)
       if obj.class == Array
         return JSArray.new(obj)

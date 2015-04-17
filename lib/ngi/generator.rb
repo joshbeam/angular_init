@@ -7,9 +7,13 @@ require_relative 'utils/utils'
 
 # This class generates templates (hence the name "Generator")
 class Generator
-  # STDIN is separated into a class so that
-  # it can be extracted and tested
-  class AcceptInput
+  # This class is used in place of just
+  # using $stdin.gets (or similar methods)
+  # to collect input. This is so that
+  # this class can be redefined in tests,
+  # basically making #gets testable because
+  # it can be replaced with whatever you want.
+  class AcceptInput < Utils::AcceptInput
     def self.str(type)
       case type
       when :condensed
@@ -22,8 +26,10 @@ class Generator
     end
   end
 
-  # Here we just implement
-  # the virtual class Utils::AskLoop
+  # This implementation just creates a loop that asks
+  # for user input. The result of the
+  # user's input is returned so that it can be
+  # used later in the code.
   class AskLoop < Utils::AskLoop
     def self.ask(args)
       print "\n#{args[:prompt]}"
@@ -50,9 +56,9 @@ class Generator
   # Generator.new (the initialization function) is called in self.run
 
   # An extraction of the template file/directory for
-  # the generator... This way it can be separated, redefined,
+  # the generator. This way it can be separated, redefined,
   # and tested.
-  class TemplateDir
+  class TemplateDir < Utils::TemplateDir
     attr_reader :dir
 
     def initialize(component)
@@ -83,24 +89,33 @@ class Generator
 
   ###############################
 
+  # Asks for the new file name
+  # of the component being generated.
   def new_file_name
     print '[?] New file name: '
 
     @new_file = AcceptInput.str(:condensed)
   end
 
+  # Asks for the module name
+  # of the component being generated.
   def module_name
     print '[?] Module name: '
 
     @module_name = AcceptInput.str(:condensed)
   end
 
+  # Asks for the name of the component
+  # being generated (e.g. "MyController")
   def name
     print "[?] #{@type.capitalize} name: "
 
     @name = AcceptInput.str(:condensed)
   end
 
+  # Asks for what additional services, etc.,
+  # the user would like to inject into
+  # the component.
   def inject
     special = %w(routes controller).include?(@type)
     auto_injections = [
@@ -123,6 +138,8 @@ class Generator
     @dependencies << injection unless injection.nil?
   end
 
+  # This method replaces all the tags inside the template.
+  # A tag is something like {{name}}.
   def replace
     # inject may or may not have run...
     # if it wasn't run, then @dependencies was never set
@@ -155,17 +172,18 @@ class Generator
                       .gsub(cdv_regex, cdv_string)
   end
 
+  # If Liquid-style tags are used in a template that can be used
+  # for multiple components, remove those parts that don't
+  # belong to the type of component user wants to generate
   def tag
-    # If Liquid-style tags are used in a template that can be used
-    # for multiple components, remove those parts that don't
-    # belong to the type of component user wants to generate
     @template_file =  @template_file
                       .gsub(/\{\%\sif\s#{@type}\s\%\}(.*)\{\%\sendif\s#{@type}\s\%\}/m, '\1')
                       .gsub(/\s\{\%\sif\s.*\s\%\}.*\{\%\sendif\s.*\s\%\}/m, '')
   end
 
+  # Here we create the new generated file based on the
+  # template for the component that the user chose.
   def write
-    # create the new file
     def overwrite?
       AskLoop.ask(
         check: 'y', prompt: 'File exists already, overwrite it? (y/n) '
@@ -185,7 +203,7 @@ class Generator
   # the executable file.
   # This function simply goes through all of the
   # methods in order to interactively
-  # prompt the user to generate a new template
+  # prompt the user to generate a new template.
   def self.run(args)
     Generator.new(args) do |g|
       g.new_file_name

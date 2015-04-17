@@ -11,5 +11,9 @@ module Utils
   require_relative 'user_input'
   require_relative 'current_dir'
 
+  # These are just "virtual" classes
+  # that are later implemented.
   class AskLoop; end
+  class AcceptInput; end
+  class TemplateDir; end
 end

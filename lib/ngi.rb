@@ -5,7 +5,7 @@
 
 # This module wraps the basic classes
 # of the tool ngi (in other words, this
-# module simply provides namespace)
+# module simply provides namespace).
 module Ngi
   require_relative 'ngi/delegate'
   require_relative 'ngi/parser'

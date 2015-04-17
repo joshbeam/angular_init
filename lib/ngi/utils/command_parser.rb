@@ -5,14 +5,14 @@
 
 # Utilities
 module Utils
-  # Similar to Ruby's OptionParser
-  # However, this is customized for angular_init
+  # Similar to Ruby's OptionParser.
+  # However, this is customized for angular_init.
   class CommandParser
     attr_reader :args
     attr_accessor :banner, :version, :separator, :name
 
-    # Create an abstraction of puts
-    # so that we can test it
+    # Create an abstraction of $stdout.puts
+    # so that we can test it.
     class Output
       def initialize(str)
         @str = str
@@ -46,7 +46,7 @@ module Utils
       @name = name
     end
 
-    # register the listeners
+    # Register the listeners.
     def on(options, description = '', &block)
       listener = {}
 
@@ -91,6 +91,7 @@ module Utils
       end
     end
 
+    # Automatically register the "help" listener
     def register_help
       # automaticaly register this listener
       on(['-h', '--help'], 'Show the help menu') do

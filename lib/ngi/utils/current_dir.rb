@@ -5,7 +5,13 @@
 
 # Utilities
 module Utils
-  # Current directory
+  # Current directory. We use this
+  # in place of a constant. When testing,
+  # we can reset the CurrentDir to use
+  # the testing config files (which are
+  # separate from the normal config files)
+  # and suppress any CONSTANT REDEFINITION
+  # errors. 
   class CurrentDir
     @@dir = ''
 

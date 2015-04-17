@@ -70,7 +70,7 @@ describe Ngi do
           Utils::CurrentDir.dir = @dir
 
           # Redefine the $stdin in Generator
-          class AcceptInput
+          class AcceptInput < Utils::AcceptInput
             def self.str(type)
               case type
               when :condensed
@@ -89,7 +89,7 @@ describe Ngi do
           Utils::CurrentDir.dir = @dir
 
           # Redefine the $stdin in Generator
-          class AcceptInput
+          class AcceptInput < Utils::AcceptInput
             def self.str(type)
               case type
               when :stripped

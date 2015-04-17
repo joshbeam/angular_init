@@ -4,7 +4,11 @@ require_relative 'delegate'
 require_relative 'version'
 
 # This class is just a wrapper for the main process
-# of ngi
+# of ngi. It looks at the user input and passes
+# arguments to either Configure or Generator.
+# It also handles retrieving the configuration files
+# from lib/config/config.yml so that they only have
+# to be read in *one place*.
 class Parser
   CURRENT_DIR = File.dirname(__FILE__)
 
@@ -24,7 +28,13 @@ class Parser
   LANGUAGES_FILE = "#{CURRENT_DIR}/../config/config.languages.yml"
   LANGUAGES_HASH = Delegate::Configure.new(LANGUAGES_FILE).to_ruby(from: 'yaml')
 
-  # Abstraction to choose the component (custom or default)
+  # Abstraction to choose the component (custom or default).
+  # If a custom component exists in config/config.yml, then
+  # this class will select the attributes from that and
+  # build a component to pass into Generator. If no custom
+  # component exists, then the default attributes from
+  # config/config.components.yml are used to build a component
+  # to pass into Generator.
   class ComponentChooser
     attr_reader :component
 
@@ -55,6 +65,8 @@ class Parser
     end
   end
 
+  # Here we implement CommandParser to use in the
+  # executable file.
   def self.parse(args)
     p = Utils::CommandParser.new do |parser|
       components = Utils::UserInput.new(valid_inputs: COMPONENTS)
