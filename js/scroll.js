@@ -14,9 +14,9 @@ $(function(){
         
     for(sec in sections) {
       if(sections[sec] > pos && sections[sec] < pos + _height) {
-          $('a').removeClass('active');
-          $('a[href="#' + sec +'"]').addClass('active');
-      }  
+        $('a').removeClass('active');
+        $('a[href="#' + sec +'"]').addClass('active');
+      }
     }
   });
 

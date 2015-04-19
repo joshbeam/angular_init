@@ -4,8 +4,8 @@ $(function() {
 
   drawerIn();
 
-  $('.menu-icon').on('click', function() {
-    drawerOut();
+  $('.menu-icon').on('click', function(e) {
+    drawerOut(e);
   });
 
   $('.black-out').on('click', function() {
@@ -21,9 +21,10 @@ $(function() {
     $blackOut.addClass('hidden')
   }
 
-  function drawerOut() {
+  function drawerOut(event) {
     $nav.addClass('drawer-out');
     $blackOut.removeClass('hidden');
+    event.preventDefault();
   }
 
 });

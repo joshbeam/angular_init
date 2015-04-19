@@ -27,6 +27,7 @@ p {
 pre {
   font-size: 1.5rem;
   text-align: left;
+  line-height: 2rem;
   overflow: scroll;
   padding: 1rem;
   -webkit-border-radius: 10px;
@@ -38,6 +39,9 @@ pre {
   margin: 4rem auto;
   background: #eee;
   color: #333; }
+  @media screen and (max-width: 768px) {
+    pre {
+      width: 95%; } }
 
 @media screen and (max-width: 768px) {
   img.example {
@@ -92,17 +96,27 @@ main {
     -webkit-box-shadow: 0 0 30px #ccc;
     -moz-box-shadow: 0 0 30px #ccc;
     box-shadow: 0 0 30px #ccc; }
-  main section h1 {
+  main section h1,
+  main header h1,
+  main footer h1 {
     text-align: center;
     margin: 2rem; }
-  main section img {
+  main section img,
+  main header img,
+  main footer img {
     box-shadow: 0px 0px 100px #333;
     display: block;
     margin: 4rem auto; }
   @media screen and (max-width: 768px) {
+    main section,
+    main header,
+    main footer {
+      padding: .25rem .25rem 2rem .25rem; } }
+  @media screen and (max-width: 768px) {
     main {
       width: 100%;
-      margin-top: 5rem; } }
+      margin-top: 2rem;
+      padding: 0; } }
 
 .menu-icon {
   cursor: pointer;
@@ -124,7 +138,8 @@ nav {
   left: 0;
   z-index: 999;
   height: 100%;
-  width: 20%; }
+  width: 20%;
+  overflow: auto; }
   nav header h2 {
     padding: 0;
     margin: 1rem; }
@@ -167,8 +182,8 @@ nav {
   -moz-box-shadow: 0 0 10px #333;
   box-shadow: 0 0 10px #333;
   width: 100%;
-  padding: 1rem; }
-  .sticky-header h2 {
+  padding: .25rem; }
+  .sticky-header h3 {
     padding: 0;
     margin: .5rem;
     display: inline; }
