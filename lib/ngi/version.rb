@@ -7,5 +7,5 @@
 # This uses semantic versioning.
 # See http://semver.org/
 module Ngi
-  VERSION = '0.3.0'
+  VERSION = '0.4.0'
 end
