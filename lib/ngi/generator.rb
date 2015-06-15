@@ -150,7 +150,7 @@ class Generator
     @template_file =  @template_file
                       .gsub(/\{\{type\}\}/, @type)
                       .gsub(/\{\{name\}\}/, @name || '')
-                      .gsub(/\{\{module\}\}/, @module_name)
+                      .gsub(/\{\{module\}\}/, @module_name || '')
                       .gsub(/\{\{inject\s\|\sarray_string\}\}/, array_string)
                       .gsub(cdv_regex, cdv_string)
   end
