@@ -1,5 +1,5 @@
 
-# ngi 0.3.0
+# ngi 0.4.0
 
 Check out the [website][website].
 
@@ -57,7 +57,7 @@ By the way, the output of this little tool is meant to follow [John Papa's Angul
 
 ## Features
 
-### What's new in 0.3.x?
+### What's new in 0.4.x?
 
 - You can now use **custom templates** ([tutorial][tutorial])
 
